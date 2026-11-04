@@ -1,0 +1,145 @@
+/* ==========================================================================
+   EPHESUS GATHERINGS WORLDWIDE — DESIGN SYSTEM TOKENS
+   Authentic Church Palette: Royal Navy + Sacred Gold + Crisp Alabaster/Obsidian
+   ========================================================================== */
+
+:root {
+  /* --- Ephesus Royal Navy Scale (Primary Church Brand Color) --- */
+  --navy-50:  #F0F4FA;
+  --navy-100: #DCE6F5;
+  --navy-200: #B9CEEB;
+  --navy-300: #89AEDD;
+  --navy-400: #5586CA;
+  --navy-500: #2960B2;
+  --navy-600: #1346AF; /* Mother Church Vibrant Royal Blue */
+  --navy-700: #1B3A5C; /* Diaspora Classic Navy */
+  --navy-800: #0F2547;
+  --navy-900: #0B1F4A; /* Deep Sanctuary Navy */
+  --navy-950: #061024;
+
+  /* --- Ephesus Sacred Gold / Amber Scale (Secondary Church Accent) --- */
+  --gold-50:  #FFFDF5;
+  --gold-100: #FFF6D6;
+  --gold-200: #FDE9A3;
+  --gold-300: #F9D66B;
+  --gold-400: #F5B82E;
+  --gold-500: #D4AF37; /* Classic Brushed Gold */
+  --gold-600: #B88914;
+  --gold-700: #91680B;
+  --gold-800: #6B4B08;
+  --gold-900: #463004;
+
+  /* --- Status & Broadcast Colors --- */
+  --live-red:     #DC2626;
+  --live-red-bg:  #FEE2E2;
+  --ok-green:     #0D7A43;
+  --ok-green-bg:  #DCFCE7;
+
+  /* --- Typography --- */
+  --font-display: 'Jost', system-ui, -apple-system, sans-serif;
+  --font-serif:   'Cormorant Garamond', Georgia, serif;
+  --font-sans:    'Figtree', system-ui, -apple-system, sans-serif;
+
+  /* --- Fluid Type Scale --- */
+  --text-xs:    0.75rem;
+  --text-sm:    0.875rem;
+  --text-base:  1rem;
+  --text-lg:    1.125rem;
+  --text-xl:    1.25rem;
+  --text-2xl:   clamp(1.35rem, 2vw, 1.65rem);
+  --text-3xl:   clamp(1.75rem, 3vw, 2.35rem);
+  --text-4xl:   clamp(2.15rem, 4vw, 3.15rem);
+  --text-hero:  clamp(2.5rem, 5.2vw, 4.25rem);
+
+  /* --- Layout & Spacing --- */
+  --container-max: 1280px;
+  --container-narrow: 920px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --section-py: clamp(4rem, 7vw, 6.5rem);
+  --header-h: 82px;
+
+  /* --- Radii --- */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 9999px;
+
+  /* --- Motion --- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* --- Light Mode Semantic Surfaces (Default) --- */
+  --bg-page:        #FAFBFD;
+  --bg-stage:       #F1F5FB;
+  --bg-card:        #FFFFFF;
+  --bg-card-alt:    #F5F8FD;
+  --bg-well:        #EBF0F9;
+  --bg-elevated:    rgba(255, 255, 255, 0.92);
+  --bg-hero-grad:   linear-gradient(135deg, #07142E 0%, #0F2547 55%, #16376B 100%);
+  --bg-royal-band:  linear-gradient(135deg, #0B1F4A 0%, #133B7A 100%);
+
+  --text-primary:   #0A1629;
+  --text-secondary: #3B4A62;
+  --text-muted:     #607089;
+  --text-on-navy:   #F8FAFC;
+  --text-gold:      #9A7009;
+
+  --border-subtle:  rgba(11, 31, 74, 0.08);
+  --border-strong:  rgba(11, 31, 74, 0.16);
+  --border-gold:    rgba(212, 175, 55, 0.42);
+
+  --brand-primary:       #0B1F4A;
+  --brand-primary-hover: #13387C;
+  --brand-royal:         #1346AF;
+  --brand-gold:          #D4AF37;
+  --brand-gold-bright:   #F5B82E;
+
+  --shadow-sm:    0 2px 8px -2px rgba(11, 31, 74, 0.06);
+  --shadow-card:  0 16px 40px -18px rgba(11, 31, 74, 0.11), 0 2px 6px rgba(11, 31, 74, 0.04);
+  --shadow-float: 0 24px 56px -16px rgba(11, 31, 74, 0.18), 0 4px 12px rgba(11, 31, 74, 0.06);
+  --shadow-gold:  0 10px 28px -6px rgba(212, 175, 55, 0.38);
+
+  color-scheme: light;
+}
+
+/* --- Dark Mode Semantic Surfaces (Rich Midnight Sanctuary) --- */
+html[data-theme="dark"] {
+  --bg-page:        #060D1A;
+  --bg-stage:       #0A1528;
+  --bg-card:        #0F1E38;
+  --bg-card-alt:    #132544;
+  --bg-well:        #091324;
+  --bg-elevated:    rgba(10, 21, 40, 0.90);
+  --bg-hero-grad:   linear-gradient(135deg, #040914 0%, #0B1B38 55%, #112A54 100%);
+  --bg-royal-band:  linear-gradient(135deg, #0D2042 0%, #16366E 100%);
+
+  --text-primary:   #F4F7FC;
+  --text-secondary: #B8C6DC;
+  --text-muted:     #8496B4;
+  --text-on-navy:   #F8FAFC;
+  --text-gold:      #F5C451;
+
+  --border-subtle:  rgba(184, 198, 220, 0.11);
+  --border-strong:  rgba(184, 198, 220, 0.22);
+  --border-gold:    rgba(245, 196, 81, 0.38);
+
+  --brand-primary:       #2563EB;
+  --brand-primary-hover: #3B82F6;
+  --brand-royal:         #60A5FA;
+  --brand-gold:          #E5BC46;
+  --brand-gold-bright:   #F8CE58;
+
+  --live-red:     #F87171;
+  --live-red-bg:  rgba(220, 38, 38, 0.2);
+  --ok-green:     #4ADE80;
+  --ok-green-bg:  rgba(22, 163, 74, 0.2);
+
+  --shadow-sm:    0 2px 10px rgba(0, 0, 0, 0.35);
+  --shadow-card:  0 20px 44px -16px rgba(0, 0, 0, 0.55);
+  --shadow-float: 0 28px 64px -12px rgba(0, 0, 0, 0.72);
+  --shadow-gold:  0 10px 30px -6px rgba(229, 188, 70, 0.3);
+
+  color-scheme: dark;
+}

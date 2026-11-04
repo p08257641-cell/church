@@ -1,0 +1,251 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  ArrowUp,
+  CheckCircle2,
+  ExternalLink,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Youtube
+} from 'lucide-react';
+import { BrandLogo } from './BrandLogo';
+
+const TOPICS = ['Sunday Service Links', 'Daily Readings', 'Events & Camps', 'Prophetic Updates'];
+
+export const Footer: React.FC = () => {
+  const [selectedTopics, setSelectedTopics] = useState<string[]>(['Sunday Service Links', 'Events & Camps']);
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const toggleTopic = (topic: string) => {
+    setSelectedTopics(prev =>
+      prev.includes(topic) ? prev.filter(t => t !== topic) : [...prev, topic]
+    );
+  };
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setSubscribed(true);
+    setEmail('');
+  };
+
+  return (
+    <footer className="site-footer">
+      <div className="container">
+        {/* Interactive Ministry Updates Banner */}
+        <div className="footer-newsletter">
+          <div>
+            <span className="eyebrow eyebrow-light">Stay Connected Worldwide</span>
+            <h3 style={{ fontSize: 'var(--text-2xl)', color: '#FFFFFF', marginBottom: '0.45rem' }}>
+              Receive Service Links, Readings & Prophetic Alerts
+            </h3>
+            <p style={{ color: 'rgba(248,250,252,0.78)', fontSize: '0.94rem' }}>
+              Choose the updates you want in your inbox—tailored to your walk with Christ.
+            </p>
+            <div className="topic-chips" role="group" aria-label="Email topics">
+              {TOPICS.map(topic => {
+                const active = selectedTopics.includes(topic);
+                return (
+                  <button
+                    key={topic}
+                    type="button"
+                    className={`topic-chip ${active ? 'active' : ''}`}
+                    onClick={() => toggleTopic(topic)}
+                  >
+                    {active ? '✓ ' : '+ '}
+                    {topic}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            {subscribed ? (
+              <div
+                style={{
+                  padding: '1.25rem',
+                  borderRadius: 'var(--radius-md)',
+                  background: 'rgba(13, 122, 67, 0.25)',
+                  border: '1px solid rgba(74, 222, 128, 0.45)',
+                  color: '#FFFFFF',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem'
+                }}
+              >
+                <CheckCircle2 size={24} style={{ color: '#4ADE80', flexShrink: 0 }} />
+                <div>
+                  <strong>You are on the list!</strong>
+                  <div style={{ fontSize: '0.85rem', opacity: 0.88 }}>
+                    Subscribed to: {selectedTopics.join(', ') || 'General Ministry Updates'}.
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                <div className="newsletter-form-row">
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    placeholder="Enter your email address..."
+                    className="newsletter-input"
+                    aria-label="Email address"
+                  />
+                  <button type="submit" className="btn btn-gold">
+                    Subscribe
+                  </button>
+                </div>
+                <span style={{ fontSize: '0.76rem', color: 'rgba(248,250,252,0.6)' }}>
+                  Sent only by Ephesus Gatherings Worldwide. Unsubscribe anytime with one click.
+                </span>
+              </form>
+            )}
+          </div>
+        </div>
+
+        {/* Main 4-Column Footer */}
+        <div className="footer-grid">
+          <div>
+            <BrandLogo onDark width={148} />
+            <p style={{ marginTop: '1rem', fontSize: '0.92rem', color: 'rgba(248,250,252,0.75)', lineHeight: 1.65 }}>
+              A Christ-centred training centre equipping God’s overcomers across Canada, the UK, the USA, Germany, Ghana, and the nations to take their place on earth for the Lord Jesus Christ.
+            </p>
+            <div className="social-row">
+              <a
+                href="https://www.youtube.com/@EGW_Diaspora"
+                target="_blank"
+                rel="noreferrer"
+                className="social-pill"
+                aria-label="YouTube"
+                title="YouTube (@EGW_Diaspora)"
+              >
+                <Youtube size={18} />
+              </a>
+              <a
+                href="https://www.whatsapp.com/channel/0029VaAKoAFDZ4LUxGNPze0t"
+                target="_blank"
+                rel="noreferrer"
+                className="social-pill"
+                aria-label="WhatsApp Channel"
+                title="Official WhatsApp Channel"
+              >
+                <MessageCircle size={17} />
+              </a>
+              <a
+                href="https://www.instagram.com/egw_diaspora/"
+                target="_blank"
+                rel="noreferrer"
+                className="social-pill"
+                aria-label="Instagram"
+                title="Instagram (@egw_diaspora)"
+              >
+                <ExternalLink size={16} />
+              </a>
+              <a
+                href="mailto:admin@ephesusgatheringsworldwide.com"
+                className="social-pill"
+                aria-label="Email EGW"
+                title="Email Us"
+              >
+                <Mail size={16} />
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="footer-heading">Worship & Word</h4>
+            <div className="footer-links">
+              <Link to="/online-service">Online Broadcast Stage</Link>
+              <Link to="/events">Events & Global Calendar</Link>
+              <Link to="/daily-readings">Daily Bible Readings</Link>
+              <Link to="/testimonies">Testimonies Wall</Link>
+              <Link to="/salvation">Salvation — Receive Jesus</Link>
+              <a
+                href="https://open.spotify.com/show/76wjFskbcoaJiCzwPTc7yG"
+                target="_blank"
+                rel="noreferrer"
+              >
+                The Emergence Podcast <ExternalLink size={12} />
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="footer-heading">Ministry & Family</h4>
+            <div className="footer-links">
+              <Link to="/about">Our Story & Vision</Link>
+              <Link to="/about#beliefs">12 Articles of Faith</Link>
+              <Link to="/about#founder">Prophet Edem Julius-Cudjoe</Link>
+              <Link to="/about#leaders">Diaspora Leadership Team</Link>
+              <Link to="/join">Join as Member or Affiliate</Link>
+              <Link to="/give">Tithes & Kingdom Giving</Link>
+              <Link to="/resources">Ecosystem & Resources</Link>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="footer-heading">Global Offices & Care</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.88rem', color: 'rgba(248,250,252,0.8)' }}>
+              <div style={{ display: 'flex', gap: '0.6rem' }}>
+                <MapPin size={17} style={{ color: 'var(--gold-300)', flexShrink: 0, marginTop: 3 }} />
+                <div>
+                  <strong style={{ color: '#FFFFFF', display: 'block' }}>Diaspora Mailing Office</strong>
+                  10620 99 Ave NW, Unit 407, Edmonton, AB T5K 0L3, Canada
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '0.6rem' }}>
+                <MapPin size={17} style={{ color: 'var(--gold-300)', flexShrink: 0, marginTop: 3 }} />
+                <div>
+                  <strong style={{ color: '#FFFFFF', display: 'block' }}>Mother Church Sanctuary</strong>
+                  The Son Place, Mikaddo Plaza, Labone, Accra, Ghana
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+                <Phone size={16} style={{ color: 'var(--gold-300)', flexShrink: 0 }} />
+                <a href="tel:+17809537153">+1 (780) 953-7153</a>
+                <span style={{ opacity: 0.4 }}>·</span>
+                <a href="tel:+233201944006">+233 20 194 4006</a>
+              </div>
+              <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+                <Mail size={16} style={{ color: 'var(--gold-300)', flexShrink: 0 }} />
+                <a href="mailto:admin@ephesusgatheringsworldwide.com">
+                  admin@ephesusgatheringsworldwide.com
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <div>
+            © {new Date().getFullYear()} Ephesus Gatherings Worldwide — Diaspora. All rights reserved.
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+            <Link to="/contact" style={{ color: 'rgba(248,250,252,0.75)' }}>
+              Confidential Prayer Desk
+            </Link>
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                color: 'var(--gold-300)',
+                fontWeight: 600
+              }}
+            >
+              Back to top <ArrowUp size={14} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
