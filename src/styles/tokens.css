@@ -54,9 +54,9 @@
   /* --- Layout & Spacing --- */
   --container-max: 1280px;
   --container-narrow: 920px;
-  --gutter: clamp(1.25rem, 4vw, 3rem);
-  --section-py: clamp(4rem, 7vw, 6.5rem);
-  --header-h: 82px;
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --section-py: clamp(3rem, 6.5vw, 6.25rem);
+  --header-h: 78px;
 
   /* --- Radii --- */
   --radius-xs: 6px;

@@ -255,8 +255,8 @@ export const Header: React.FC = () => {
               <Search size={17} />
             </button>
 
-            {/* 9-Language Switcher */}
-            <div className="popover-wrap">
+            {/* 9-Language Switcher (Desktop/Tablet; also inside Mobile Drawer) */}
+            <div className="popover-wrap hide-mobile">
               <button
                 type="button"
                 className="icon-btn"
@@ -292,8 +292,8 @@ export const Header: React.FC = () => {
               )}
             </div>
 
-            {/* Theme Mode Switcher */}
-            <div className="popover-wrap">
+            {/* Theme Mode Switcher (Desktop/Tablet; also inside Mobile Drawer) */}
+            <div className="popover-wrap hide-mobile">
               <button
                 type="button"
                 className="icon-btn"
@@ -387,9 +387,45 @@ export const Header: React.FC = () => {
               ))}
             </div>
 
+            <div className="mobile-drawer-prefs">
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.4rem' }}>
+                {(
+                  [
+                    { id: 'light', label: 'Light', icon: <Sun size={14} /> },
+                    { id: 'dark', label: 'Dark', icon: <Moon size={14} /> },
+                    { id: 'auto', label: 'Auto', icon: <SunMoon size={14} /> }
+                  ] as { id: ThemeMode; label: string; icon: React.ReactNode }[]
+                ).map(opt => (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    className={`chip-btn ${themeMode === opt.id ? 'is-active' : ''}`}
+                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', padding: '0.45rem 0.5rem' }}
+                    onClick={() => setThemeMode(opt.id)}
+                  >
+                    {opt.icon} {opt.label}
+                  </button>
+                ))}
+              </div>
+
+              <select
+                className="field-select"
+                style={{ minHeight: 42 }}
+                value={language}
+                onChange={e => setLanguage(e.target.value as typeof language)}
+                aria-label="Choose ministry language"
+              >
+                {LANGUAGES.map(l => (
+                  <option key={l.code} value={l.code}>
+                    Language: {l.label} ({l.englishName})
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
               <Link to="/online-service" className="btn btn-gold" style={{ width: '100%' }}>
-                <Radio size={17} /> {currentLang.nav.watchLive}
+                {currentLang.nav.watchLive}
               </Link>
               <Link to="/join" className="btn btn-primary" style={{ width: '100%' }}>
                 Become a Member or Affiliate

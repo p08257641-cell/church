@@ -183,7 +183,7 @@ export const EventsPage: React.FC = () => {
               </h2>
             </div>
 
-            <div style={{ position: 'relative', minWidth: 260 }}>
+            <div className="search-filter-box">
               <Search
                 size={16}
                 style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }}

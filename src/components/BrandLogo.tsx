@@ -11,7 +11,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({ onDark = false, width = 13
     <Link to="/" className="brand-link" aria-label="Ephesus Gatherings Worldwide — Home">
       <span
         className={`brand-mask ${onDark ? 'on-dark' : ''}`}
-        style={{ width: `${width}px` }}
+        style={{ '--logo-w': `${width}px` } as React.CSSProperties}
         role="img"
         aria-hidden="true"
       />

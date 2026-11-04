@@ -171,36 +171,38 @@ export const TestimoniesPage: React.FC = () => {
               ))}
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-              <div style={{ position: 'relative' }}>
+            <div className="testimonies-controls">
+              <div className="search-filter-box">
                 <Search size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                 <input
                   type="text"
                   className="field-input"
-                  style={{ paddingLeft: '2.2rem', minHeight: 40, borderRadius: 'var(--radius-pill)', width: 220 }}
+                  style={{ paddingLeft: '2.2rem', minHeight: 40, borderRadius: 'var(--radius-pill)', width: '100%' }}
                   placeholder="Search stories..."
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                 />
               </div>
-              <button
-                type="button"
-                className="icon-btn"
-                onClick={() => toggleViewMode('grid')}
-                aria-label="Grid view"
-                style={viewMode === 'grid' ? { borderColor: 'var(--brand-gold)', color: 'var(--brand-primary)' } : undefined}
-              >
-                <LayoutGrid size={17} />
-              </button>
-              <button
-                type="button"
-                className="icon-btn"
-                onClick={() => toggleViewMode('list')}
-                aria-label="List view"
-                style={viewMode === 'list' ? { borderColor: 'var(--brand-gold)', color: 'var(--brand-primary)' } : undefined}
-              >
-                <List size={17} />
-              </button>
+              <div style={{ display: 'flex', gap: '0.45rem' }}>
+                <button
+                  type="button"
+                  className="icon-btn"
+                  onClick={() => toggleViewMode('grid')}
+                  aria-label="Grid view"
+                  style={viewMode === 'grid' ? { borderColor: 'var(--brand-gold)', color: 'var(--brand-primary)' } : undefined}
+                >
+                  <LayoutGrid size={17} />
+                </button>
+                <button
+                  type="button"
+                  className="icon-btn"
+                  onClick={() => toggleViewMode('list')}
+                  aria-label="List view"
+                  style={viewMode === 'list' ? { borderColor: 'var(--brand-gold)', color: 'var(--brand-primary)' } : undefined}
+                >
+                  <List size={17} />
+                </button>
+              </div>
             </div>
           </div>
 

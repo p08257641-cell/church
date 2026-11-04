@@ -73,7 +73,7 @@ export const ResourcesPage: React.FC = () => {
               ))}
             </div>
 
-            <div style={{ position: 'relative', minWidth: 250 }}>
+            <div className="search-filter-box">
               <Search size={15} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
               <input
                 type="text"
