@@ -14,12 +14,12 @@ import {
 import { WEEKLY_SERVICES, formatGMTServiceInLocal } from '../utils/time';
 
 const REASONS = [
-  { id: 'prayer', label: 'Prayer Request', email: 'welfare@ephesusgatheringsworldwide.com' },
-  { id: 'general', label: 'General Enquiry', email: 'admin@ephesusgatheringsworldwide.com' },
-  { id: 'support', label: 'Pastoral Support / Helpline', email: 'welfare@ephesusgatheringsworldwide.com' },
-  { id: 'volunteer', label: 'Volunteer in a Team', email: 'service@ephesusgatheringsworldwide.com' },
-  { id: 'academy', label: 'Academy & Discipleship', email: 'academy@ephesusgatheringsworldwide.com' },
-  { id: 'partnership', label: 'Partnership & Giving', email: 'admin@ephesusgatheringsworldwide.com' }
+  { id: 'prayer', label: 'Prayer Request', email: 'welfare@ephesusgatheringsworldwide.org' },
+  { id: 'general', label: 'General Enquiry', email: 'admin@ephesusgatheringsworldwide.org' },
+  { id: 'support', label: 'Pastoral Support / Helpline', email: 'welfare@ephesusgatheringsworldwide.org' },
+  { id: 'volunteer', label: 'Volunteer in a Team', email: 'service@ephesusgatheringsworldwide.org' },
+  { id: 'academy', label: 'Education & Training Schools', email: 'academy@ephesusgatheringsworldwide.org' },
+  { id: 'partnership', label: 'Partnership & Giving', email: 'admin@ephesusgatheringsworldwide.org' }
 ];
 
 export const ContactPage: React.FC = () => {
@@ -61,24 +61,24 @@ export const ContactPage: React.FC = () => {
             }}
           >
             <div style={{ fontWeight: 700, color: 'var(--gold-300)', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              Direct Helpline & Pastoral Desk
+              Direct Sanctuary Helpline &amp; Pastoral Desk
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
               <Phone size={18} style={{ color: 'var(--gold-300)' }} />
-              <a href="tel:+17809537153" style={{ fontWeight: 700, fontSize: '1.1rem' }}>
-                +1 (780) 953-7153 (Diaspora)
+              <a href="tel:+233201944006" style={{ fontWeight: 700, fontSize: '1.1rem' }}>
+                +233 20 194 4006 (Ghana Sanctuary &amp; HQ)
               </a>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
               <Phone size={18} style={{ color: 'var(--gold-300)' }} />
-              <a href="tel:+233201944006" style={{ fontWeight: 600 }}>
-                +233 20 194 4006 (Ghana Mother Church)
+              <a href="tel:+17809537153" style={{ fontWeight: 600 }}>
+                +1 (780) 953-7153 (International / Diaspora)
               </a>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
               <Mail size={18} style={{ color: 'var(--gold-300)' }} />
-              <a href="mailto:admin@ephesusgatheringsworldwide.com">
-                admin@ephesusgatheringsworldwide.com
+              <a href="mailto:admin@ephesusgatheringsworldwide.org">
+                admin@ephesusgatheringsworldwide.org
               </a>
             </div>
           </div>
@@ -206,23 +206,23 @@ export const ContactPage: React.FC = () => {
             </div>
 
             <div className="card">
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.75rem' }}>Global Addresses</h3>
+              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.75rem' }}>Sanctuary &amp; Correspondence</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.9rem' }}>
                 <div style={{ display: 'flex', gap: '0.6rem' }}>
                   <MapPin size={18} style={{ color: 'var(--brand-royal)', flexShrink: 0, marginTop: 2 }} />
                   <div>
-                    <strong>Diaspora Mailing Address (Canada)</strong>
+                    <strong>Mother Church Sanctuary (The Son Place)</strong>
                     <div style={{ color: 'var(--text-secondary)' }}>
-                      10620 99 Ave NW, Unit 407, Edmonton, AB T5K 0L3, Canada
+                      Mikaddo Plaza, Labone Junction, Accra, Ghana
                     </div>
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: '0.6rem' }}>
                   <MapPin size={18} style={{ color: 'var(--brand-royal)', flexShrink: 0, marginTop: 2 }} />
                   <div>
-                    <strong>Mother Church Sanctuary (Ghana)</strong>
+                    <strong>International / Diaspora Correspondence (Canada)</strong>
                     <div style={{ color: 'var(--text-secondary)' }}>
-                      The Son Place, Mikaddo Plaza, Labone, Accra, Ghana
+                      10620 99 Ave NW, Unit 407, Edmonton, AB T5K 0L3, Canada
                     </div>
                   </div>
                 </div>

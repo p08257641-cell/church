@@ -3,6 +3,7 @@ import {
   Bell,
   CheckCircle2,
   CreditCard,
+  ExternalLink,
   Globe2,
   HeartHandshake,
   Landmark,
@@ -11,17 +12,46 @@ import {
   ShieldCheck,
   Smartphone
 } from 'lucide-react';
+import { CHURCH_INFO } from '../data/ministryData';
 
 const FUNDS = [
-  { id: 'tithe', label: 'Tithe (First 10%)', desc: 'Honouring the Lord with the firstfruits of your increase (Malachi 3:10).' },
-  { id: 'offering', label: 'Free-Will Offering', desc: 'Cheerful worship gifts advancing weekly broadcasts and discipleship.' },
-  { id: 'missions', label: 'Global Missions & Welfare', desc: 'Supporting diaspora family care, outreach, and urgent community needs.' },
-  { id: 'camp', label: 'ITF Camp & Special Projects', desc: 'Partnering in global convocations, media ministry, and sanctuary growth.' }
+  {
+    id: 'tithe',
+    label: 'Tithe (First 10%)',
+    desc: 'Honouring the Lord with the firstfruits of your increase (Malachi 3:10).',
+    paystackUrl: 'https://paystack.shop/pay/ephesustithes'
+  },
+  {
+    id: 'offering',
+    label: 'Free-Will Offering',
+    desc: 'Cheerful worship gifts advancing services, youth groups, and spiritual growth.',
+    paystackUrl: 'https://paystack.shop/pay/ephesusofferings'
+  },
+  {
+    id: 'seed',
+    label: 'Kingdom Seed',
+    desc: 'Sowing in faith for specific harvest, breakthrough, and open doors in Christ.',
+    paystackUrl: 'https://paystack.shop/pay/ephesusseeds'
+  },
+  {
+    id: 'prophet',
+    label: 'Seed to Prophet',
+    desc: 'Honouring the Lead Convener and prophetic office according to Galatians 6:6.',
+    paystackUrl: 'https://paystack.shop/pay/forprophetedem'
+  },
+  {
+    id: 'partnership',
+    label: 'Ephesus Partnership Unit',
+    desc: 'Partnering in school outreaches, Bible distribution, scholarships, and missions.',
+    paystackUrl: 'https://forms.gle/yZWzABAiM58dmPqH6'
+  }
 ];
 
 export const GivePage: React.FC = () => {
   const [selectedFund, setSelectedFund] = useState(FUNDS[0].id);
   const [pledgeSaved, setPledgeSaved] = useState(false);
+
+  const activeFundObj = FUNDS.find(f => f.id === selectedFund) || FUNDS[0];
 
   return (
     <div>
@@ -29,10 +59,10 @@ export const GivePage: React.FC = () => {
       <section className="page-hero">
         <div className="container page-hero-inner">
           <div>
-            <span className="eyebrow eyebrow-light">Tithes, Offerings & Kingdom Partnership</span>
-            <h1>Experience the Joy of Worship Through Giving</h1>
+            <span className="eyebrow eyebrow-light">Tithes, Offerings &amp; Kingdom Partnership</span>
+            <h1>Give with a Grateful Heart</h1>
             <p className="lead">
-              Giving is an act of worship, gratitude, and covenant partnership in advancing the Gospel of Jesus Christ across the nations.
+              “Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver.” – 2 Corinthians 9:7
             </p>
           </div>
 
@@ -55,56 +85,63 @@ export const GivePage: React.FC = () => {
       {/* Why We Give + Kingdom Stewardship Portal */}
       <section className="section">
         <div className="container grid-2" style={{ alignItems: 'start' }}>
-          {/* Left: Biblical Foundation */}
+          {/* Left: Biblical Foundation & Where Your Gift Goes */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
-              <span className="eyebrow">Kingdom Principles</span>
+              <span className="eyebrow">Where Your Gift Goes</span>
               <h2 className="section-title">
-                Your Generosity <span className="accent-serif">Makes an Eternal Difference</span>
+                Your Generosity <span className="accent-serif">Fuels the Mission</span>
               </h2>
               <p style={{ color: 'var(--text-secondary)' }}>
-                Through faithful tithes and free-will offerings, lives are reached online across continents, families receive pastoral care, and believers are trained in the Word.
+                Your generosity fuels our mission and touches lives across the globe through worship services, educational discipleship, and benevolent school outreach.
               </p>
             </div>
 
             <div className="card">
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.4rem' }}>What Are Tithes?</h3>
+              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.4rem' }}>Schools &amp; Community Outreach</h3>
               <p style={{ fontSize: '0.93rem', color: 'var(--text-secondary)' }}>
-                The first 10% of your income, returned to the Lord in faith, covenant honour, and gratitude for His provision.
+                Your gift helps us organize high school outreaches, donate Bibles, give domestic support to needy families, and award educational scholarships.
               </p>
             </div>
 
             <div className="card">
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.4rem' }}>What Are Offerings?</h3>
+              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.4rem' }}>Services &amp; Training Programs</h3>
               <p style={{ fontSize: '0.93rem', color: 'var(--text-secondary)' }}>
-                Additional spirit-led gifts beyond your tithe that fuel missions, media broadcasts, welfare support, and special Kingdom initiatives.
+                You support our weekly services, live online broadcasts, youth groups, and the 5 specialized schools of the Education &amp; Training Unit.
+              </p>
+            </div>
+
+            <div className="card">
+              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.4rem' }}>Sanctuary Maintenance &amp; Projects</h3>
+              <p style={{ fontSize: '0.93rem', color: 'var(--text-secondary)' }}>
+                You help maintain our physical sanctuary at The Son Place (Mikaddo Plaza, Labone, Accra), ensuring it remains an anointed, welcoming house of prayer for all.
               </p>
             </div>
 
             <div className="card" style={{ background: 'var(--bg-stage)' }}>
-              <h4 style={{ fontSize: '1.05rem', marginBottom: '0.65rem' }}>How Your Partnership Impacts Lives</h4>
+              <h4 style={{ fontSize: '1.05rem', marginBottom: '0.65rem' }}>How Your Giving Impacts Lives</h4>
               <ul className="check-list">
-                <li><CheckCircle2 size={17} style={{ color: 'var(--ok-green)', flexShrink: 0, marginTop: 3 }} /> Powers live weekly online broadcasts across all time zones</li>
-                <li><CheckCircle2 size={17} style={{ color: 'var(--ok-green)', flexShrink: 0, marginTop: 3 }} /> Equips new believers with Foundation School & study materials</li>
-                <li><CheckCircle2 size={17} style={{ color: 'var(--ok-green)', flexShrink: 0, marginTop: 3 }} /> Supports urgent welfare & pastoral assistance across the family</li>
+                <li><CheckCircle2 size={17} style={{ color: 'var(--ok-green)', flexShrink: 0, marginTop: 3 }} /> Powers weekly live broadcasts reaching believers in over 20 nations</li>
+                <li><CheckCircle2 size={17} style={{ color: 'var(--ok-green)', flexShrink: 0, marginTop: 3 }} /> Distributes free Bibles and study materials through school outreach teams</li>
+                <li><CheckCircle2 size={17} style={{ color: 'var(--ok-green)', flexShrink: 0, marginTop: 3 }} /> Funds urgent welfare, compassionate care, and student scholarships</li>
               </ul>
             </div>
           </div>
 
-          {/* Right: Interactive Stewardship & Portal Launch Card */}
+          {/* Right: Interactive Stewardship & Instant Paystack Gateway Card */}
           <div className="card" style={{ borderColor: 'var(--border-gold)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
               <span className="badge badge-gold">
-                <Lock size={12} /> Official Giving Desk
+                <Lock size={12} /> Official Giving Channels
               </span>
-              <span className="badge badge-navy">Portal Verification Finalising</span>
+              <span className="badge badge-navy">Instant Paystack Verified</span>
             </div>
 
             <h3 style={{ fontSize: '1.45rem', marginBottom: '0.45rem' }}>
-              Select Designation & Connect With Stewardship
+              Select Fund &amp; Give Securely Online
             </h3>
             <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1.25rem' }}>
-              Automated card and app checkouts are completing final banking verification for international currencies. Choose your gift purpose below to be notified the moment instant checkout opens—or coordinate directly with our official administration office.
+              Choose your designation below to give directly via the official church Paystack gateway, or register for assistance with our finance team.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.35rem' }}>
@@ -136,43 +173,62 @@ export const GivePage: React.FC = () => {
               })}
             </div>
 
-            {pledgeSaved ? (
-              <div style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: 'var(--ok-green-bg)', color: 'var(--ok-green)' }}>
-                <CheckCircle2 size={24} style={{ marginBottom: '0.4rem' }} />
-                <strong>Thank You for Your Heart to Give!</strong>
-                <p style={{ fontSize: '0.88rem', marginTop: '0.25rem' }}>
-                  You are registered for priority alert as soon as the online giving gateway goes live, and our stewardship team is available at <strong>admin@ephesusgatheringsworldwide.com</strong>.
-                </p>
-              </div>
-            ) : (
-              <form
-                onSubmit={e => {
-                  e.preventDefault();
-                  setPledgeSaved(true);
-                }}
-                className="form-grid"
+            {/* Direct Paystack Action Button for Selected Fund */}
+            <div style={{ marginBottom: '1.35rem' }}>
+              <a
+                href={activeFundObj.paystackUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-gold"
+                style={{ width: '100%', justifyContent: 'center', fontSize: '1rem' }}
               >
-                <div>
-                  <label className="field-label">Full Name <span className="req">*</span></label>
-                  <input required type="text" className="field-input" placeholder="Your name" />
+                <CreditCard size={18} /> Give {activeFundObj.label} via Paystack <ExternalLink size={16} />
+              </a>
+              <span style={{ display: 'block', textAlign: 'center', fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.45rem' }}>
+                Secured by 256-bit SSL · Accepts Visa, Mastercard &amp; Mobile Money (MTN, Telecel, AT)
+              </span>
+            </div>
+
+            <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '1.25rem' }}>
+              <h4 style={{ fontSize: '1.02rem', marginBottom: '0.45rem' }}>Request Banking Details or Assistance</h4>
+              {pledgeSaved ? (
+                <div style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: 'var(--ok-green-bg)', color: 'var(--ok-green)' }}>
+                  <CheckCircle2 size={24} style={{ marginBottom: '0.4rem' }} />
+                  <strong>Thank You for Your Heart to Give!</strong>
+                  <p style={{ fontSize: '0.88rem', marginTop: '0.25rem' }}>
+                    Our stewardship desk has received your note and will assist you at <strong>{CHURCH_INFO.contact.emailAdmin}</strong>.
+                  </p>
                 </div>
-                <div>
-                  <label className="field-label">Email Address <span className="req">*</span></label>
-                  <input required type="email" className="field-input" placeholder="you@example.com" />
-                </div>
-                <div className="form-full" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                  <button type="submit" className="btn btn-gold" style={{ flex: 1 }}>
-                    <Bell size={16} /> Notify Me When Portal Opens
-                  </button>
-                  <a
-                    href="mailto:admin@ephesusgatheringsworldwide.com?subject=Kingdom%20Giving%20Enquiry"
-                    className="btn btn-outline"
-                  >
-                    <Mail size={16} /> Email Finance Desk
-                  </a>
-                </div>
-              </form>
-            )}
+              ) : (
+                <form
+                  onSubmit={e => {
+                    e.preventDefault();
+                    setPledgeSaved(true);
+                  }}
+                  className="form-grid"
+                >
+                  <div>
+                    <label className="field-label">Full Name <span className="req">*</span></label>
+                    <input required type="text" className="field-input" placeholder="Your name" />
+                  </div>
+                  <div>
+                    <label className="field-label">Email Address <span className="req">*</span></label>
+                    <input required type="email" className="field-input" placeholder="you@example.com" />
+                  </div>
+                  <div className="form-full" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                    <button type="submit" className="btn btn-outline" style={{ flex: 1 }}>
+                      <Bell size={16} /> Request Transfer Info
+                    </button>
+                    <a
+                      href={`mailto:${CHURCH_INFO.contact.emailAdmin}?subject=Kingdom%20Giving%20Enquiry`}
+                      className="btn btn-outline"
+                    >
+                      <Mail size={16} /> Email Finance Desk
+                    </a>
+                  </div>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -181,18 +237,18 @@ export const GivePage: React.FC = () => {
       <section className="section section-stage">
         <div className="container">
           <div style={{ marginBottom: '2.25rem' }}>
-            <span className="eyebrow">Channels & Protection</span>
+            <span className="eyebrow">Channels &amp; Protection</span>
             <h2 className="section-title">
-              Ways to Give & <span className="accent-serif">Online Giving Safety</span>
+              Ways to Give &amp; <span className="accent-serif">Online Giving Safety</span>
             </h2>
           </div>
 
           <div className="grid-4" style={{ marginBottom: '2.25rem' }}>
             {[
-              { icon: <CreditCard size={22} />, title: 'Online Portal', desc: 'Secure multi-currency card & digital wallet giving right on this page.' },
-              { icon: <Smartphone size={22} />, title: 'Ephesus Mobile App', desc: 'Integrated giving with full personal receipt history inside your account.' },
-              { icon: <Landmark size={22} />, title: 'Direct Bank Transfer', desc: 'Verified church bank details published exclusively on this official page.' },
-              { icon: <Globe2 size={22} />, title: 'Mobile Money / EFT', desc: 'Convenient regional transfers for members across Africa & the diaspora.' }
+              { icon: <CreditCard size={22} />, title: 'Paystack Gateway', desc: 'Instant card & mobile money payments for tithes, offerings, and seeds.' },
+              { icon: <Globe2 size={22} />, title: 'Partnership Unit', desc: 'Monthly covenants supporting high school outreaches and Bible distribution.' },
+              { icon: <Landmark size={22} />, title: 'Direct Bank Transfer', desc: 'Verified church bank accounts available on request from our finance desk.' },
+              { icon: <Smartphone size={22} />, title: 'Mobile Money', desc: 'Convenient transfers via Ghana MTN, Telecel, and AT MoMo networks.' }
             ].map(ch => (
               <div key={ch.title} className="card">
                 <div className="mega-icon" style={{ marginBottom: '0.85rem' }}>{ch.icon}</div>
@@ -206,7 +262,7 @@ export const GivePage: React.FC = () => {
           <div className="card split-card-spotlight">
             <div>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--ok-green)', fontWeight: 700, marginBottom: '0.5rem' }}>
-                <ShieldCheck size={22} /> Security & Financial Integrity
+                <ShieldCheck size={22} /> Security &amp; Financial Integrity
               </div>
               <h3 style={{ fontSize: '1.45rem', marginBottom: '0.5rem' }}>Five Golden Rules for Safe Giving</h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.94rem' }}>
@@ -215,10 +271,11 @@ export const GivePage: React.FC = () => {
             </div>
 
             <ul className="check-list">
-              <li><HeartHandshake size={17} style={{ color: 'var(--brand-gold)', flexShrink: 0, marginTop: 3 }} /> <strong>Use Official Information Only:</strong> Official details are published solely on ephesusgatheringsworldwide.com.</li>
+              <li><HeartHandshake size={17} style={{ color: 'var(--brand-gold)', flexShrink: 0, marginTop: 3 }} /> <strong>Use Official Channels Only:</strong> Official giving gateways are linked exclusively from ephesusgatheringsworldwide.org.</li>
               <li><HeartHandshake size={17} style={{ color: 'var(--brand-gold)', flexShrink: 0, marginTop: 3 }} /> <strong>Double-Check Account Names:</strong> Always verify Ephesus Gatherings Worldwide before authorising any transfer.</li>
-              <li><HeartHandshake size={17} style={{ color: 'var(--brand-gold)', flexShrink: 0, marginTop: 3 }} /> <strong>Include Clear References:</strong> Label gifts (e.g., Tithe, Offering, Missions) for accurate stewardship records.</li>
-              <li><HeartHandshake size={17} style={{ color: 'var(--brand-gold)', flexShrink: 0, marginTop: 3 }} /> <strong>Be Alert to Impersonators:</strong> Pastors and coordinators will never solicit private gifts via social DMs.</li>
+              <li><HeartHandshake size={17} style={{ color: 'var(--brand-gold)', flexShrink: 0, marginTop: 3 }} /> <strong>Include Clear References:</strong> Label gifts (e.g., Tithe, Offering, Seed) for accurate stewardship records.</li>
+              <li><HeartHandshake size={17} style={{ color: 'var(--brand-gold)', flexShrink: 0, marginTop: 3 }} /> <strong>Be Alert to Impersonators:</strong> Pastors and coordinators will never solicit private gifts via social media DMs.</li>
+              <li><HeartHandshake size={17} style={{ color: 'var(--brand-gold)', flexShrink: 0, marginTop: 3 }} /> <strong>Receipts &amp; Confirmation:</strong> Receive automated receipts via Paystack and personal pastoral acknowledgment upon request.</li>
             </ul>
           </div>
         </div>

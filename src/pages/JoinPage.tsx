@@ -23,27 +23,27 @@ export const JoinPage: React.FC = () => {
         <div className="container page-hero-inner">
           <div>
             <span className="eyebrow eyebrow-light">Become Part of Our Global Family</span>
-            <h1>Begin Your Journey With EGW Diaspora</h1>
+            <h1>Begin Your Journey With Ephesus Gatherings Worldwide</h1>
             <p className="lead">
-              Whether Ephesus Gatherings Worldwide will be your primary spiritual home as a <strong>Member</strong> or a stream where you occasionally fellowship as an <strong>Affiliate</strong>, there is a place prepared for you.
+              Whether Ephesus Gatherings Worldwide will be your primary spiritual home as a <strong>Member</strong> (in-person at The Son Place or online worldwide) or a stream where you occasionally fellowship as an <strong>Affiliate</strong>, there is a place prepared for you.
             </p>
             <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--gold-200)' }}>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
                 <Clock size={16} /> Takes 2 minutes
               </span>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                <UserCheck size={16} /> Pastoral reply within 48 hours
+                <UserCheck size={16} /> Pastoral welcome within 48 hours
               </span>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                <Globe2 size={16} /> Canada · UK · USA · Germany · Worldwide
+                <Globe2 size={16} /> Accra, Ghana &amp; Global Family Worldwide
               </span>
             </div>
           </div>
 
           <div className="vision-media-stack" style={{ borderColor: 'rgba(212,175,55,0.4)' }}>
             <img
-              src="https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Diaspora-photos-ITF-Camp-2026-2-scaled.jpg"
-              alt="Flag Night with Prophet Edem Julius-Cudjoe at ITF Camp 2026"
+              src="https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-41.jpg"
+              alt="Congregation and fellowship at Ephesus Gatherings Worldwide"
             />
           </div>
         </div>
@@ -128,9 +128,9 @@ export const JoinPage: React.FC = () => {
           <div className="grid-4">
             {[
               { step: '01', title: 'Tell Us About You', desc: 'Complete the short form below from any phone or computer.' },
-              { step: '02', title: '48-Hour Review', desc: 'Our Diaspora coordinators review your registration promptly.' },
+              { step: '02', title: 'Pastoral Review', desc: 'Our pastoral team reviews your registration promptly.' },
               { step: '03', title: 'Personal Welcome', desc: 'A coordinator reaches out by email or WhatsApp to greet you.' },
-              { step: '04', title: 'Connected in Family', desc: 'Step smoothly into weekly worship, prayer, and community.' }
+              { step: '04', title: 'Connected in Family', desc: 'Step smoothly into weekly worship, discipleship, and community.' }
             ].map(item => (
               <div key={item.step} className="card">
                 <div className="faith-num" style={{ marginBottom: '0.5rem' }}>{item.step}</div>
@@ -147,7 +147,7 @@ export const JoinPage: React.FC = () => {
         <div className="container-narrow">
           <div className="card">
             <div style={{ marginBottom: '1.5rem' }}>
-              <span className="eyebrow">Step 2 · Diaspora Onboarding</span>
+              <span className="eyebrow">Step 2 · Member &amp; Affiliate Registration</span>
               <h2 style={{ fontSize: '1.75rem', marginBottom: '0.35rem' }}>
                 Tell Us a Little About You ({pathType === 'member' ? 'Member' : 'Affiliate'})
               </h2>
@@ -161,7 +161,7 @@ export const JoinPage: React.FC = () => {
                 <CheckCircle2 size={46} style={{ color: 'var(--ok-green)', marginInline: 'auto', marginBottom: '0.75rem' }} />
                 <h3 style={{ fontSize: '1.5rem', marginBottom: '0.4rem' }}>Thank You for Reaching Out!</h3>
                 <p style={{ color: 'var(--text-secondary)', maxWidth: 480, marginInline: 'auto', marginBottom: '1.25rem' }}>
-                  Your registration as a Diaspora <strong>{pathType === 'member' ? 'Member' : 'Affiliate'}</strong> is with our leadership team. Expect a warm personal welcome within 48 hours!
+                  Your registration as an EGW <strong>{pathType === 'member' ? 'Member' : 'Affiliate'}</strong> is with our pastoral team. Expect a warm personal welcome within 48 hours!
                 </p>
                 <button type="button" className="btn btn-outline btn-sm" onClick={() => setSubmitted(false)}>
                   Update Another Record

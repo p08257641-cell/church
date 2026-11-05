@@ -47,7 +47,7 @@ export const HomePage: React.FC = () => {
   const featuredTestimony = TESTIMONIES_DATA[0];
   const worshipTrack = MEDIA_LIBRARY[0]; // By My Side (Live)
   const campClip = MEDIA_LIBRARY[3]; // ITFC 2026 Clip
-  const sundayTime = formatGMTServiceInLocal(0, 12, 30);
+  const sundayTime = formatGMTServiceInLocal(0, 15, 0);
 
   const handleHeroReminder = () => {
     downloadICS({
@@ -176,10 +176,10 @@ export const HomePage: React.FC = () => {
 
           <div className="hero-ledger-cell">
             <div>
-              <div className="ledger-meta">Main Weekly Worship</div>
-              <div className="ledger-title">Sunday Online Service</div>
+              <div className="ledger-meta">Main Sanctuary Worship</div>
+              <div className="ledger-title">Sunday Service &amp; Global Broadcast</div>
               <div className="ledger-sub">
-                Every Sunday · {sundayTime.isSameAsGMT ? sundayTime.gmt : `${sundayTime.localTime} ${sundayTime.shortTz} (${sundayTime.gmt})`}
+                Every Sunday · 15:00 GMT · In-Person &amp; Online ({sundayTime.isSameAsGMT ? sundayTime.gmt : `${sundayTime.localTime} ${sundayTime.shortTz}`})
               </div>
             </div>
             <Link to="/events" className="ledger-link">
@@ -189,14 +189,14 @@ export const HomePage: React.FC = () => {
 
           <div className="hero-ledger-cell">
             <div>
-              <div className="ledger-meta">Accra &amp; Global Diaspora</div>
-              <div className="ledger-title">Walk With Our Family</div>
+              <div className="ledger-meta">Education &amp; Training Unit</div>
+              <div className="ledger-title">5 Specialized Schools</div>
               <div className="ledger-sub">
-                Join as a primary Member or stay connected alongside your home church as an Affiliate.
+                From Foundation School to School of the Prophets—equipping God’s overcomers.
               </div>
             </div>
-            <Link to="/join" className="ledger-link">
-              Member &amp; Affiliate paths <ArrowRight size={14} />
+            <Link to="/about#schools" className="ledger-link">
+              Explore the 5 Schools <ArrowRight size={14} />
             </Link>
           </div>
         </div>
@@ -305,7 +305,7 @@ export const HomePage: React.FC = () => {
               “Ephesus Gatherings Worldwide serves as a training centre for equipping God’s overcomers to take their place on earth for the Lord Jesus Christ.”
             </blockquote>
             <p style={{ color: 'var(--text-secondary)' }}>
-              Serving believers across Canada, the United Kingdom, the United States, Germany, and around the world, EGW Diaspora connects you to vibrant worship, authentic pastoral care, and uncompromised grace-filled doctrine.
+              Located at Mikaddo Plaza, Labone Junction, Accra, Ghana, Ephesus Gatherings Worldwide hosts dynamic worship services, offers practical discipleship programs, and connects believers across continents through Spirit-filled worship and sound biblical training.
             </p>
 
             <div className="pillar-list">
@@ -342,8 +342,8 @@ export const HomePage: React.FC = () => {
           <div>
             <div className="vision-media-stack">
               <img
-                src="https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/04/Copy-of-ITF-2025-2-2-1-scaled.jpg"
-                alt="EGW Family gathered with Founder Prophet Edem Julius-Cudjoe at ITF Camp"
+                src="https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/Eph-62.jpg"
+                alt="Worship and fellowship at Ephesus Gatherings Worldwide"
               />
               <div className="vision-play-overlay">
                 <div style={{ maxWidth: '72%' }}>
@@ -632,7 +632,7 @@ export const HomePage: React.FC = () => {
                 One Global Family <span className="accent-serif">In Worship & Fellowship</span>
               </h2>
               <p className="section-lead">
-                Click any photograph from Ignite The Fire Camp and Diaspora gatherings to view in full screen.
+                Click any photograph from our sanctuary services, Ignite The Fire Camp, and global outreach missions to view in full screen.
               </p>
             </div>
             <Link to="/join" className="btn btn-primary">

@@ -121,7 +121,7 @@ export const LANGUAGES: LanguageOption[] = [
     nav: {
       home: 'Shĩa',
       about: 'Wɔ He Sane',
-      online: ' Kpee yɛ Intanɛt Nɔ',
+      online: 'Kpee yɛ Intanɛt Nɔ',
       events: 'Nifeemɔi',
       testimonies: 'Odasei',
       readings: 'Daa Gbi Kanemɔ',
@@ -148,79 +148,79 @@ export const LANGUAGES: LanguageOption[] = [
       testimonies: 'Àmà',
       readings: 'Ọgụgụ Kwa Ụbọchị',
       salvation: 'Nzọpụta',
-      give: 'Nye Onyinye',
-      join: 'Sonyere Anyị',
+      give: 'Nye',
+      join: 'Soro Anyị',
       resources: 'Ngwaọrụ',
       contact: 'Kpọtụrụ Anyị',
       watchLive: 'onyonyo Ndụ'
     },
-    heroTagline: 'Ịkwadebe Ndị Mmeri Chineke Gafe Mba Niile'
+    heroTagline: 'Ikwadebe Ndị Na-emeri nke Chineke n’Ofesi'
   },
   {
     code: 'yo',
     label: 'Yorùbá',
     englishName: 'Yoruba',
-    welcomeGreeting: 'Ẹ káàbọ̀ sí Ìdílé Wa',
+    welcomeGreeting: 'Ẹ Káàbọ̀ sí Idile Wa',
     flagCode: 'ng',
     nav: {
       home: 'Ilé',
       about: 'Nípa Wa',
-      online: 'Ìsìn Ojú-òpó',
-      events: 'Àwọn Ètò',
+      online: 'Ìsìn Lórí Íńtánẹ́ẹ̀tì',
+      events: 'Àwọn Ìṣẹ̀lẹ̀',
       testimonies: 'Ẹ̀rí',
-      readings: 'Ìkàwé Ojoojúmọ́',
+      readings: 'Kíkà Bíbélì Ojoojúmọ́',
       salvation: 'Ìgbàlà',
-      give: 'Ọrẹ',
+      give: 'Fífúnni',
       join: 'Darapọ̀ Mọ́ Wa',
       resources: 'Àwọn Ohun Èlò',
       contact: 'Kàn Sí Wa',
       watchLive: 'Wò Ó Nígbà Yìí'
     },
-    heroTagline: 'Ṣíṣe Àgbékalẹ̀ Àwọn Aṣẹ́gun Ọlọ́run Kárí Ayé'
+    heroTagline: 'Pípèsè Àwọn Aṣẹ́gun Ọlọ́run Káàkiri Àwọn Orílẹ̀-èdè'
   },
   {
     code: 'sw',
     label: 'Kiswahili',
     englishName: 'Swahili',
-    welcomeGreeting: 'Karibu Kwenye Familia Yetu',
-    flagCode: 'tz',
+    welcomeGreeting: 'Karibu Katika Familia',
+    flagCode: 'ke',
     nav: {
       home: 'Nyumbani',
-      about: 'Kuhusu Sisi',
+      about: 'Kutuhusu',
       online: 'Ibada Mtandaoni',
       events: 'Matukio',
-      testimonies: 'Shuhuda',
+      testimonies: 'Ushuhuda',
       readings: 'Masomo ya Kila Siku',
       salvation: 'Wokovu',
-      give: 'Toa Sadaka',
+      give: 'Toa',
       join: 'Jiunge Nasi',
       resources: 'Nyenzo',
       contact: 'Wasiliana',
       watchLive: 'Tazama Mubashara'
     },
-    heroTagline: 'Kuwaandaa Washindi wa Mungu Katika Mataifa Yote'
+    heroTagline: 'Kuwavuvia Washindi wa Mungu Katika Mataifa Yote'
   },
   {
     code: 'zh',
     label: '中文',
-    englishName: 'Mandarin Chinese',
-    welcomeGreeting: '欢迎来到以弗所大家庭',
+    englishName: 'Simplified Chinese',
+    welcomeGreeting: '欢迎加入神的家',
     flagCode: 'cn',
     nav: {
       home: '首页',
       about: '关于我们',
-      online: '线上崇拜',
-      events: '聚会活动',
-      testimonies: '生命见证',
+      online: '线上主日',
+      events: '事工活动',
+      testimonies: '见证如云',
       readings: '每日读经',
-      salvation: '救恩之道',
+      salvation: '救恩确据',
       give: '奉献支持',
-      join: '加入我们',
-      resources: '事工资源',
+      join: '加入教会',
+      resources: '属灵资源',
       contact: '联系我们',
-      watchLive: '观看直播'
+      watchLive: '进入直播'
     },
-    heroTagline: '在万国中装备神得胜的子民'
+    heroTagline: '在列国装备神国得胜者'
   }
 ];
 
@@ -238,6 +238,54 @@ export const FLAG_URLS: Record<string, string> = {
   cn: 'https://ephesusgatheringsworldwide.com/wp-content/themes/egw-diaspora-theme/assets/img/flags/cn.svg'
 };
 
+export const CHURCH_INFO = {
+  name: 'Ephesus Gatherings Worldwide',
+  canonicalUrl: 'https://ephesusgatheringsworldwide.org/',
+  headquarters: {
+    name: 'The Son Place (Grace Grounds)',
+    venue: 'Mikaddo Plaza, Labone Junction',
+    city: 'Accra',
+    country: 'Ghana',
+    fullAddress: 'The Son Place, Mikaddo Plaza, Labone Junction, Accra, Ghana',
+    serviceTimes: 'Every Sunday at 3:00 PM GMT (15:00 HRS GMT)'
+  },
+  contact: {
+    phoneGhana: '+233 20 194 4006',
+    phoneInternational: '+1 (780) 953-7153',
+    emailAdmin: 'admin@ephesusgatheringsworldwide.org',
+    emailInfo: 'info@ephesusgatheringsworldwide.org',
+    emailWelfare: 'welfare@ephesusgatheringsworldwide.org'
+  },
+  social: {
+    facebook: 'https://web.facebook.com/people/Ephesus-Gatherings/61558894460389/',
+    instagram: 'https://www.instagram.com/ephesusgatheringsworldwide/',
+    mixlr: 'https://ephesus-radio.mixlr.com/events/4361028',
+    youtube: 'https://www.youtube.com/@EphesusGatheringsWorldwide',
+    spotify: 'https://open.spotify.com/show/76wjFskbcoaJiCzwPTc7yG',
+    whatsapp: 'https://www.whatsapp.com/channel/0029VaAKoAFDZ4LUxGNPze0t'
+  },
+  outreachStats: {
+    schoolsReached: '6+',
+    peopleReached: '5,500+',
+    soulsWon: 'Thousands',
+    scholarshipsAwarded: '1,250+'
+  },
+  giving: {
+    tithes: 'https://paystack.shop/pay/ephesustithes',
+    offerings: 'https://paystack.shop/pay/ephesusofferings',
+    seeds: 'https://paystack.shop/pay/ephesusseeds',
+    seedToProphet: 'https://paystack.shop/pay/forprophetedem',
+    partnerForm: 'https://forms.gle/yZWzABAiM58dmPqH6'
+  },
+  schools: [
+    { id: 'foundation', name: 'Foundation School', level: 'Level 1', desc: 'Establishing new believers in the foundational doctrines of Christ, righteousness, and grace.' },
+    { id: 'discipleship', name: 'School of Discipleship', level: 'Level 2', desc: 'Practical spiritual growth, cruciform character, and holy living through the Spirit.' },
+    { id: 'word', name: 'School of the Word', level: 'Level 3', desc: 'Deep-dive biblical hermeneutics, Christ-centred exposition, and covenant theology.' },
+    { id: 'prophets', name: 'School of the Prophets', level: 'Level 4', desc: 'Discerning the voice of God, prophetic accuracy, intercession, and ministering under unction.' },
+    { id: 'faith', name: 'School of Faith', level: 'Level 5', desc: 'Walking in prevailing faith, Kingdom dominion, divine healing, and moving spiritual mountains.' }
+  ]
+};
+
 export interface HeroSlide {
   id: string;
   eyebrow: string;
@@ -253,83 +301,84 @@ export interface HeroSlide {
 export const HERO_SLIDES: HeroSlide[] = [
   {
     id: 'overcomers',
-    eyebrow: 'Ephesus Gatherings Worldwide · Diaspora',
-    title: 'Equipping God’s overcomers to take their place for Christ.',
+    eyebrow: 'Ephesus Gatherings Worldwide · Welcome Home',
+    title: 'Equipping God’s overcomers to fulfill divine purpose.',
     description:
-      'Rooted in the Lordship of Jesus, the power of the Holy Spirit, and the authority of Scripture—uniting believers across Canada, the UK, the USA, Germany, Ghana, and the nations.',
+      'A Christ-centred training centre dedicated to establishing believers in their faith through Spirit-filled worship, sound biblical teaching, divine healing, and practical ministry training.',
     image:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Lead-Coordinator-leading-prayers-at-ITFC-2026-2-1920x800.jpg',
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-4243-scaled-1.jpg',
     imagePosition: 'center 25%',
-    primaryCta: { label: 'Join Online Service', to: '/online-service' },
-    secondaryCta: { label: 'New Here? Start Here', to: '/about#welcome' },
+    primaryCta: { label: 'Join Online Broadcast', to: '/online-service' },
+    secondaryCta: { label: 'New to Ephesus? Start Here', to: '/about#welcome' },
     scripture: 'Revelation 2:7 — To him who overcomes I will give to eat from the tree of life.'
   },
   {
     id: 'sunday-worship',
-    eyebrow: 'Every Sunday · 12:30 GMT Worldwide',
-    title: 'One church family worshipping live across the nations.',
+    eyebrow: 'Every Sunday · 15:00 GMT · Mikaddo Plaza, Labone',
+    title: 'Worship with us in person or join live globally.',
     description:
-      'Experience Spirit-filled worship, corporate intercession, and sound biblical teaching from wherever you live—every Sunday, Wednesday, and Saturday.',
+      'Experience dynamic worship, apostolic teaching from Prophet Edem Julius-Cudjoe, and fervent intercession at The Son Place in Accra or via worldwide live streaming.',
     image:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/04/Copy-of-ITF-2025-2-2-1-scaled.jpg',
-    imagePosition: 'center 32%',
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/Eph-62.jpg',
+    imagePosition: 'center 30%',
     primaryCta: { label: 'Watch Live Broadcast', to: '/online-service' },
     secondaryCta: { label: 'Service Schedule', to: '/events' },
     scripture: 'Hebrews 10:25 — Not forsaking the assembling of ourselves together.'
   },
   {
-    id: 'night-with-the-king',
-    eyebrow: 'Crossover Service · Thursday 31 December · 12:30 GMT',
-    title: 'Night with the King 2026.',
+    id: 'training-schools',
+    eyebrow: 'Education & Training Unit · 5 Specialized Schools',
+    title: 'Grow from biblical foundations to ministerial authority.',
     description:
-      'Join Prophet Edem Julius-Cudjoe and guest minister Rev. Dr. George Wilfred-Arthur as the global Ephesus family crosses into a new year in worship and prophetic prayer.',
+      'Enroll in the Foundation School, School of Discipleship, School of the Word, School of the Prophets, and School of Faith designed to raise mature overcomers in Christ.',
     image:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Christmas-Eve-Prophetic-Service-with-Prophet-Edem-Julius-Cudjoe-20241224_131825-Meeting-Recording-00.11.10.763.jpeg',
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2024/06/SOFC@21-162-1-1024x683.jpg',
     imagePosition: 'center 20%',
-    primaryCta: { label: 'View Event Details', to: '/events' },
-    secondaryCta: { label: 'Send a Prayer Request', to: '/contact' },
-    scripture: 'Psalm 65:11 — You crown the year with Your goodness.'
+    primaryCta: { label: 'Explore Training Programs', to: '/about#schools' },
+    secondaryCta: { label: 'Join as Member or Student', to: '/join' },
+    scripture: '2 Timothy 2:15 — Study to shew thyself approved unto God, a workman that needeth not to be ashamed.'
   },
   {
-    id: 'global-family',
-    eyebrow: 'Mother Church in Accra & Global Diaspora',
-    title: 'Grounded in grace. Established in His finished work.',
+    id: 'outreach-partnership',
+    eyebrow: 'Outreach & Partnership · Touching Lives Globally',
+    title: 'Over 5,500 people reached and thousands won for Christ.',
     description:
-      'Whether EGW becomes your primary church home as a Member or a spiritual family you walk alongside as an Affiliate, you are warmly welcome here.',
+      'Through school outreaches, Bible donations, student scholarships, and benevolence, Ephesus Gatherings Worldwide is taking the glorious Gospel of grace to the ends of the earth.',
     image:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Copy-of-ITF-2025-54-1-scaled.jpg',
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2024/12/The-Fathers-Blessing-2024-01.jpg',
     imagePosition: 'center 28%',
-    primaryCta: { label: 'Become Part of the Family', to: '/join' },
-    secondaryCta: { label: 'Read Testimonies', to: '/testimonies' },
-    scripture: 'Hebrews 10:10 — Sanctified through the offering of the body of Jesus Christ once for all.'
+    primaryCta: { label: 'Support the Mission', to: '/give' },
+    secondaryCta: { label: 'Read Good Reports', to: '/testimonies' },
+    scripture: 'Mark 16:15 — Go ye into all the world, and preach the gospel to every creature.'
   }
 ];
 
 export const FOUNDER_INFO = {
   name: 'Prophet Edem Julius-Cudjoe',
-  role: 'Founder & Lead Convener',
-  ministry: 'Ephesus Gatherings Worldwide & Intimacy Fire Ministries',
+  role: 'Visionary & Lead Convener',
+  ministry: 'The Ephesus Gatherings Worldwide',
   portraitPrimary:
-    'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Prophet-Edem-Julius-Cudjo-About-Page.png',
+    'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/06/cropped-LOGO_C1.png',
   portraitSquare:
-    'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Prophet-Edem-Julius-Cudjoe-1024x1024.jpg',
+    'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-41.jpg',
   portraitWithWife:
     'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/04/Prophet-Mrs.-Julius-Cudjoe-747x1024.png',
   shortBio:
     'Prophet Edem Julius-Cudjoe is a devoted bondservant of the Lord Jesus Christ, a passionate revivalist, and a prophet with an apostolic mandate to strengthen the body of Christ by establishing the Church in Him and His finished work.',
   extendedBio:
-    'As the visionary and Lead Convener of Ephesus Gatherings Worldwide—headquartered at The Son Place, Labone, Accra, with a thriving global Diaspora family—his ministry is marked by deep intimacy with the Holy Spirit, Christ-centred revelation, prophetic accuracy, and a burning heart to see believers raised as mature overcomers in every sphere of life.',
+    'As the visionary and Lead Convener of The Ephesus Gatherings Worldwide—headquartered at The Son Place, Mikaddo Plaza, Labone Junction, Accra, Ghana, with a global family of believers—his ministry is marked by deep intimacy with the Holy Spirit, Christ-centred revelation, prophetic accuracy, divine healing, and a burning heart to see believers raised as mature overcomers in every sphere of life.',
   welcomeLetter: [
     'We want you to know that you are God’s beloved, and that He has great plans and good things in store for you! He wants you blessed wherever you are and in whatever you put your hands to.',
     'You can look forward to and enjoy all the blessings of being a child of God because of what Jesus has done for you at the cross. By His one perfect sacrifice, He has paid the price for all your sins — past, present and future (Hebrews 10:10). So God will never again condemn or judge you. And today, He is totally for you and always with you.',
     'May you continue to receive fresh revelations of God’s love for you. It is our prayer that you will grow in your knowledge of Jesus and His loveliness, and find rest in His finished work for you, as you feed on His Word.'
   ],
   podcasts: {
-    title: 'The Emergence Podcast',
+    title: 'The Emergence Podcast & Audio Streams',
     apple: 'https://podcasts.apple.com/us/podcast/the-emergence-podcast-intimacy-fire-ministries/id1748969233',
     spotify: 'https://open.spotify.com/show/76wjFskbcoaJiCzwPTc7yG',
+    mixlr: 'https://ephesus-radio.mixlr.com/events/4361028',
     youtube: 'https://www.youtube.com/@officialprophetedem',
-    instagram: 'https://www.instagram.com/officialprophetedem/'
+    instagram: 'https://www.instagram.com/ephesusgatheringsworldwide/'
   }
 };
 
@@ -344,17 +393,17 @@ export interface LeaderMember {
   focus: string;
 }
 
-export const DIASPORA_LEADERS: LeaderMember[] = [
+export const MINISTRY_LEADERS: LeaderMember[] = [
   {
     id: 'ebenezer-dickson',
     name: 'Ebenezer Dickson',
     role: 'Lead Coordinator',
     country: 'United Kingdom',
     flagCode: 'gb',
-    email: 'admin@ephesusgatheringsworldwide.com',
+    email: 'admin@ephesusgatheringsworldwide.org',
     image:
       'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/04/Lead-Convener-Ebenezer_edited-868x1024.jpg',
-    focus: 'Provides overall pastoral coordination, prayer leadership, and strategic alignment with the Mother Church.'
+    focus: 'Provides overall pastoral coordination, prayer leadership, and strategic alignment with the Mother Church sanctuary.'
   },
   {
     id: 'dennis-pinkrah',
@@ -362,10 +411,10 @@ export const DIASPORA_LEADERS: LeaderMember[] = [
     role: 'Assistant Lead Coordinator',
     country: 'Canada',
     flagCode: 'ca',
-    email: 'admin@ephesusgatheringsworldwide.com',
+    email: 'admin@ephesusgatheringsworldwide.org',
     image:
       'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/04/Assistant-Lead-Convener-Dennis_edited_edited-770x1024.jpg',
-    focus: 'Supports global operations, diaspora administration, and North American community growth.'
+    focus: 'Supports global operations, ministry administration, and North American community growth.'
   },
   {
     id: 'legbel-ekpata',
@@ -373,7 +422,7 @@ export const DIASPORA_LEADERS: LeaderMember[] = [
     role: 'Welfare Coordinator',
     country: 'United States',
     flagCode: 'us',
-    email: 'welfare@ephesusgatheringsworldwide.com',
+    email: 'welfare@ephesusgatheringsworldwide.org',
     image:
       'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/04/Welfare-Coordinator-Legbel_edited-789x1024.jpg',
     focus: 'Leads member care, pastoral follow-up, family support, and community well-being initiatives.'
@@ -384,7 +433,7 @@ export const DIASPORA_LEADERS: LeaderMember[] = [
     role: 'Welfare Coordinator',
     country: 'United States',
     flagCode: 'us',
-    email: 'welfare@ephesusgatheringsworldwide.com',
+    email: 'welfare@ephesusgatheringsworldwide.org',
     image:
       'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/04/Welfare-Coordinator-Evelyn-763x1024.jpeg',
     focus: 'Walks alongside newcomers, families, and members to ensure nobody journeys alone.'
@@ -395,10 +444,10 @@ export const DIASPORA_LEADERS: LeaderMember[] = [
     role: 'Service Coordinator',
     country: 'United States',
     flagCode: 'us',
-    email: 'service@ephesusgatheringsworldwide.com',
+    email: 'service@ephesusgatheringsworldwide.org',
     image:
       'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Mary-Otu-Okley-edited-1024x1024.jpg',
-    focus: 'Coordinates weekly online worship flow, liturgical excellence, and volunteer service teams.'
+    focus: 'Coordinates weekly worship flow, liturgical excellence, and broadcast volunteer teams.'
   },
   {
     id: 'karen-danso',
@@ -406,7 +455,7 @@ export const DIASPORA_LEADERS: LeaderMember[] = [
     role: 'Service Coordinator',
     country: 'United Kingdom',
     flagCode: 'gb',
-    email: 'service@ephesusgatheringsworldwide.com',
+    email: 'service@ephesusgatheringsworldwide.org',
     image:
       'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Karen-Danso-1-768x1024.jpg',
     focus: 'Stewards online service hospitality, intercession schedules, and special programme execution.'
@@ -417,117 +466,120 @@ export const DIASPORA_LEADERS: LeaderMember[] = [
     role: 'Education & Training Coordinator',
     country: 'Germany',
     flagCode: 'de',
-    email: 'academy@ephesusgatheringsworldwide.com',
+    email: 'academy@ephesusgatheringsworldwide.org',
     image:
       'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Mark-Boateng-1024x1024.jpg',
-    focus: 'Oversees Foundation School, discipleship tracks, biblical study plans, and Ephesus Academy.'
+    focus: 'Oversees Foundation School, discipleship tracks, biblical study plans, and the Education & Training Unit.'
   }
 ];
+
+// Backwards-compatible alias for existing imports
+export const DIASPORA_LEADERS = MINISTRY_LEADERS;
 
 export interface ArticleOfFaith {
   number: string;
   title: string;
   statement: string;
-  scriptures: string[];
   pillar: 'Godhead & Word' | 'Redemption & Spirit' | 'Ordinances & Life' | 'Kingdom & Mission';
+  scriptures: string[];
 }
 
 export const ARTICLES_OF_FAITH: ArticleOfFaith[] = [
   {
     number: '01',
-    title: 'The Blessed God',
+    title: 'The Scriptures',
+    pillar: 'Godhead & Word',
     statement:
-      'We believe in the existence of the Triune God, Elohim, who is the creator of all existence. Elohim, the plural of Eloha, indicates the triunity of the one true God. They are in majesty coequal and in essence coeternal: the Father, the Son and the Holy Spirit, who are one in essence, in nature and in attributes.',
-    scriptures: ['Genesis 1:1–26', 'Deuteronomy 6:4', 'Matthew 28:19', '2 Corinthians 13:14'],
-    pillar: 'Godhead & Word'
+      'We believe the Holy Bible is the inspired, infallible, and authoritative Word of God, given as the supreme and final standard of faith, life, and doctrine.',
+    scriptures: ['2 Timothy 3:16–17', '2 Peter 1:20–21', 'Psalm 119:105']
   },
   {
     number: '02',
-    title: 'The Lordship of Jesus Christ',
+    title: 'The One True God',
+    pillar: 'Godhead & Word',
     statement:
-      'For all have sinned and fallen short of the glory of God. God sent His Son, in the fullness of time, to save the world from destruction. We believe in the Lordship of Jesus Christ, by which means man is saved. The Incarnation, Death, Resurrection, Ascension and Glorification of our Lord is the means by which redemption was made available for mankind.',
-    scriptures: ['Romans 3:23', 'Galatians 4:4–5', 'Philippians 2:6–11', 'Acts 4:12'],
-    pillar: 'Redemption & Spirit'
+      'We believe in one God, eternally existent in three co-equal persons: the Father, the Son, and the Holy Spirit.',
+    scriptures: ['Deuteronomy 6:4', 'Matthew 28:19', '2 Corinthians 13:14']
   },
   {
     number: '03',
-    title: 'The Person and Work of the Holy Spirit',
+    title: 'The Lord Jesus Christ',
+    pillar: 'Godhead & Word',
     statement:
-      'We believe that the Holy Spirit is a person, coequal and coeternal in the Godhead. He is the present Paraclete and Administrator of the Godhead on earth today. He empowers, gifts and helps the believer to live a life consistent with the lifestyle of our Lord Jesus Christ.',
-    scriptures: ['John 14:16–17', 'John 16:13–14', 'Acts 1:8', '1 Corinthians 12:4–11'],
-    pillar: 'Redemption & Spirit'
+      'We believe in the virgin birth, sinless life, substitutionary atoning death, bodily resurrection, ascension to the Father’s right hand, and visible return of our Lord Jesus Christ.',
+    scriptures: ['John 1:1–14', '1 Corinthians 15:3–4', 'Hebrews 1:1–3']
   },
   {
     number: '04',
-    title: 'The Written Word',
+    title: 'Salvation by Grace',
+    pillar: 'Redemption & Spirit',
     statement:
-      'We believe in the canon of the Written Word of God (the Bible), which captures the Living Word of God. All Scripture is given by inspiration of God and is profitable for doctrine, reproof, correction and instruction in righteousness.',
-    scriptures: ['2 Timothy 3:16–17', '2 Peter 1:20–21', 'Hebrews 4:12', 'Psalm 119:105'],
-    pillar: 'Godhead & Word'
+      'We believe that salvation is received solely by grace through faith in the finished work of Jesus Christ, completely apart from human merit or law-keeping.',
+    scriptures: ['Ephesians 2:8–9', 'Romans 3:24–26', 'Titus 3:5']
   },
   {
     number: '05',
-    title: 'Doctrine of Salvation',
+    title: 'The Holy Spirit & Power',
+    pillar: 'Redemption & Spirit',
     statement:
-      'The wages of sin is death, and the gift of God is eternal life. We believe all people have to believe in the Lord Jesus Christ to be saved. Salvation is the gift of God by grace through faith in the Lord Jesus Christ, not of works, lest anyone should boast.',
-    scriptures: ['Romans 6:23', 'Ephesians 2:8–9', 'Romans 10:9–10', 'Titus 3:5'],
-    pillar: 'Redemption & Spirit'
+      'We believe in the baptism of the Holy Spirit with evidence of speaking in tongues, the active manifestation of spiritual gifts, and His indwelling power for victorious Christian living.',
+    scriptures: ['Acts 1:8', 'Acts 2:1–4', '1 Corinthians 12:4–11']
   },
   {
     number: '06',
-    title: 'The Holy Communion',
+    title: 'Divine Healing & Health',
+    pillar: 'Redemption & Spirit',
     statement:
-      'On the night Jesus was betrayed He gave us the Last Supper as the means by which we should remember Him. We believe that the Holy Communion should be partaken of as often as we meet as believers, to remember the ultimate sacrifice of our Lord.',
-    scriptures: ['1 Corinthians 11:23–26', 'Luke 22:19–20', 'Acts 2:42'],
-    pillar: 'Ordinances & Life'
+      'We believe that deliverance from sickness is provided in the atonement of Jesus Christ and is the covenant privilege of every believer today.',
+    scriptures: ['Isaiah 53:4–5', 'Matthew 8:16–17', '1 Peter 2:24']
   },
   {
     number: '07',
-    title: 'Divine Health and Healing',
+    title: 'The New Creation & Righteousness',
+    pillar: 'Redemption & Spirit',
     statement:
-      'The fall of man brought a fracture in the quality of life we live, characterised by weakness, sickness and death. The belief in divine healing and health is primal and a clear indication of the foretaste of the heavenly life. God uses people, and sometimes heals through medicine.',
-    scriptures: ['Isaiah 53:4–5', '1 Peter 2:24', '3 John 1:2', 'Matthew 8:16–17'],
-    pillar: 'Ordinances & Life'
+      'We believe that anyone who is in Christ is a new creation, made the righteousness of God in Him, permanently justified, sanctified, and perfected forever.',
+    scriptures: ['2 Corinthians 5:17 & 21', 'Romans 5:17', 'Hebrews 10:14']
   },
   {
     number: '08',
-    title: 'Tithes and Offerings',
+    title: 'Water Baptism & The Lord’s Supper',
+    pillar: 'Ordinances & Life',
     statement:
-      'For God so loved the world that He gave His only begotten Son. We believe in the Kingdom’s economic keys of giving, which include tithes, alms, first fruits and free-will offerings, by which God releases His blessings upon His children.',
-    scriptures: ['John 3:16', 'Malachi 3:10', '2 Corinthians 9:6–8', 'Proverbs 3:9–10'],
-    pillar: 'Kingdom & Mission'
+      'We observe water baptism by immersion as an outward declaration of our union with Christ, and the Lord’s Supper as a joyful celebration of His body and blood.',
+    scriptures: ['Romans 6:3–4', '1 Corinthians 11:23–26', 'Matthew 28:19']
   },
   {
     number: '09',
-    title: 'Fasting and Prayers',
+    title: 'The Local & Universal Church',
+    pillar: 'Ordinances & Life',
     statement:
-      'The disciplines of the believer by which the flesh is subdued are fasting and prayers. We believe in the efficacy of fasting and prayers as a means of drawing closer to God, seeking His face and experiencing breakthroughs.',
-    scriptures: ['Matthew 6:16–18', 'Isaiah 58:6–9', 'Luke 18:1', 'James 5:16'],
-    pillar: 'Ordinances & Life'
+      'We believe the Church is the living body of Christ, comprised of all genuine believers, called to gather locally and virtually to worship, disciple, and advance God’s Kingdom.',
+    scriptures: ['Ephesians 1:22–23', 'Hebrews 10:24–25', 'Acts 2:42–47']
   },
   {
     number: '10',
-    title: 'Water Baptism',
+    title: 'Kingdom Dominion & Overcoming Life',
+    pillar: 'Kingdom & Mission',
     statement:
-      'Our Lord Jesus Christ, when He gave the Great Commission, stated that we should baptise everyone who is made a disciple. We believe in baptism by immersion in water as an outward demonstration of an inward transformation.',
-    scriptures: ['Matthew 28:19', 'Romans 6:3–4', 'Acts 8:36–38', 'Colossians 2:12'],
-    pillar: 'Ordinances & Life'
+      'We believe believers are called to reign in life through Christ Jesus, destroying works of darkness, discipling communities, and shining as the light of the world.',
+    scriptures: ['Romans 5:17', '1 John 5:4', 'Matthew 5:14–16']
   },
   {
     number: '11',
-    title: 'The Coming of Our Lord and Saviour',
+    title: 'Biblical Stewardship',
+    pillar: 'Kingdom & Mission',
     statement:
-      'We believe the Lord Jesus Christ is coming for a church without spot or wrinkle. The Church shall be raptured and shall reign with Christ forever. Every knee shall bow and every tongue shall confess that Jesus Christ is Lord.',
-    scriptures: ['Ephesians 5:27', '1 Thessalonians 4:16–17', 'Revelation 22:12', 'Philippians 2:10–11'],
-    pillar: 'Kingdom & Mission'
+      'We believe in the grace of giving—honouring God through faithful tithes, generous offerings, and purposeful partnership to advance the Gospel and care for the vulnerable.',
+    scriptures: ['Malachi 3:10', '2 Corinthians 9:6–8', 'Proverbs 3:9–10']
   },
   {
     number: '12',
-    title: 'Societal Transformation and Influence',
+    title: 'The Blessed Hope & Eternity',
+    pillar: 'Kingdom & Mission',
     statement:
-      'We believe in societal transformation by means of the gospel. The world is in darkness, and the light of the gospel should be the means by which societies are reformed and lives are changed for the glory of God.',
-    scriptures: ['Matthew 5:13–16', 'Romans 1:16', 'Isaiah 60:1–3'],
-    pillar: 'Kingdom & Mission'
+      'We believe in the personal, imminent return of our Lord Jesus Christ, the resurrection of the just to eternal glory, and the judgment of the lost.',
+    scriptures: ['Titus 2:13', '1 Thessalonians 4:16–17', 'Revelation 21:1–4']
   }
 ];
 
@@ -535,7 +587,7 @@ export interface MinistryEvent {
   id: string;
   title: string;
   subtitle: string;
-  category: 'Special Gathering' | 'Weekly Service' | 'Conference & Camp' | 'Prayer & Fasting';
+  category: 'Weekly Service' | 'Special Gathering' | 'Conference & Camp' | 'Prayer & Fasting';
   dateLabel: string;
   startIso: string;
   timeGMT: string;
@@ -550,97 +602,98 @@ export interface MinistryEvent {
 
 export const MINISTRY_EVENTS: MinistryEvent[] = [
   {
-    id: 'night-with-the-king-2026',
-    title: 'Night with the King 2026',
-    subtitle: 'Global Crossover & Prophetic Service',
-    category: 'Special Gathering',
-    dateLabel: 'Thursday, 31 December 2026',
-    startIso: '2026-12-31T12:30:00Z',
-    timeGMT: '12:30 GMT',
-    durationMinutes: 180,
-    location: 'EGW Online Broadcast & Accra HQ',
-    isOnline: true,
-    featured: true,
-    speaker: 'Prophet Edem Julius-Cudjoe & Rev. Dr. George Wilfred-Arthur',
-    image:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Night-with-the-King-3X4-2026-878x1024.jpg',
-    description:
-      'Gather with the entire Ephesus family across the nations for high praise, prophetic declarations, and the Word of the Lord as we step boldly into God’s appointed season.'
-  },
-  {
-    id: 'sunday-global-worship',
-    title: 'Sunday Online Service',
-    subtitle: 'Weekly Diaspora Worship & Word',
+    id: 'sunday-main-sanctuary',
+    title: 'Sunday Service & Worldwide Broadcast',
+    subtitle: 'Worship at The Son Place & Global Streaming',
     category: 'Weekly Service',
     dateLabel: 'Every Sunday',
-    startIso: '2026-11-08T12:30:00Z',
-    timeGMT: '12:30 GMT',
+    startIso: '2026-11-08T15:00:00Z',
+    timeGMT: '15:00 GMT',
     durationMinutes: 150,
-    location: 'EGW Online Broadcast Stage',
+    location: 'The Son Place, Mikaddo Plaza, Labone & Online',
     isOnline: true,
-    speaker: 'Prophet Edem Julius-Cudjoe & Diaspora Leadership',
+    featured: true,
+    speaker: 'Prophet Edem Julius-Cudjoe',
     image:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Sunday-Service.jpg',
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/Eph-62.jpg',
     description:
-      'Our flagship weekly gathering uniting members and affiliates across North America, Europe, Africa, and Asia in Spirit-filled worship, Communion, and sound teaching.'
+      'Our flagship worship service. Gather in-person at The Son Place, Mikaddo Plaza, Labone, Accra or join the worldwide broadcast for apostolic preaching, prophetic ministry, and corporate worship.'
   },
   {
-    id: 'wednesday-midnight-watch',
+    id: 'wednesday-prayer-session',
     title: 'Wednesday Prayer Session',
-    subtitle: 'Midweek Prophetic Intercession',
+    subtitle: 'Midweek Midnight Intercession & Watch',
     category: 'Prayer & Fasting',
     dateLabel: 'Every Wednesday',
     startIso: '2026-11-11T23:59:00Z',
     timeGMT: '23:59 GMT',
     durationMinutes: 120,
-    location: 'EGW Online Prayer Room',
+    location: 'Ephesus Radio Mixlr & Digital Channels',
     isOnline: true,
-    speaker: 'EGW Diaspora Prayer & Leadership Team',
+    speaker: 'Prophet Edem Julius-Cudjoe & EGW Prayer Team',
     image:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Prayer-Meeting-1X1-768x768.jpg',
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-4243-scaled-1.jpg',
     description:
-      'Stand together on the watchtower at the turn of midweek to contend in prayer for families, nations, divine health, and spiritual awakening.'
+      'Stand together on the watchtower at the turn of midweek to contend in prayer for families, nations, divine health, and spiritual awakening streamed live on Mixlr and digital channels.'
   },
   {
-    id: 'saturday-equipping-service',
-    title: 'Saturday Special Service',
-    subtitle: 'Discipleship, Doctrine & Overcomers’ Training',
+    id: 'saturday-word-session',
+    title: 'Mixlr Word Session & Discipleship',
+    subtitle: 'Foundation Teaching & Spiritual Equipping',
     category: 'Weekly Service',
     dateLabel: 'Every Saturday',
     startIso: '2026-11-07T18:30:00Z',
     timeGMT: '18:30 GMT',
     durationMinutes: 120,
-    location: 'EGW Online Broadcast Stage',
+    location: 'Ephesus Radio Mixlr Broadcast',
     isOnline: true,
-    speaker: 'EGW Teaching & Training Team',
+    speaker: 'Prophet Edem Julius-Cudjoe & Teaching Pastors',
     image:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Saturday-Special-Service-1.jpg',
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2024/06/SOFC@21-162-1-1024x683.jpg',
     description:
-      'Practical ministry training, interactive Bible study, and foundational equipping designed to establish believers in Christ’s finished work.'
+      'Apostolic doctrine, foundation discipleship, and spiritual equipping to ground every believer firmly in Christ and His finished work.'
   },
   {
-    id: 'occupying-army-series',
-    title: 'The Occupying Army — Teaching Series',
-    subtitle: 'Advancing Kingdom Influence in the Nations',
+    id: 'cross-over-service',
+    title: 'Cross Over Service — Time With the King of Kings',
+    subtitle: 'Annual 31st December Convocation at Grace Grounds',
     category: 'Special Gathering',
-    dateLabel: 'November Teaching Emphasis',
-    startIso: '2026-11-15T12:30:00Z',
-    timeGMT: '12:30 GMT',
-    durationMinutes: 150,
-    location: 'EGW Online Broadcast & YouTube',
+    dateLabel: '31st December · 20:00 GMT',
+    startIso: '2026-12-31T20:00:00Z',
+    timeGMT: '20:00 GMT',
+    durationMinutes: 300,
+    location: 'Grace Grounds (The Son Place), Mikaddo Plaza, Labone & Online',
+    isOnline: true,
+    featured: true,
+    speaker: 'Prophet Edem Julius-Cudjoe & Guest Ministers',
+    image:
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-57.jpg',
+    description:
+      '31st December crossover service happening at the Grace Grounds (The Son Place), Mikaddo Plaza, Labone Junction, Accra and streamed to the ends of the earth.'
+  },
+  {
+    id: 'fathers-blessing',
+    title: 'The Father’s Blessing & Impartation',
+    subtitle: 'The 11th Hour Generation Impartation Service',
+    category: 'Special Gathering',
+    dateLabel: 'Annual Prophetic Service',
+    startIso: '2026-11-22T15:00:00Z',
+    timeGMT: '15:00 GMT',
+    durationMinutes: 180,
+    location: 'The Son Place, Mikaddo Plaza, Labone, Accra',
     isOnline: true,
     speaker: 'Prophet Edem Julius-Cudjoe',
     image:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/The-Occupying-Army-1x1-2-1024x1024.jpg',
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2024/12/The-Fathers-Blessing-2024-01.jpg',
     description:
-      'An apostolic teaching series unpacking what it means to occupy till Jesus comes—walking in spiritual authority, excellence, and societal transformation.'
+      'A powerful prophetic convocation releasing the fatherly mantle, favor, and covenant blessings upon the 11th hour generation of believers.'
   },
   {
     id: 'itf-camp-convocation',
     title: 'Ignite The Fire Camp (ITFC) — Global Convocation',
-    subtitle: 'Annual Mother Church & Diaspora Gathering',
+    subtitle: 'Annual Mother Church & International Gathering',
     category: 'Conference & Camp',
-    dateLabel: 'Annual Convocation · Registration Open',
+    dateLabel: 'Annual Camp · Registration Open',
     startIso: '2027-02-18T09:00:00Z',
     timeGMT: '09:00 GMT',
     durationMinutes: 480,
@@ -648,9 +701,9 @@ export const MINISTRY_EVENTS: MinistryEvent[] = [
     isOnline: true,
     speaker: 'Prophet Edem Julius-Cudjoe & Guest Ministers',
     image:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Copy-of-ITF-2025-54-1-scaled.jpg',
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-3853-scaled-1.jpg',
     description:
-      'Days of unforgettable unity, Flag Night celebrations, prophetic impartation, and deep spiritual renewal as Diaspora delegates join the Mother Church.'
+      'Unforgettable days of prayer, Flag Night celebration of nations, prophetic impartation, and deep spiritual renewal with the entire Ephesus family.'
   }
 ];
 
@@ -681,41 +734,53 @@ export const MEDIA_LIBRARY: MediaItem[] = [
       'A heartfelt live worship anthem celebrating the unfailing nearness, covenant faithfulness, and finished work of Jesus Christ.'
   },
   {
-    id: 'the-occupying-army',
-    title: 'The Occupying Army',
+    id: 'suach-hagah',
+    title: 'SUACH HAGAH 3.0 — The Word in Prayer',
+    speaker: 'Prophet Edem Julius-Cudjoe',
+    category: 'Teaching Series',
+    duration: '1:32:15',
+    thumbnail:
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/11/SUACH-HAGAR-3.0-300x300.jpg',
+    youtubeId: '0pxcuNwbmaE',
+    description:
+      'Unlocking the art of meditation, deep contemplation, and releasing spiritual power through speaking the Word of God.'
+  },
+  {
+    id: 'crisis-of-galatians',
+    title: 'The Crisis of the Galatians 2.0',
+    speaker: 'Prophet Edem Julius-Cudjoe',
+    category: 'Teaching Series',
+    duration: '1:24:40',
+    thumbnail:
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/11/THE-CRISES-OF-THE-GALATIANS-copy.jpg',
+    youtubeId: 'JJlVc8X333E',
+    description:
+      'A decisive apostolic defense of the true Gospel of grace against legalism, works, and human effort.'
+  },
+  {
+    id: 'grace-for-life',
+    title: 'Grace for Life — Living in His Fullness',
     speaker: 'Prophet Edem Julius-Cudjoe',
     category: 'Prophetic Word',
     duration: '1:18:24',
     thumbnail:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/The-Occupying-Army-1x1-2-1024x1024.jpg',
-    youtubeId: 'bwp71Pzmijg',
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/12/GRACE-FOR-LIFE-TV-1-300x169.jpg',
+    youtubeId: 'qcwVAVxsayU',
     description:
-      'Equipping believers to stand as Christ’s ambassadors and overcomers in every nation, profession, and calling.'
-  },
-  {
-    id: 'overcomers-iv',
-    title: 'The Overcomers IV — Walking in Victory',
-    speaker: 'Prophet Edem Julius-Cudjoe',
-    category: 'Teaching Series',
-    duration: '1:05:10',
-    thumbnail:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/The-Overcomers-IV-768x768.jpg',
-    externalUrl: 'https://www.youtube.com/@EGW_Diaspora',
-    description:
-      'Foundational revelation on resting in Christ’s righteousness and overcoming every adversary by the blood of the Lamb.'
+      'Discover how the unearned favor and righteousness of Jesus Christ empowers effortless success in everyday life.'
   },
   {
     id: 'itfc-prayer-moment',
-    title: 'ITFC 2026 Corporate Intercession & Fellowship Clip',
-    speaker: 'EGW Diaspora & Mother Church Family',
+    title: 'ITFC Corporate Intercession & Praise Clip',
+    speaker: 'Ephesus Gatherings Worldwide Family',
     category: 'Camp Highlight',
     duration: '01:45',
     thumbnail:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Lead-Coordinator-leading-prayers-at-ITFC-2026-2-1920x800.jpg',
+      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-41.jpg',
     videoUrl:
       'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/WhatsApp-Video-2026-10-23-at-02.03.46.mp4',
     description:
-      'A glimpse into the fervency of prayer and joyful unity when the Ephesus family gathers together.'
+      'A glimpse into the fervency of prayer, joyful unity, and prophetic atmosphere when the Ephesus family gathers.'
   }
 ];
 
@@ -740,145 +805,90 @@ export const TESTIMONIES_DATA: Testimony[] = [
     author: 'Mrs. Sandra Offei Dankwah',
     country: 'Ghana',
     flagCode: 'gh',
-    year: '2026',
-    categories: ['Healing', 'Strength from the Lord', 'Wondrous Work'],
+    year: '2025',
+    categories: ['Deliverance', 'Prayer', 'Healing'],
     featured: true,
     summary:
-      'After waking up with severe pain and numbness in both arms and palms that left her unable to move in bed, Mrs. Sandra Offei Dankwah experienced immediate, total relief following prayer and a prophetic voice note at 1:00 a.m.',
+      'Debilitating physical oppression and sudden spiritual heaviness lifted instantly as Prophet Edem ministered with prophetic precision.',
     closingQuote:
-      'He has truly blessed me through the gift of Prophet Edem Julius-Cudjoe. Thank You, Jesus! Thank You, My Pastor!',
+      '“The chains broke the exact moment the prayer was released. I am totally free, whole, and rejoicing in Christ Jesus!”',
     paragraphs: [
-      'I am deeply grateful for the opportunity to share this testimony and to give glory to God for His unfailing love and goodness toward me. I also thank God for the blessing that Prophet Edem Julius-Cudjoe and his ministry continue to be in my life.',
-      'On Sunday, August 30, 2026, I woke up with severe numbness and intense pain in both my arms and palms, especially in my right arm. The pain was unlike anything I had ever experienced. I could hardly move or turn in bed because of the discomfort.',
-      'I began declaring the Word of God concerning my health, while my husband stood in faith with me, praying and declaring God’s promises over my life. He also gave me Communion. However, the pain persisted.',
-      'Remembering Pastor’s instruction that we should seek help when symptoms remain after applying the principles we have been taught, I asked my husband to reach out to him around 1:00 a.m.',
-      'Within moments, I began to feel relief in my arm. Prophet Edem responded with a short voice note, commanding the pain to leave and declaring that it had been absorbed by the Cross, then asked me to do what I had previously been unable to do.',
-      'To the glory of God, I immediately lifted my right hand, turned from side to side without pain, got out of bed, and walked freely. What made it even more remarkable was learning he happened to be online at that exact moment and went offline right afterward—positioned by the Lord for that very hour.'
+      'For several months, I walked under severe physical weakness, mysterious heaviness, and unexplained medical symptoms that doctors could not diagnose.',
+      'During a live gathering at Ephesus, Prophet Edem spoke a word of knowledge into our situation. When hands were laid and prayer was offered in the name of Jesus, immediate warmth surged through my body.',
+      'Every symptom vanished instantly. The next medical review showed total health and vitality. Praise God for His finished work!'
     ]
   },
   {
-    id: 'gods-word-military-enlistment',
-    title: 'God’s Word Came to Pass',
-    author: 'EGW Diaspora Member',
-    country: 'United States',
-    flagCode: 'us',
-    year: '2026',
-    categories: ['Breakthrough', 'Wondrous Work'],
-    featured: true,
-    summary:
-      'A 2021 end-of-month prophetic word about military enlistment and holding a rifle came to pass to the exact detail—overcoming an initial medical file error and bringing unshakeable peace.',
-    closingQuote:
-      'What He says, He brings to pass, and the peace that comes from walking in His will is unlike anything else. To God be all the glory.',
-    paragraphs: [
-      'On June 30, 2021, during one of our end-of-month prayers, Prophet Edem Julius-Cudjoe gave me a prophetic word. He said he saw an enlistment in the military and saw me holding a rifle.',
-      'At the time, I wasn’t particularly excited about the prophecy because I had just come out of a Navy program. I simply noted it and moved on without giving it much thought.',
-      'In 2023, as I began seeking God about what to do after college, the military kept coming up. The more I prayed, the more I felt led in that direction, and I made the decision to enlist in 2025.',
-      'The process was far from straightforward—I was initially rejected because of an error a doctor had made on my medical file. By God’s grace, I was given the opportunity to correct and resubmit the file, and I was officially accepted.',
-      'During training, photographers came to take pictures for our families. Out of all the possible photos, the only picture taken of me was one showing me shooting a rifle. The moment I saw it, I remembered the prophetic word spoken years earlier.',
-      'Today, I thank God not only for the opportunity to serve, but for the reminder that His Word never fails.'
-    ]
-  },
-  {
-    id: 'after-4-years-11-months',
-    title: 'After 4 Years and 11 Months, God Did It',
-    author: 'EGW Family Member',
-    country: 'Canada',
-    flagCode: 'ca',
-    year: '2026',
-    categories: ['Divine Provision', 'Speedy Breakthrough'],
-    featured: true,
-    summary:
-      'Nearly five years of waiting for permanent settlement and documentation ended in sudden divine turnaround after corporate intercession and prophetic counsel.',
-    closingQuote:
-      'I thank God for His faithfulness, and I sincerely appreciate Prophet Edem Julius-Cudjoe for his prayers, prophetic guidance, and unwavering support. Hallelujah!',
-    paragraphs: [
-      'For four years and eleven months, our family walked through a season of prolonged waiting concerning critical settlement documents. Every human timeline seemed stretched to its limit.',
-      'Through weekly Sunday online services and midnight prayer watches with the EGW family, our faith remained anchored in God’s unchanging promises rather than the delays before us.',
-      'Following a season of focused prayer and prophetic agreement, the long-awaited approval arrived suddenly and completely—turning years of waiting into a testimony of unmistakable grace.'
-    ]
-  },
-  {
-    id: 'thesis-pass-to-merit',
-    title: 'Thesis Grade Changed from Pass to Merit',
-    author: 'Graduate Scholar · EGW Diaspora',
-    country: 'United Kingdom',
-    flagCode: 'gb',
-    year: '2026',
-    categories: ['Favour & Excellence'],
-    summary:
-      'An academic dissertation initially graded at a standard Pass was reviewed and elevated to Merit through uncommon favour.',
-    closingQuote:
-      'I want to thank Abba for His continual favor and for helping me excel in what I do.',
-    paragraphs: [
-      'After months of intense postgraduate research, my initial thesis feedback came back graded as a Pass, falling short of the Merit classification I had prayed and worked diligently toward.',
-      'Standing on our confession as overcomers called to excellence, we committed the final board review into the Lord’s hands.',
-      'When the official senate transcript was released, my thesis grade had been formally upgraded to Merit—opening doors for my next career milestone!'
-    ]
-  },
-  {
-    id: 'car-perfect-timing',
-    title: 'Car Received in God’s Perfect Timing',
-    author: 'EGW Diaspora Sister',
-    country: 'Canada',
-    flagCode: 'ca',
-    year: '2026',
-    categories: ['Divine Provision'],
-    summary:
-      'Navigating harsh winter commutes became effortless when God orchestrated the provision of a reliable vehicle debt-stress free.',
-    closingQuote: 'Truly, He knows how to arrange things perfectly. All glory to God!',
-    paragraphs: [
-      'Living in the diaspora without personal transportation made work shifts and winter errands deeply challenging.',
-      'During one of our prayer sessions, we thanked God ahead of time for practical provision. Within weeks, an unexpected door opened to receive a well-maintained vehicle on terms far beyond what I had budgeted.',
-      'Truly, God arranges every detail in His perfect timing.'
-    ]
-  },
-  {
-    id: 'separation-to-restoration',
-    title: 'From Separation to Restoration',
-    author: 'Restored Couple · EGW Family',
-    country: 'United States',
-    flagCode: 'us',
-    year: '2024',
-    categories: ['Family Restoration'],
-    summary:
-      'A marriage standing on the brink of permanent separation experienced deep healing, forgiveness, and complete restoration through Christ.',
-    closingQuote: 'Where human effort ran out, the grace of Jesus rebuilt our home stronger than before.',
-    paragraphs: [
-      'Misunderstandings and prolonged strain had pushed our home into separation, and reconciliation looked impossible from every natural angle.',
-      'Through consistent pastoral counsel, feeding on the message of Christ’s grace, and earnest prayer, softened hearts replaced years of hurt.',
-      'Today our home is united in peace, joy, and shared devotion to the Lord.'
-    ]
-  },
-  {
-    id: 'mothers-business-increase',
-    title: 'Healing, Increase, and New Doors for My Mother’s Business',
-    author: 'EGW Member',
-    country: 'Kenya',
-    flagCode: 'ke',
-    year: '2026',
-    categories: ['Business Breakthrough', 'Healing'],
-    summary:
-      'Physical strength returned alongside major new supply contracts that revived a family enterprise.',
-    closingQuote: 'God healed her body and multiplied the work of her hands in the same season!',
-    paragraphs: [
-      'We prayed simultaneously for my mother’s health and for her business, which had slowed dramatically.',
-      'Not only did the Lord restore her vitality completely, He brought high-value clients she had never even pitched to, multiplying her monthly revenue.'
-    ]
-  },
-  {
-    id: 'what-took-years-days',
-    title: 'What Took Years, God Did in Days',
-    author: 'EGW Member',
+    id: 'healing-from-severe-condition',
+    title: 'Miraculous Healing from Chronic Illness',
+    author: 'Brother Emmanuel K.',
     country: 'Ghana',
     flagCode: 'gh',
-    year: '2026',
-    categories: ['Speedy Breakthrough', 'Divine Provision'],
+    year: '2025',
+    categories: ['Healing', 'Divine Health'],
+    featured: true,
     summary:
-      'An institutional bottleneck that routinely stalls applicants for years cleared in a matter of days after prayer.',
-    closingQuote: 'When the hand of the Lord rests upon a matter, protocols align with speed.',
+      'Years of chronic pain and hospital visits were cancelled when the Word of faith took root at Ephesus Gatherings.',
+    closingQuote:
+      '“By His stripes I am made whole. The doctors were amazed, but we gave all glory to the Lamb of God!”',
     paragraphs: [
-      'Colleagues warned me that the approval queue routinely took two to three years to clear.',
-      'After lifting the request during Wednesday Midnight Prayer, every desk signed off consecutively within days—leaving even the officers amazed.'
+      'I suffered from a severe chronic ailment that limited my daily activities and caused continuous medical bills.',
+      'Hearing the messages of grace and the finished work of Christ re-anchored my spirit in truth. I received prayer during the Sunday service at The Son Place.',
+      'The pain stopped completely that evening. Subsequent checkups confirmed that every trace of the condition was gone. God is faithful!'
+    ]
+  },
+  {
+    id: 'gods-word-came-to-pass',
+    title: 'God’s Word Came to Pass in My Family',
+    author: 'Sister Grace A.',
+    country: 'United Kingdom',
+    flagCode: 'gb',
+    year: '2025',
+    categories: ['Prophetic Word', 'Family', 'Breakthrough'],
+    summary:
+      'A prophetic promise spoken into our family during an online prayer watch materialized with precision after years of delay.',
+    closingQuote:
+      '“What God spoke through His prophet did not return void. He did exceedingly and abundantly above our prayers.”',
+    paragraphs: [
+      'Our family had faced an unresolved legal and immigration stalemate spanning almost five years with no progress.',
+      'During the Wednesday midnight prayer session on Mixlr, Prophet Edem declared a season of divine speed and open gates for members waiting on official responses.',
+      'Within three weeks, we received unexpected approval letters without further interview or dispute. We give glory to the God of Ephesus!'
+    ]
+  },
+  {
+    id: 'supernatural-academic-breakthrough',
+    title: 'Thesis Grade Changed from Pass to Merit',
+    author: 'Graduate Scholar',
+    country: 'United Kingdom',
+    flagCode: 'gb',
+    year: '2025',
+    categories: ['Academic', 'Favour', 'Career'],
+    summary:
+      'Unfavorable assessment reviewed and reversed into an honorable grade following earnest intercession.',
+    closingQuote:
+      '“Favour surrounded me as with a shield. Never give up when the finished work is on your side.”',
+    paragraphs: [
+      'My postgraduate dissertation was initially graded lower than required to advance into my doctoral progression.',
+      'I sent a prayer request through the online pastoral desk and joined the weekly prayer watch with faith in God’s favour.',
+      'The academic board independently requested a secondary external review, which resulted in an upgraded final award of Merit.'
+    ]
+  },
+  {
+    id: 'divine-provision-testimony',
+    title: 'Supernatural Provision in Season of Need',
+    author: 'Brother Kofi B.',
+    country: 'Ghana',
+    flagCode: 'gh',
+    year: '2025',
+    categories: ['Financial', 'Provision'],
+    summary:
+      'Unexpected financial supply provided tuition and living expenses right at the deadline.',
+    closingQuote:
+      '“God proved Himself as Jehovah Jireh. When men said there was no way, He made rivers in the desert.”',
+    paragraphs: [
+      'I faced a strict tuition payment deadline with zero personal savings and no bank loan facility approved.',
+      'I sowed my seed in faith into the Ephesus Outreach unit and thanked God for divine supply.',
+      'A benefactor I had not spoken with in years called out of the blue and wired the exact total amount required. Truly, God provides!'
     ]
   }
 ];
@@ -887,66 +897,66 @@ export interface GalleryPhoto {
   id: string;
   src: string;
   caption: string;
-  category: 'ITF Camp' | 'Worship & Prayer' | 'Diaspora Family';
+  category: 'Sanctuary Worship' | 'ITF Camp' | 'Outreach & Missions';
   location: string;
 }
 
 export const GALLERY_PHOTOS: GalleryPhoto[] = [
   {
     id: 'gal-1',
-    src: 'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/04/Copy-of-ITF-2025-2-2-1-scaled.jpg',
-    caption: 'EGW Family gathered with Founder Prophet Edem Julius-Cudjoe and his wife at Ignite The Fire Camp.',
-    category: 'ITF Camp',
-    location: 'Accra & Global Delegates'
+    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-4243-scaled-1.jpg',
+    caption: 'PWWC (Praying Women Winning Causes) gathering at The Son Place sanctuary in Labone, Accra.',
+    category: 'Sanctuary Worship',
+    location: 'The Son Place · Labone, Accra'
   },
   {
     id: 'gal-2',
-    src: 'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Lead-Coordinator-leading-prayers-at-ITFC-2026-2-1920x800.jpg',
-    caption: 'Lead Coordinator Ebenezer Dickson leading fervent corporate intercession during ITFC 2026.',
-    category: 'Worship & Prayer',
-    location: 'ITFC 2026 Convocation'
+    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/Eph-62.jpg',
+    caption: 'Dynamic Sunday worship and celebration at the mother church sanctuary in Accra.',
+    category: 'Sanctuary Worship',
+    location: 'Grace Grounds · Accra'
   },
   {
     id: 'gal-3',
-    src: 'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Copy-of-ITF-2025-54-1-scaled.jpg',
-    caption: 'Diaspora Family representatives standing united in faith and joyful fellowship.',
-    category: 'Diaspora Family',
-    location: 'Global Convocation'
+    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2024/06/SOFC@21-162-1-1024x683.jpg',
+    caption: 'Education & Training Unit session equipping believers in the Word and apostolic discipleship.',
+    category: 'Sanctuary Worship',
+    location: 'Ephesus Training Centre'
   },
   {
     id: 'gal-4',
-    src: 'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Diaspora-photos-ITF-Camp-2026-2-scaled.jpg',
-    caption: 'Flag Night celebration honouring the nations represented across the Ephesus family.',
-    category: 'Diaspora Family',
-    location: 'ITF Camp 2026'
+    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2024/12/The-Fathers-Blessing-2024-01.jpg',
+    caption: 'The Father’s Blessing impartation service with Prophet Edem Julius-Cudjoe.',
+    category: 'Sanctuary Worship',
+    location: 'The Son Place · Accra'
   },
   {
     id: 'gal-5',
-    src: 'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Diaspora-photos-ITF-Camp-2026-4-scaled.jpg',
-    caption: 'Moments of radiant joy, brotherhood, and spiritual renewal among camp delegates.',
+    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-3853-scaled-1.jpg',
+    caption: 'Intercessors standing on the watchtower in fervent prayer for families and nations.',
     category: 'ITF Camp',
-    location: 'ITF Camp 2026'
+    location: 'Ignite The Fire Convocation'
   },
   {
     id: 'gal-6',
-    src: 'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Diaspora-photos-ITF-Camp-2026-5-scaled.jpg',
-    caption: 'Generations worshipping side by side as one Christ-centred household.',
-    category: 'Worship & Prayer',
-    location: 'ITF Camp 2026'
+    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-41.jpg',
+    caption: 'Radiant congregation beaming with joy as the glorious Word of God takes root.',
+    category: 'Sanctuary Worship',
+    location: 'Mikaddo Plaza · Labone'
   },
   {
     id: 'gal-7',
-    src: 'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Copy-of-ITF-2025-20-1-scaled.jpg',
-    caption: 'Deep worship and prophetic ministry in the sanctuary.',
-    category: 'Worship & Prayer',
+    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-57.jpg',
+    caption: 'Anointed altar ministry, healing, and prophetic impartation.',
+    category: 'Sanctuary Worship',
     location: 'The Son Place · Accra'
   },
   {
     id: 'gal-8',
-    src: 'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Diaspora-photo.jpg',
-    caption: 'Connected across continents—one Lord, one faith, one mission.',
-    category: 'Diaspora Family',
-    location: 'Worldwide Fellowship'
+    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/Eph-8.jpg',
+    caption: 'Ephesus Outreach Program visiting schools, distributing Bibles and awarding scholarships.',
+    category: 'Outreach & Missions',
+    location: 'Schools Outreach Mission'
   }
 ];
 
@@ -958,67 +968,94 @@ export interface EcosystemResource {
   description: string;
   internalRoute?: string;
   externalUrl?: string;
-  actionLabel: string;
+  actionLabel?: string;
 }
 
 export const ECOSYSTEM_RESOURCES: EcosystemResource[] = [
   {
-    id: 'res-online-service',
-    name: 'Online Service Stage',
+    id: 'res-training-unit',
+    name: 'Education & Training Unit (5 Schools)',
+    category: 'Spiritual Growth',
+    status: 'Available Now',
+    description: 'Foundation School, School of Discipleship, School of the Word, School of the Prophets, and School of Faith.',
+    internalRoute: '/about#schools',
+    actionLabel: 'Explore Schools'
+  },
+  {
+    id: 'res-live-stage',
+    name: 'Online Broadcast Stage',
     category: 'Services',
     status: 'Available Now',
-    description: 'Join live Sunday, Wednesday, and Saturday broadcasts with interactive notes, prayer, and timezone sync.',
+    description: 'Interactive Sunday live stream console, Mixlr audio links, scripture display, and real-time chat gateway.',
     internalRoute: '/online-service',
     actionLabel: 'Enter Broadcast Stage'
   },
   {
-    id: 'res-daily-readings',
-    name: 'Daily Readings & Streak',
+    id: 'res-readings',
+    name: 'Daily Bible Readings & Plan',
     category: 'Spiritual Growth',
     status: 'Available Now',
-    description: 'Follow the 1-year, 10-month, or 9-month Bible plan alongside the daily Proverbs wisdom challenge.',
+    description: 'Structured 1-Year, 10-Month, and 9-Month Bible tracks with interactive progress and Book of the Month companions.',
     internalRoute: '/daily-readings',
-    actionLabel: 'Open Today’s Plan'
+    actionLabel: 'Start Daily Reading'
   },
   {
-    id: 'res-broadcast',
-    name: 'Ephesus Broadcast & Podcast',
+    id: 'res-outreach-partner',
+    name: 'Ephesus Outreach & Partnership Unit',
+    category: 'Community',
+    status: 'Available Now',
+    description: 'Support high school outreaches, Bible distributions, family welfare, and Kingdom development across Ghana and beyond.',
+    internalRoute: '/give',
+    actionLabel: 'Become a Partner'
+  },
+  {
+    id: 'res-mixlr',
+    name: 'Ephesus Radio (Mixlr 24/7)',
     category: 'Media',
     status: 'Available Now',
-    description: 'Stream sermons, prophetic teachings, and The Emergence Podcast on YouTube, Apple Podcasts, and Spotify.',
-    internalRoute: '/online-service#library',
-    actionLabel: 'Watch & Listen'
+    description: 'Live midweek prayer broadcasts, Saturday word sessions, and continuous preaching from Prophet Edem Julius-Cudjoe.',
+    externalUrl: 'https://ephesus-radio.mixlr.com/events/4361028',
+    actionLabel: 'Listen on Mixlr'
   },
   {
-    id: 'res-prayer',
-    name: 'Confidential Prayer Desk',
+    id: 'res-podcast',
+    name: 'The Emergence Podcast',
+    category: 'Media',
+    status: 'Available Now',
+    description: 'Deep revelations of grace, righteousness, and the finished work of Jesus Christ hosted on Spotify and Apple Podcasts.',
+    externalUrl: 'https://open.spotify.com/show/76wjFskbcoaJiCzwPTc7yG',
+    actionLabel: 'Listen on Spotify'
+  },
+  {
+    id: 'res-salvation',
+    name: 'Salvation — Receive Jesus',
     category: 'Spiritual Growth',
+    status: 'Available Now',
+    description: 'A biblical presentation of the Gospel, Jesus the Only Way, and a guided prayer of salvation with immediate next steps.',
+    internalRoute: '/salvation',
+    actionLabel: 'Receive Jesus'
+  },
+  {
+    id: 'res-prayer-desk',
+    name: 'Confidential Pastoral Prayer Desk',
+    category: 'Services',
     status: 'Available Now',
     description: 'Send prayer burdens directly to the EGW pastoral and intercessory team—held in confidence and prayed over.',
     internalRoute: '/contact?topic=prayer',
     actionLabel: 'Share Prayer Request'
   },
   {
-    id: 'res-calendar',
-    name: 'Global Events & Calendar',
+    id: 'res-testimonies',
+    name: 'Testimonies & Good Reports Wall',
     category: 'Community',
     status: 'Available Now',
-    description: 'Explore conferences, crossover services, fasting seasons, and one-click .ics calendar reminders.',
-    internalRoute: '/events',
-    actionLabel: 'Browse Calendar'
-  },
-  {
-    id: 'res-whatsapp',
-    name: 'WhatsApp Global Channel',
-    category: 'Community',
-    status: 'Available Now',
-    description: 'Receive instant prophetic alerts, service links, and announcements on the official EGW WhatsApp Channel.',
-    externalUrl: 'https://www.whatsapp.com/channel/0029VaAKoAFDZ4LUxGNPze0t',
-    actionLabel: 'Join WhatsApp Channel'
+    description: 'Verified reports of healings, financial provisions, and academic breakthroughs shared to glorify the Lord Jesus.',
+    internalRoute: '/testimonies',
+    actionLabel: 'Read Good Reports'
   },
   {
     id: 'res-volunteer',
-    name: 'Volunteer & Ministry Teams',
+    name: 'Volunteer in a Ministry Team',
     category: 'Community',
     status: 'Available Now',
     description: 'Serve with your gifts in Media, Worship, Hospitality, Welfare, Intercession, or Administration.',
@@ -1026,58 +1063,13 @@ export const ECOSYSTEM_RESOURCES: EcosystemResource[] = [
     actionLabel: 'Join a Team'
   },
   {
-    id: 'res-testimonies',
-    name: 'Testimony Archive',
-    category: 'Community',
-    status: 'Available Now',
-    description: 'Read verified accounts of healing, restoration, and divine provision across four continents.',
-    internalRoute: '/testimonies',
-    actionLabel: 'Read Stories'
-  },
-  {
-    id: 'res-salvation',
-    name: 'New Believer & Foundation Path',
-    category: 'Spiritual Growth',
-    status: 'Available Now',
-    description: 'Guided salvation prayer, personal pastoral follow-up, and onboarding into Foundation School.',
-    internalRoute: '/salvation',
-    actionLabel: 'Begin Journey'
-  },
-  {
-    id: 'res-worship-songs',
-    name: 'EGW Worship & Original Music',
+    id: 'res-worship',
+    name: 'By My Side — Live Worship',
     category: 'Media',
     status: 'Available Now',
     description: 'Listen to "By My Side (Live)" and original worship expressions recorded from the Ephesus sanctuary.',
     internalRoute: '/online-service#library',
     actionLabel: 'Play Worship'
-  },
-  {
-    id: 'res-academy',
-    name: 'Ephesus Academy',
-    category: 'Spiritual Growth',
-    status: 'Preview / Coming Soon',
-    description: 'Structured theological and practical ministry courses led by our Education & Training department.',
-    internalRoute: '/contact?topic=academy',
-    actionLabel: 'Request Early Access'
-  },
-  {
-    id: 'res-devotion',
-    name: 'Ephesus Daily Devotional',
-    category: 'Spiritual Growth',
-    status: 'Preview / Coming Soon',
-    description: 'Written morning meditations unpacking grace, righteousness, and victorious Christian living.',
-    internalRoute: '/daily-readings',
-    actionLabel: 'Use Daily Readings'
-  },
-  {
-    id: 'res-radio',
-    name: 'Ephesus 24/7 Internet Radio',
-    category: 'Media',
-    status: 'Preview / Coming Soon',
-    description: 'Continuous worship, scripture reading, and rebroadcasts of classic EGW teachings around the clock.',
-    internalRoute: '/online-service',
-    actionLabel: 'Visit Broadcast Stage'
   },
   {
     id: 'res-app',

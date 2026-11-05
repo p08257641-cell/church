@@ -43,18 +43,19 @@ export const AboutPage: React.FC = () => {
       <section className="page-hero">
         <div className="container page-hero-inner">
           <div>
-            <span className="eyebrow eyebrow-light">Diaspora Branch · Ephesus Gatherings Worldwide</span>
+            <span className="eyebrow eyebrow-light">Ephesus Gatherings Worldwide · Mother Sanctuary & Global Family</span>
             <h1>Our Story, Our Vision & The People Serving You</h1>
             <p className="lead">
-              Get to know the Christ-centred global extension of our Mother Church in Ghana—equipping believers outside the homeland to walk in victory and fulfil their calling.
+              Ephesus Gatherings Worldwide is a Christ-centered training center dedicated to equipping God’s overcomers to fulfill their divine purpose, experience divine health and healing, and make a transformative impact for the Lord Jesus Christ.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '1.6rem' }}>
               {[
                 { href: '#welcome', label: 'Pastor’s Welcome' },
                 { href: '#vision', label: 'Story & Vision' },
+                { href: '#schools', label: '5 Training Schools' },
                 { href: '#beliefs', label: '12 Beliefs' },
                 { href: '#founder', label: 'Our Founder' },
-                { href: '#leaders', label: 'Global Leaders (7)' },
+                { href: '#leaders', label: 'Ministry Leaders' },
                 { href: '#belong', label: 'Member vs Affiliate' }
               ].map(ch => (
                 <a key={ch.href} href={ch.href} className="btn btn-ghost-light btn-sm">
@@ -66,8 +67,8 @@ export const AboutPage: React.FC = () => {
 
           <div className="vision-media-stack" style={{ borderColor: 'rgba(212,175,55,0.4)' }}>
             <img
-              src="https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Copy-of-ITF-2025-54-1-scaled.jpg"
-              alt="EGW Diaspora Family Representatives at ITF Camp"
+              src="https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-4243-scaled-1.jpg"
+              alt="Ephesus Gatherings Worldwide Sanctuary Congregation"
             />
           </div>
         </div>
@@ -143,26 +144,26 @@ export const AboutPage: React.FC = () => {
               “Ephesus Gatherings Worldwide serves as a training centre for equipping God’s overcomers to take their place on earth for the Lord Jesus Christ.”
             </p>
             <p style={{ color: 'var(--text-secondary)' }}>
-              Headquartered at The Son Place, Labone, Accra, Ghana, our Diaspora branch connects believers across North America, Europe, Africa, and Asia through dynamic online worship services, structured discipleship, and fervent intercession.
+              Located at Mikaddo Plaza, Labone Junction, Accra, Ghana, Ephesus Gatherings Worldwide hosts dynamic worship services, offers practical discipleship programs, and connects believers across continents through Spirit-filled worship, sound biblical teaching, and practical ministry training.
             </p>
           </div>
 
-          <div className="grid-3">
+          <div className="grid-3" style={{ marginBottom: '3.5rem' }}>
             {[
               {
                 num: '01',
                 title: 'Spirit-Filled Worship',
-                desc: 'Dynamic online worship services every Sunday, Wednesday, and Saturday where Jesus is exalted and the Holy Spirit ministers freely.'
+                desc: 'Dynamic worship services every Sunday at 3:00 PM GMT at The Son Place in Accra and streaming live globally where Jesus is exalted and the Holy Spirit moves freely.'
               },
               {
                 num: '02',
                 title: 'Sound Biblical Teaching',
-                desc: 'Discipleship programmes, Daily Readings, and Foundation School grounded squarely in the authority of Scripture and Christ’s finished work.'
+                desc: 'Discipleship programmes, Daily Bible Readings, and apostolic expositions grounded squarely in the authority of Scripture and Christ’s finished work.'
               },
               {
                 num: '03',
                 title: 'Practical Ministry Training',
-                desc: 'Hands-on fellowship, welfare care, and spiritual equipping that empower believers to shine in every nation and vocation.'
+                desc: 'Hands-on fellowship, outreach missions, divine healing, and spiritual equipping that empower every believer to walk in victory on earth.'
               }
             ].map(p => (
               <div key={p.num} className="card">
@@ -171,6 +172,60 @@ export const AboutPage: React.FC = () => {
                 <p style={{ fontSize: '0.94rem', color: 'var(--text-secondary)' }}>{p.desc}</p>
               </div>
             ))}
+          </div>
+
+          {/* Education & Training Unit: 5 Specialized Schools */}
+          <div id="schools" style={{ paddingTop: '1rem' }}>
+            <div style={{ textAlign: 'center', maxWidth: 740, marginInline: 'auto', marginBottom: '2.5rem' }}>
+              <span className="eyebrow">Education &amp; Training Unit</span>
+              <h2 className="section-title">
+                Five Schools to <span className="accent-serif">Equip Overcomers</span>
+              </h2>
+              <p style={{ color: 'var(--text-secondary)' }}>
+                Structured ministerial and discipleship pathways designed to take you from foundational salvation truths into apostolic authority and prevailing faith.
+              </p>
+            </div>
+
+            <div className="grid-3" style={{ marginBottom: '2.5rem' }}>
+              {[
+                { title: 'Foundation School', badge: 'Level 1', desc: 'Establishing new believers firmly in the grace of God, salvation assurance, and the finished work of the Cross.' },
+                { title: 'School of Discipleship', badge: 'Level 2', desc: 'Cruciform character, holy spiritual walk, and cultivating intimate daily communion with the Holy Spirit.' },
+                { title: 'School of the Word', badge: 'Level 3', desc: 'In-depth hermeneutics, Christ-centred Scripture exposition, and mastering the New Covenant.' },
+                { title: 'School of the Prophets', badge: 'Level 4', desc: 'Hearing the voice of God, discerning spiritual realms, prophetic prayer watches, and operating in spiritual gifts.' },
+                { title: 'School of Faith', badge: 'Level 5', desc: 'Unshakable Kingdom dominion, commanding miracles, walking in divine health, and prevailing faith in action.' }
+              ].map(sch => (
+                <div key={sch.title} className="card card-interactive">
+                  <span className="badge badge-gold" style={{ marginBottom: '0.6rem' }}>{sch.badge}</span>
+                  <h3 style={{ fontSize: '1.2rem', marginBottom: '0.4rem' }}>{sch.title}</h3>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{sch.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Outreach Impact Counter Bar */}
+            <div className="card split-card-spotlight">
+              <div>
+                <span className="badge badge-navy" style={{ marginBottom: '0.5rem' }}>Ephesus Partnership &amp; Outreach</span>
+                <h3 style={{ fontSize: '1.45rem', marginBottom: '0.45rem' }}>Reaching Schools, Winning Souls</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.94rem' }}>
+                  The Ephesus Gatherings Partnership Unit supports school outreaches, Bible donations, family welfare, and student scholarships across Ghana and beyond.
+                </p>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem', textAlign: 'center' }}>
+                <div>
+                  <div style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', fontWeight: 700, color: 'var(--brand-royal)' }}>6+</div>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>Schools Reached</div>
+                </div>
+                <div>
+                  <div style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', fontWeight: 700, color: 'var(--brand-royal)' }}>5,500+</div>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>People Reached</div>
+                </div>
+                <div>
+                  <div style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', fontWeight: 700, color: 'var(--brand-royal)' }}>1,250+</div>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>Scholarships &amp; Bibles</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -291,10 +346,10 @@ export const AboutPage: React.FC = () => {
             <div>
               <span className="eyebrow">Servant Leadership</span>
               <h2 className="section-title">
-                The Team Serving the <span className="accent-serif">Diaspora Branch</span>
+                The Team Serving the <span className="accent-serif">Global Family</span>
               </h2>
               <p className="section-lead">
-                Dedicated coordinators across the United Kingdom, Canada, the United States, and Germany shepherding our global household.
+                Dedicated coordinators and department leaders across administration, welfare, online service, and the Education &amp; Training Unit.
               </p>
             </div>
             <Link to="/contact" className="btn btn-outline">

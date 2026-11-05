@@ -137,7 +137,7 @@ export const Header: React.FC = () => {
                     <span className="mega-icon"><Compass size={18} /></span>
                     <div>
                       <div className="mega-link-title">Our Story & Vision</div>
-                      <div className="mega-link-desc">Mother Church in Ghana & global Diaspora mandate</div>
+                      <div className="mega-link-desc">Mother Church in Accra & global Kingdom expression</div>
                     </div>
                   </Link>
                   <Link to="/about#beliefs" className="mega-link-item">
@@ -150,8 +150,8 @@ export const Header: React.FC = () => {
                   <Link to="/about#leaders" className="mega-link-item">
                     <span className="mega-icon"><Users size={18} /></span>
                     <div>
-                      <div className="mega-link-title">Founder & Global Leaders</div>
-                      <div className="mega-link-desc">Meet our Lead Convener & 7 Diaspora Coordinators</div>
+                      <div className="mega-link-title">Founder & Ministry Leaders</div>
+                      <div className="mega-link-desc">Meet our Lead Convener & Global Ministry Leaders</div>
                     </div>
                   </Link>
                 </div>
@@ -209,7 +209,7 @@ export const Header: React.FC = () => {
                     <span className="mega-icon"><Users size={18} /></span>
                     <div>
                       <div className="mega-link-title">Join as Member or Affiliate</div>
-                      <div className="mega-link-desc">48-hour pastoral onboarding across the diaspora</div>
+                      <div className="mega-link-desc">Pastoral welcome & discipleship across the nations</div>
                     </div>
                   </Link>
                   <Link to="/resources" className="mega-link-item">

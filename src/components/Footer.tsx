@@ -112,20 +112,40 @@ export const Footer: React.FC = () => {
         {/* Main 4-Column Footer */}
         <div className="footer-grid">
           <div>
-            <BrandLogo onDark width={148} />
+            <BrandLogo onDark width={152} />
             <p style={{ marginTop: '1rem', fontSize: '0.92rem', color: 'rgba(248,250,252,0.75)', lineHeight: 1.65 }}>
-              A Christ-centred training centre equipping God’s overcomers across Canada, the UK, the USA, Germany, Ghana, and the nations to take their place on earth for the Lord Jesus Christ.
+              A Christ-centred training centre equipping God’s overcomers across Ghana and the nations to fulfill their divine purpose, experience divine health, and make a transformative impact for the Lord Jesus Christ.
             </p>
             <div className="social-row">
               <a
-                href="https://www.youtube.com/@EGW_Diaspora"
+                href="https://web.facebook.com/people/Ephesus-Gatherings/61558894460389/"
                 target="_blank"
                 rel="noreferrer"
                 className="social-pill"
-                aria-label="YouTube"
-                title="YouTube (@EGW_Diaspora)"
+                aria-label="Facebook"
+                title="Facebook (Ephesus Gatherings)"
               >
-                <Youtube size={18} />
+                <ExternalLink size={16} />
+              </a>
+              <a
+                href="https://www.instagram.com/ephesusgatheringsworldwide/"
+                target="_blank"
+                rel="noreferrer"
+                className="social-pill"
+                aria-label="Instagram"
+                title="Instagram (@ephesusgatheringsworldwide)"
+              >
+                <ExternalLink size={16} />
+              </a>
+              <a
+                href="https://ephesus-radio.mixlr.com/events/4361028"
+                target="_blank"
+                rel="noreferrer"
+                className="social-pill"
+                aria-label="Ephesus Radio Mixlr"
+                title="Mixlr Live Broadcast"
+              >
+                <ExternalLink size={16} />
               </a>
               <a
                 href="https://www.whatsapp.com/channel/0029VaAKoAFDZ4LUxGNPze0t"
@@ -138,17 +158,7 @@ export const Footer: React.FC = () => {
                 <MessageCircle size={17} />
               </a>
               <a
-                href="https://www.instagram.com/egw_diaspora/"
-                target="_blank"
-                rel="noreferrer"
-                className="social-pill"
-                aria-label="Instagram"
-                title="Instagram (@egw_diaspora)"
-              >
-                <ExternalLink size={16} />
-              </a>
-              <a
-                href="mailto:admin@ephesusgatheringsworldwide.com"
+                href="mailto:admin@ephesusgatheringsworldwide.org"
                 className="social-pill"
                 aria-label="Email EGW"
                 title="Email Us"
@@ -162,10 +172,17 @@ export const Footer: React.FC = () => {
             <h4 className="footer-heading">Worship & Word</h4>
             <div className="footer-links">
               <Link to="/online-service">Online Broadcast Stage</Link>
-              <Link to="/events">Events & Global Calendar</Link>
+              <Link to="/events">Events & Service Calendar</Link>
               <Link to="/daily-readings">Daily Bible Readings</Link>
-              <Link to="/testimonies">Testimonies Wall</Link>
+              <Link to="/testimonies">Testimonies & Good Reports</Link>
               <Link to="/salvation">Salvation — Receive Jesus</Link>
+              <a
+                href="https://ephesus-radio.mixlr.com/events/4361028"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Ephesus Radio Mixlr <ExternalLink size={12} />
+              </a>
               <a
                 href="https://open.spotify.com/show/76wjFskbcoaJiCzwPTc7yG"
                 target="_blank"
@@ -177,46 +194,46 @@ export const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h4 className="footer-heading">Ministry & Family</h4>
+            <h4 className="footer-heading">Ministry & Schools</h4>
             <div className="footer-links">
               <Link to="/about">Our Story & Vision</Link>
+              <Link to="/about#schools">Education & Training Unit</Link>
               <Link to="/about#beliefs">12 Articles of Faith</Link>
               <Link to="/about#founder">Prophet Edem Julius-Cudjoe</Link>
-              <Link to="/about#leaders">Diaspora Leadership Team</Link>
-              <Link to="/join">Join as Member or Affiliate</Link>
-              <Link to="/give">Tithes & Kingdom Giving</Link>
-              <Link to="/resources">Ecosystem & Resources</Link>
+              <Link to="/about#leaders">Ministry Leadership Team</Link>
+              <Link to="/join">Join as Member or Partner</Link>
+              <Link to="/give">Tithes, Offerings & Partnership</Link>
+              <Link to="/resources">All Resources & Outreach</Link>
             </div>
           </div>
 
           <div>
-            <h4 className="footer-heading">Global Offices & Care</h4>
+            <h4 className="footer-heading">Sanctuary & Contact</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.88rem', color: 'rgba(248,250,252,0.8)' }}>
               <div style={{ display: 'flex', gap: '0.6rem' }}>
                 <MapPin size={17} style={{ color: 'var(--gold-300)', flexShrink: 0, marginTop: 3 }} />
                 <div>
-                  <strong style={{ color: '#FFFFFF', display: 'block' }}>Diaspora Mailing Office</strong>
-                  10620 99 Ave NW, Unit 407, Edmonton, AB T5K 0L3, Canada
-                </div>
-              </div>
-              <div style={{ display: 'flex', gap: '0.6rem' }}>
-                <MapPin size={17} style={{ color: 'var(--gold-300)', flexShrink: 0, marginTop: 3 }} />
-                <div>
-                  <strong style={{ color: '#FFFFFF', display: 'block' }}>Mother Church Sanctuary</strong>
-                  The Son Place, Mikaddo Plaza, Labone, Accra, Ghana
+                  <strong style={{ color: '#FFFFFF', display: 'block' }}>The Son Place (Grace Grounds)</strong>
+                  Mikaddo Plaza, Labone Junction, Accra, Ghana
+                  <div style={{ color: 'var(--gold-200)', fontSize: '0.82rem', marginTop: 2 }}>
+                    Every Sunday at 3:00 PM GMT
+                  </div>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
                 <Phone size={16} style={{ color: 'var(--gold-300)', flexShrink: 0 }} />
-                <a href="tel:+17809537153">+1 (780) 953-7153</a>
+                <a href="tel:+233201944006">+233 20 194 4006 (Office)</a>
                 <span style={{ opacity: 0.4 }}>·</span>
-                <a href="tel:+233201944006">+233 20 194 4006</a>
+                <a href="tel:+17809537153">+1 (780) 953-7153</a>
               </div>
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
                 <Mail size={16} style={{ color: 'var(--gold-300)', flexShrink: 0 }} />
-                <a href="mailto:admin@ephesusgatheringsworldwide.com">
-                  admin@ephesusgatheringsworldwide.com
+                <a href="mailto:admin@ephesusgatheringsworldwide.org">
+                  admin@ephesusgatheringsworldwide.org
                 </a>
+              </div>
+              <div style={{ fontSize: '0.8rem', color: 'rgba(248,250,252,0.6)', marginTop: 2 }}>
+                Global Fellowship & Diaspora connections across North America, Europe & Africa.
               </div>
             </div>
           </div>
@@ -224,7 +241,7 @@ export const Footer: React.FC = () => {
 
         <div className="footer-bottom">
           <div>
-            © {new Date().getFullYear()} Ephesus Gatherings Worldwide — Diaspora. All rights reserved.
+            © {new Date().getFullYear()} EPHESUS GATHERINGS WORLDWIDE. All rights reserved.
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
             <Link to="/contact" style={{ color: 'rgba(248,250,252,0.75)' }}>

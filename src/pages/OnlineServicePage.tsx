@@ -103,8 +103,8 @@ export const OnlineServicePage: React.FC = () => {
                 ) : (
                   <>
                     <img
-                      src="https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Lead-Coordinator-leading-prayers-at-ITFC-2026-2-1920x800.jpg"
-                      alt="EGW Sanctuary Broadcast"
+                      src="https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-4243-scaled-1.jpg"
+                      alt="Ephesus Gatherings Worldwide Sanctuary Broadcast"
                       className="poster"
                     />
                     <div className="stage-center-overlay">
@@ -132,17 +132,17 @@ export const OnlineServicePage: React.FC = () => {
                         <button
                           type="button"
                           className="btn btn-gold btn-sm"
-                          onClick={() => setStageYoutubeId('bwp71Pzmijg')}
+                          onClick={() => setStageYoutubeId('qcwVAVxsayU')}
                         >
                           <Play size={15} fill="currentColor" /> Watch Latest Message on Stage
                         </button>
                         <a
-                          href="https://www.youtube.com/@EGW_Diaspora"
+                          href="https://ephesus-radio.mixlr.com/events/4361028"
                           target="_blank"
                           rel="noreferrer"
                           className="btn btn-ghost-light btn-sm"
                         >
-                          <Youtube size={16} /> Open YouTube Live
+                          <Radio size={16} /> Open Mixlr Audio
                         </a>
                       </div>
                     </div>
@@ -352,7 +352,7 @@ export const OnlineServicePage: React.FC = () => {
                       {copied ? 'Broadcast Link Copied!' : 'Copy Broadcast Stage Link'}
                     </button>
                     <a
-                      href={`https://wa.me/?text=${encodeURIComponent('Worship live with us at Ephesus Gatherings Worldwide: https://ephesusgatheringsworldwide.com/online-service/')}`}
+                      href={`https://wa.me/?text=${encodeURIComponent('Worship live with us at Ephesus Gatherings Worldwide: https://ephesusgatheringsworldwide.org/online-service/')}`}
                       target="_blank"
                       rel="noreferrer"
                       className="btn btn-outline btn-sm"

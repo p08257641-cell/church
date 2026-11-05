@@ -67,8 +67,8 @@ export const SalvationPage: React.FC = () => {
 
           <div className="vision-media-stack" style={{ borderColor: 'rgba(212,175,55,0.4)' }}>
             <img
-              src="https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/Salvation-1024x576.png"
-              alt="Salvation in Jesus Christ"
+              src="https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-41.jpg"
+              alt="Salvation and new life in Jesus Christ"
             />
           </div>
         </div>

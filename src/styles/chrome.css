@@ -120,31 +120,40 @@
   align-items: center;
   gap: 0.75rem;
   flex-shrink: 0;
+  text-decoration: none;
 }
 
-.brand-mask {
+.brand-img {
   display: block;
-  width: min(var(--logo-w, 132px), 32vw);
-  min-width: 96px;
-  aspect-ratio: 1895 / 780;
-  background-color: var(--brand-primary);
-  -webkit-mask-image: url('/brand/egw-logo.svg');
-  mask-image: url('/brand/egw-logo.svg');
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: left center;
-  mask-position: left center;
-  transition: background-color 0.2s ease;
+  width: min(var(--logo-w, 148px), 42vw);
+  height: auto;
+  aspect-ratio: 1600 / 485;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
 }
 
-html[data-theme="dark"] .brand-mask {
-  background-color: #FFFFFF;
+/* Light mode default: show dark ink logo, hide white ink */
+.logo-white-ink {
+  display: none !important;
+}
+.logo-dark-ink {
+  display: block !important;
 }
 
-.brand-mask.on-dark {
-  background-color: #FFFFFF;
+/* Dark mode: show white logo, hide dark ink */
+html[data-theme="dark"] .logo-dark-ink {
+  display: none !important;
+}
+html[data-theme="dark"] .logo-white-ink {
+  display: block !important;
+}
+
+/* Explicit force-dark (e.g. site footer, midnight modals) */
+.brand-link.force-dark .logo-dark-ink {
+  display: none !important;
+}
+.brand-link.force-dark .logo-white-ink {
+  display: block !important;
 }
 
 /* --- Desktop Navigation --- */

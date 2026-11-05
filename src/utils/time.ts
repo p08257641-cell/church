@@ -8,41 +8,45 @@ export interface WeeklyService {
   durationMinutes: number;
   category: string;
   description: string;
+  location?: string;
 }
 
 export const WEEKLY_SERVICES: WeeklyService[] = [
   {
-    id: 'sunday-online',
-    title: 'Sunday Online Service',
-    subtitle: 'Global Worship & the Word',
+    id: 'sunday-main',
+    title: 'Sunday Service & Worldwide Broadcast',
+    subtitle: 'The Son Place, Labone & Global Online Stream',
     dayOfWeek: 0,
-    hourGMT: 12,
-    minuteGMT: 30,
+    hourGMT: 15,
+    minuteGMT: 0,
     durationMinutes: 150,
-    category: 'Main Service',
-    description: 'Gather with believers across Canada, the UK, the USA, Germany, Ghana, and the nations for Spirit-filled worship and sound biblical exposition.'
+    category: 'Main Gathering',
+    description: 'Gather in-person at The Son Place (Mikaddo Plaza, Labone, Accra) or stream live globally for Spirit-filled worship, apostolic exposition, and divine transformation.',
+    location: 'The Son Place, Mikaddo Plaza, Labone Junction, Accra, Ghana'
   },
   {
     id: 'wednesday-prayer',
     title: 'Wednesday Prayer Session',
-    subtitle: 'Midweek Intercession & Watch',
+    subtitle: 'Mixlr Midweek Intercession & Prayer Watch',
     dayOfWeek: 3,
     hourGMT: 23,
     minuteGMT: 59,
     durationMinutes: 120,
-    category: 'Prayer',
-    description: 'Stand together in fervent midweek prayer, prophetic declarations, and corporate intercession.'
+    category: 'Prayer Watch',
+    description: 'Fervent midnight intercession, prophetic declarations, and prayer watch streamed live on Mixlr and digital channels.',
+    location: 'Ephesus Radio Mixlr & Online Channels'
   },
   {
-    id: 'saturday-special',
-    title: 'Saturday Special Service',
-    subtitle: 'Equipping, Teaching & Fellowship',
+    id: 'saturday-word',
+    title: 'Mixlr Word Session & Discipleship',
+    subtitle: 'Equipping God’s Overcomers in the Word',
     dayOfWeek: 6,
     hourGMT: 18,
     minuteGMT: 30,
     durationMinutes: 120,
-    category: 'Teaching',
-    description: 'Deep-dive discipleship, interactive teaching, and spiritual equipping to walk as an overcomer in Christ.'
+    category: 'Word & Discipleship',
+    description: 'Apostolic teaching, foundation discipleship, and spiritual equipping to establish every believer firmly in Christ and His finished work.',
+    location: 'Ephesus Radio Mixlr & Online Broadcast'
   }
 ];
 
@@ -267,15 +271,15 @@ export function downloadICS(event: {
   const ics = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Ephesus Gatherings Worldwide//Diaspora//EN',
+    'PRODID:-//Ephesus Gatherings Worldwide//EN',
     'BEGIN:VEVENT',
-    `UID:${Date.now()}@ephesusgatheringsworldwide.com`,
+    `UID:${Date.now()}@ephesusgatheringsworldwide.org`,
     `DTSTAMP:${toICSDate(new Date())}`,
     `DTSTART:${toICSDate(start)}`,
     `DTEND:${toICSDate(end)}`,
     `SUMMARY:${event.title}`,
     `DESCRIPTION:${event.description.replace(/\n/g, '\\n')}`,
-    `LOCATION:${event.location || 'https://ephesusgatheringsworldwide.com/online-service/'}`,
+    `LOCATION:${event.location || 'The Son Place, Mikaddo Plaza, Labone Junction, Accra, Ghana & Online'}`,
     'END:VEVENT',
     'END:VCALENDAR'
   ].join('\r\n');

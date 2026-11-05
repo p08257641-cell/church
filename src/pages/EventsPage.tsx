@@ -61,12 +61,12 @@ export const EventsPage: React.FC = () => {
       const dateObj = new Date(year, month, d);
       const dow = dateObj.getDay();
       const svcs: string[] = [];
-      if (dow === 0) svcs.push('Sun 12:30 GMT');
+      if (dow === 0) svcs.push('Sun 15:00 GMT');
       if (dow === 3) svcs.push('Wed 23:59 GMT');
       if (dow === 6) svcs.push('Sat 18:30 GMT');
 
       let special: string | undefined;
-      if (month === 11 && d === 31) special = 'Night with the King';
+      if (month === 11 && d === 31) special = 'Cross Over Service';
       if (month === 1 && d === 18) special = 'ITFC Camp';
 
       cells.push({ day: d, services: svcs, special });
