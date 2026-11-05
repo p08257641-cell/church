@@ -342,7 +342,7 @@ export const HomePage: React.FC = () => {
           <div>
             <div className="vision-media-stack">
               <img
-                src="https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/Eph-62.jpg"
+                src="/images/sanctuary-corporate-worship.jpg"
                 alt="Worship and fellowship at Ephesus Gatherings Worldwide"
               />
               <div className="vision-play-overlay">

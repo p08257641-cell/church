@@ -305,8 +305,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     title: 'Equipping God’s overcomers to fulfill divine purpose.',
     description:
       'A Christ-centred training centre dedicated to establishing believers in their faith through Spirit-filled worship, sound biblical teaching, divine healing, and practical ministry training.',
-    image:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-4243-scaled-1.jpg',
+    image: '/images/prophet-edem-pulpit.jpg',
     imagePosition: 'center 25%',
     primaryCta: { label: 'Join Online Broadcast', to: '/online-service' },
     secondaryCta: { label: 'New to Ephesus? Start Here', to: '/about#welcome' },
@@ -318,8 +317,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     title: 'Worship with us in person or join live globally.',
     description:
       'Experience dynamic worship, apostolic teaching from Prophet Edem Julius-Cudjoe, and fervent intercession at The Son Place in Accra or via worldwide live streaming.',
-    image:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/Eph-62.jpg',
+    image: '/images/prophet-edem-worship-lead.jpg',
     imagePosition: 'center 30%',
     primaryCta: { label: 'Watch Live Broadcast', to: '/online-service' },
     secondaryCta: { label: 'Service Schedule', to: '/events' },
@@ -331,8 +329,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     title: 'Grow from biblical foundations to ministerial authority.',
     description:
       'Enroll in the Foundation School, School of Discipleship, School of the Word, School of the Prophets, and School of Faith designed to raise mature overcomers in Christ.',
-    image:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2024/06/SOFC@21-162-1-1024x683.jpg',
+    image: '/images/training-discipleship-session.jpg',
     imagePosition: 'center 20%',
     primaryCta: { label: 'Explore Training Programs', to: '/about#schools' },
     secondaryCta: { label: 'Join as Member or Student', to: '/join' },
@@ -344,8 +341,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     title: 'Over 5,500 people reached and thousands won for Christ.',
     description:
       'Through school outreaches, Bible donations, student scholarships, and benevolence, Ephesus Gatherings Worldwide is taking the glorious Gospel of grace to the ends of the earth.',
-    image:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2024/12/The-Fathers-Blessing-2024-01.jpg',
+    image: '/images/schools-outreach-stage.jpg',
     imagePosition: 'center 28%',
     primaryCta: { label: 'Support the Mission', to: '/give' },
     secondaryCta: { label: 'Read Good Reports', to: '/testimonies' },
@@ -357,12 +353,9 @@ export const FOUNDER_INFO = {
   name: 'Prophet Edem Julius-Cudjoe',
   role: 'Visionary & Lead Convener',
   ministry: 'The Ephesus Gatherings Worldwide',
-  portraitPrimary:
-    'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/06/cropped-LOGO_C1.png',
-  portraitSquare:
-    'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-41.jpg',
-  portraitWithWife:
-    'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/04/Prophet-Mrs.-Julius-Cudjoe-747x1024.png',
+  portraitPrimary: '/images/prophet-edem-pulpit.jpg',
+  portraitSquare: '/images/prophet-edem-holding-bible.jpg',
+  portraitWithWife: '/images/prophet-mrs-julius-cudjoe.png',
   shortBio:
     'Prophet Edem Julius-Cudjoe is a devoted bondservant of the Lord Jesus Christ, a passionate revivalist, and a prophet with an apostolic mandate to strengthen the body of Christ by establishing the Church in Him and His finished work.',
   extendedBio:
@@ -614,8 +607,7 @@ export const MINISTRY_EVENTS: MinistryEvent[] = [
     isOnline: true,
     featured: true,
     speaker: 'Prophet Edem Julius-Cudjoe',
-    image:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/Eph-62.jpg',
+    image: '/images/prophet-edem-worship-lead.jpg',
     description:
       'Our flagship worship service. Gather in-person at The Son Place, Mikaddo Plaza, Labone, Accra or join the worldwide broadcast for apostolic preaching, prophetic ministry, and corporate worship.'
   },
@@ -775,8 +767,7 @@ export const MEDIA_LIBRARY: MediaItem[] = [
     speaker: 'Ephesus Gatherings Worldwide Family',
     category: 'Camp Highlight',
     duration: '01:45',
-    thumbnail:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-41.jpg',
+    thumbnail: '/images/sanctuary-prayer-worship.jpg',
     videoUrl:
       'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/WhatsApp-Video-2026-10-23-at-02.03.46.mp4',
     description:
@@ -904,59 +895,73 @@ export interface GalleryPhoto {
 export const GALLERY_PHOTOS: GalleryPhoto[] = [
   {
     id: 'gal-1',
-    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-4243-scaled-1.jpg',
-    caption: 'PWWC (Praying Women Winning Causes) gathering at The Son Place sanctuary in Labone, Accra.',
+    src: '/images/prophet-edem-pulpit.jpg',
+    caption: 'Prophet Edem Julius-Cudjoe ministering under an apostolic grace at The Son Place sanctuary.',
     category: 'Sanctuary Worship',
     location: 'The Son Place · Labone, Accra'
   },
   {
     id: 'gal-2',
-    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/Eph-62.jpg',
-    caption: 'Dynamic Sunday worship and celebration at the mother church sanctuary in Accra.',
+    src: '/images/sanctuary-prayer-worship.jpg',
+    caption: 'Dynamic Sunday worship, prayer and celebration at Grace Grounds in Accra.',
     category: 'Sanctuary Worship',
     location: 'Grace Grounds · Accra'
   },
   {
     id: 'gal-3',
-    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2024/06/SOFC@21-162-1-1024x683.jpg',
+    src: '/images/training-discipleship-session.jpg',
     caption: 'Education & Training Unit session equipping believers in the Word and apostolic discipleship.',
     category: 'Sanctuary Worship',
     location: 'Ephesus Training Centre'
   },
   {
     id: 'gal-4',
-    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2024/12/The-Fathers-Blessing-2024-01.jpg',
-    caption: 'The Father’s Blessing impartation service with Prophet Edem Julius-Cudjoe.',
+    src: '/images/prophet-edem-worship-lead.jpg',
+    caption: 'Prophetic worship, song, and impartation with Prophet Edem Julius-Cudjoe.',
     category: 'Sanctuary Worship',
     location: 'The Son Place · Accra'
   },
   {
     id: 'gal-5',
-    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-3853-scaled-1.jpg',
+    src: '/images/worship-surrender.jpg',
     caption: 'Intercessors standing on the watchtower in fervent prayer for families and nations.',
     category: 'ITF Camp',
     location: 'Ignite The Fire Convocation'
   },
   {
     id: 'gal-6',
-    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-41.jpg',
-    caption: 'Radiant congregation beaming with joy as the glorious Word of God takes root.',
-    category: 'Sanctuary Worship',
-    location: 'Mikaddo Plaza · Labone'
+    src: '/images/itf-camp-family.jpg',
+    caption: 'Ephesus Gatherings Worldwide family united in joy and spiritual fellowship at Ignite The Fire Camp.',
+    category: 'ITF Camp',
+    location: 'Ignite The Fire Camp'
   },
   {
     id: 'gal-7',
-    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-57.jpg',
-    caption: 'Anointed altar ministry, healing, and prophetic impartation.',
+    src: '/images/minister-altar-prayer.jpg',
+    caption: 'Anointed altar ministry, healing, and prophetic intercession.',
     category: 'Sanctuary Worship',
     location: 'The Son Place · Accra'
   },
   {
     id: 'gal-8',
-    src: 'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/Eph-8.jpg',
-    caption: 'Ephesus Outreach Program visiting schools, distributing Bibles and awarding scholarships.',
+    src: '/images/schools-outreach-stage.jpg',
+    caption: 'Ephesus Outreach Program ministering to thousands of senior high school students outdoors.',
     category: 'Outreach & Missions',
     location: 'Schools Outreach Mission'
+  },
+  {
+    id: 'gal-9',
+    src: '/images/schools-outreach-students.jpg',
+    caption: 'Students gathered under canopy tents listening to the Word of God and receiving free Bibles.',
+    category: 'Outreach & Missions',
+    location: 'Senior High School Mission'
+  },
+  {
+    id: 'gal-10',
+    src: '/images/youth-fellowship-gathering.jpg',
+    caption: 'Young believers and campus ambassadors walking out the Gospel with joy and brotherly love.',
+    category: 'Outreach & Missions',
+    location: 'Youth & Campus Fellowship'
   }
 ];
 

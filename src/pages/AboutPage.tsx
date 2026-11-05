@@ -67,7 +67,7 @@ export const AboutPage: React.FC = () => {
 
           <div className="vision-media-stack" style={{ borderColor: 'rgba(212,175,55,0.4)' }}>
             <img
-              src="https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-4243-scaled-1.jpg"
+              src="/images/sanctuary-prayer-worship.jpg"
               alt="Ephesus Gatherings Worldwide Sanctuary Congregation"
             />
           </div>

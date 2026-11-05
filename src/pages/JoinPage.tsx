@@ -42,7 +42,7 @@ export const JoinPage: React.FC = () => {
 
           <div className="vision-media-stack" style={{ borderColor: 'rgba(212,175,55,0.4)' }}>
             <img
-              src="https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-41.jpg"
+              src="/images/sanctuary-corporate-worship.jpg"
               alt="Congregation and fellowship at Ephesus Gatherings Worldwide"
             />
           </div>
