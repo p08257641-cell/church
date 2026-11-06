@@ -20,6 +20,7 @@ import {
   FOUNDER_INFO,
   GALLERY_PHOTOS,
   HERO_SLIDES,
+  ITFC_MOMENT_VIDEO,
   MEDIA_LIBRARY,
   MINISTRY_EVENTS,
   SERMON_CATEGORIES,
@@ -49,7 +50,7 @@ export const HomePage: React.FC = () => {
   const currentSlide = HERO_SLIDES[slideIdx];
   const featuredTestimony = TESTIMONIES_DATA[0];
   const worshipTrack = MEDIA_LIBRARY[0]; // By My Side (Live Worship)
-  const campClip = MEDIA_LIBRARY[1]; // Featured Ministry Video
+  const campClip = ITFC_MOMENT_VIDEO; // Authentic YouTube ITFC Ministry Moment
   const sundayTime = formatGMTServiceInLocal(0, 15, 0);
 
   const [selectedSermonCat, setSelectedSermonCat] = useState<string>('All');

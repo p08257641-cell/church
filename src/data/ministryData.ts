@@ -902,6 +902,17 @@ export interface MediaItem {
   description: string;
 }
 
+export const ITFC_MOMENT_VIDEO: MediaItem = {
+  id: "itfc-prayer-moment",
+  title: "Ignite The Fire Camp (ITFC) — Corporate Prayer & Fellowship",
+  speaker: "Prophet Edem Julius-Cudjoe & Ephesus Family",
+  category: "Ministry Moment",
+  duration: "01:30",
+  thumbnail: "https://img.youtube.com/vi/dNxi9tOEv9s/hqdefault.jpg",
+  youtubeId: "dNxi9tOEv9s",
+  description: "An intimate and powerful glimpse into corporate prayer, prophetic fellowship, and the moving of the Holy Spirit at Ignite The Fire Camp."
+};
+
 export const MEDIA_LIBRARY: MediaItem[] = [
   {
     id: "by-my-side",
@@ -1152,6 +1163,16 @@ export const MEDIA_LIBRARY: MediaItem[] = [
     thumbnail: "https://img.youtube.com/vi/X_aKCwuxYgU/hqdefault.jpg",
     youtubeId: "X_aKCwuxYgU",
     description: "A triumphant corporate celebration of high praise, thanksgiving, dance, and spiritual victory before the Lord."
+  },
+  {
+    id: "yt-kyjJ0lgPwDM",
+    title: "Ignite The Fire Camp (ITFC) — Sunday Service & Prophetic Impartation",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Shabbat & Special Convocations",
+    duration: "2:04:48",
+    thumbnail: "https://img.youtube.com/vi/kyjJ0lgPwDM/hqdefault.jpg",
+    youtubeId: "kyjJ0lgPwDM",
+    description: "The climactic Sunday gathering at Ignite The Fire Camp with apostolic teaching, prophetic declarations, and dynamic corporate worship."
   },
   {
     id: "yt-EphsAg4h_6k",
