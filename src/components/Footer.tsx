@@ -200,7 +200,7 @@ export const Footer: React.FC = () => {
               <Link to="/about#schools">Education & Training Unit</Link>
               <Link to="/about#beliefs">12 Articles of Faith</Link>
               <Link to="/about#founder">Prophet Edem Julius-Cudjoe</Link>
-              <Link to="/about#leaders">Ministry Leadership Team</Link>
+              <Link to="/about#ministries">Mother Church Ministry Arms</Link>
               <Link to="/join">Join as Member or Partner</Link>
               <Link to="/give">Tithes, Offerings & Partnership</Link>
               <Link to="/resources">All Resources & Outreach</Link>
@@ -233,7 +233,7 @@ export const Footer: React.FC = () => {
                 </a>
               </div>
               <div style={{ fontSize: '0.8rem', color: 'rgba(248,250,252,0.6)', marginTop: 2 }}>
-                Global Fellowship & Diaspora connections across North America, Europe & Africa.
+                Global Fellowship & Worldwide Family connecting believers across Ghana, Africa & the Nations.
               </div>
             </div>
           </div>

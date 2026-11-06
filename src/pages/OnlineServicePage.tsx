@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Bell,
@@ -13,11 +13,12 @@ import {
   NotebookPen,
   Play,
   Radio,
+  Search,
   Share2,
   Youtube
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { FOUNDER_INFO, MEDIA_LIBRARY } from '../data/ministryData';
+import { FOUNDER_INFO, MEDIA_LIBRARY, SERMON_CATEGORIES } from '../data/ministryData';
 import { WEEKLY_SERVICES, downloadICS, formatGMTServiceInLocal } from '../utils/time';
 
 type ConsoleTab = 'notes' | 'prayer' | 'salvation' | 'share';
@@ -37,6 +38,21 @@ export const OnlineServicePage: React.FC = () => {
   const [prayerText, setPrayerText] = useState('');
   const [prayerSent, setPrayerSent] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [selectedLibCat, setSelectedLibCat] = useState<string>('All');
+  const [searchLib, setSearchLib] = useState<string>('');
+
+  const filteredMedia = useMemo(() => {
+    return MEDIA_LIBRARY.filter(item => {
+      const catOk = selectedLibCat === 'All' || item.category === selectedLibCat;
+      const q = searchLib.trim().toLowerCase();
+      const qOk =
+        !q ||
+        item.title.toLowerCase().includes(q) ||
+        item.description.toLowerCase().includes(q) ||
+        item.speaker.toLowerCase().includes(q);
+      return catOk && qOk;
+    });
+  }, [selectedLibCat, searchLib]);
 
   useEffect(() => {
     try {
@@ -453,8 +469,53 @@ export const OnlineServicePage: React.FC = () => {
             </div>
           </div>
 
+          {/* Series / Category Filter & Search Bar */}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem',
+              marginBottom: '2rem'
+            }}
+          >
+            <div className="filter-bar" style={{ margin: 0 }}>
+              <div className="chip-group">
+                {SERMON_CATEGORIES.map(cat => (
+                  <button
+                    key={cat}
+                    type="button"
+                    className={`chip-btn ${selectedLibCat === cat ? 'is-active' : ''}`}
+                    onClick={() => setSelectedLibCat(cat)}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+              <div className="search-filter-box" style={{ maxWidth: 360, width: '100%', position: 'relative' }}>
+                <Search
+                  size={15}
+                  style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }}
+                />
+                <input
+                  type="text"
+                  className="field-input"
+                  style={{ paddingLeft: '2.4rem', borderRadius: 'var(--radius-pill)', width: '100%' }}
+                  placeholder="Filter messages by topic or series..."
+                  value={searchLib}
+                  onChange={e => setSearchLib(e.target.value)}
+                />
+              </div>
+              <span style={{ fontSize: '0.86rem', color: 'var(--text-muted)' }}>
+                Showing {filteredMedia.length} of {MEDIA_LIBRARY.length} messages & songs
+              </span>
+            </div>
+          </div>
+
           <div className="grid-2">
-            {MEDIA_LIBRARY.map(item => (
+            {filteredMedia.map(item => (
               <article
                 key={item.id}
                 className="card card-interactive media-row-card"

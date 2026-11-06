@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -22,6 +22,7 @@ import {
   HERO_SLIDES,
   MEDIA_LIBRARY,
   MINISTRY_EVENTS,
+  SERMON_CATEGORIES,
   TESTIMONIES_DATA
 } from '../data/ministryData';
 import {
@@ -45,9 +46,25 @@ export const HomePage: React.FC = () => {
 
   const currentSlide = HERO_SLIDES[slideIdx];
   const featuredTestimony = TESTIMONIES_DATA[0];
-  const worshipTrack = MEDIA_LIBRARY[0]; // By My Side (Live)
-  const campClip = MEDIA_LIBRARY[3]; // ITFC 2026 Clip
+  const worshipTrack = MEDIA_LIBRARY[0]; // By My Side (Live Worship)
+  const campClip = MEDIA_LIBRARY[1]; // Featured Ministry Video
   const sundayTime = formatGMTServiceInLocal(0, 15, 0);
+
+  const [selectedSermonCat, setSelectedSermonCat] = useState<string>('All');
+
+  const displayedSermons = useMemo(() => {
+    if (selectedSermonCat === 'All') {
+      return [
+        MEDIA_LIBRARY[0], // By My Side (Live Worship)
+        MEDIA_LIBRARY[1], // The Remnants: Overcomers in Sardis
+        MEDIA_LIBRARY[6], // The Long Night Service
+        MEDIA_LIBRARY[11], // The Lordship of the Holy Spirit
+        MEDIA_LIBRARY[17], // The Privilege of Parenting
+        MEDIA_LIBRARY[22] // The Spirit of Glory Shabbat 3.0
+      ];
+    }
+    return MEDIA_LIBRARY.filter(m => m.category === selectedSermonCat);
+  }, [selectedSermonCat]);
 
   const handleHeroReminder = () => {
     downloadICS({
@@ -468,64 +485,141 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. UPCOMING GATHERINGS & SPECIAL SERIES (CURATED, ZERO DUPLICATES) */}
-      <section className="section">
+      {/* 5. APOSTOLIC SERMONS & BROADCASTS (YOUTUBE SERMON SERIES) */}
+      <section className="section section-stage">
         <div className="container">
           <div className="section-head-split">
             <div>
-              <span className="eyebrow">Gatherings & Programmes</span>
+              <span className="eyebrow">Apostolic Sermons & Broadcasts</span>
               <h2 className="section-title">
-                Upcoming Moments on the <span className="accent-serif">Global Calendar</span>
+                Watch Sermons & <span className="accent-serif">Live Messages</span>
               </h2>
               <p className="section-lead">
-                From weekly prophetic prayer watches to global crossover convocations—join from anywhere.
+                Stream apostolic teachings, prophetic prayer vigils, and live worship messages directly from Prophet Edem Julius-Cudjoe on YouTube.
               </p>
             </div>
-            <Link to="/events" className="btn btn-outline">
-              <Calendar size={16} /> View Full Calendar
-            </Link>
+            <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+              <Link to="/online-service#library" className="btn btn-primary">
+                <Play size={15} fill="currentColor" /> Full Sermon Library
+              </Link>
+              <a
+                href="https://www.youtube.com/@officialprophetedem"
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-outline"
+              >
+                YouTube Channel <ExternalLink size={14} />
+              </a>
+            </div>
+          </div>
+
+          {/* Series / Category Filter Pills */}
+          <div className="filter-bar" style={{ marginBottom: '1.75rem' }}>
+            <div className="chip-group">
+              {SERMON_CATEGORIES.map(cat => (
+                <button
+                  key={cat}
+                  type="button"
+                  className={`chip-btn ${selectedSermonCat === cat ? 'is-active' : ''}`}
+                  onClick={() => setSelectedSermonCat(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+            <span style={{ fontSize: '0.86rem', color: 'var(--text-muted)' }}>
+              Showing {displayedSermons.length} {selectedSermonCat === 'All' ? 'featured sermons' : 'sermons'}
+            </span>
           </div>
 
           <div className="grid-3">
-            {[MINISTRY_EVENTS[0], MINISTRY_EVENTS[4], MINISTRY_EVENTS[5]].map(ev => (
-              <article key={ev.id} className="card card-interactive event-card">
-                <div className="event-media">
-                  <img src={ev.image} alt={ev.title} />
+            {displayedSermons.map(sermon => (
+              <article key={sermon.id} className="card card-interactive event-card">
+                <div className="event-media" style={{ position: 'relative' }}>
+                  <img src={sermon.thumbnail} alt={sermon.title} loading="lazy" />
+                  <button
+                    type="button"
+                    aria-label={`Play ${sermon.title}`}
+                    onClick={() => playMedia(sermon)}
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'rgba(5, 13, 28, 0.35)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'background 0.2s ease'
+                    }}
+                    className="sermon-play-overlay"
+                  >
+                    <div
+                      style={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: '50%',
+                        background: 'var(--brand-gold)',
+                        color: 'var(--brand-primary)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.35)'
+                      }}
+                    >
+                      <Play size={20} fill="currentColor" style={{ marginLeft: 3 }} />
+                    </div>
+                  </button>
+                  <span
+                    style={{
+                      position: 'absolute',
+                      bottom: 8,
+                      right: 8,
+                      background: 'rgba(5, 13, 28, 0.85)',
+                      color: '#FFFFFF',
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      padding: '2px 7px',
+                      borderRadius: '4px',
+                      backdropFilter: 'blur(4px)'
+                    }}
+                  >
+                    {sermon.duration}
+                  </span>
                 </div>
                 <div className="event-body">
                   <div>
-                    <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
-                      <span className="badge badge-gold">{ev.category}</span>
-                      <span className="badge badge-navy">{ev.timeGMT}</span>
+                    <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '0.65rem' }}>
+                      <span className="badge badge-gold">{sermon.category}</span>
                     </div>
-                    <h3 style={{ fontSize: '1.28rem', marginBottom: '0.35rem' }}>{ev.title}</h3>
-                    <p style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--brand-royal)', marginBottom: '0.55rem' }}>
-                      {ev.dateLabel}
+                    <h3 style={{ fontSize: '1.18rem', lineHeight: 1.35, marginBottom: '0.45rem' }}>{sermon.title}</h3>
+                    <p style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--brand-royal)', marginBottom: '0.55rem' }}>
+                      {sermon.speaker}
                     </p>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{ev.description}</p>
+                    <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                      {sermon.description}
+                    </p>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.75rem', borderTop: '1px solid var(--border-subtle)' }}>
-                    <Link
-                      to="/events"
-                      style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--brand-primary)', display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}
-                    >
-                      Event Details <ArrowRight size={14} />
-                    </Link>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.85rem', borderTop: '1px solid var(--border-subtle)', gap: '0.5rem', flexWrap: 'wrap' }}>
                     <button
                       type="button"
-                      className="btn btn-outline btn-sm"
-                      onClick={() =>
-                        downloadICS({
-                          title: ev.title,
-                          description: ev.description,
-                          startIso: ev.startIso,
-                          durationMinutes: ev.durationMinutes,
-                          location: ev.location
-                        })
-                      }
+                      className="btn btn-primary btn-sm"
+                      onClick={() => playMedia(sermon)}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                     >
-                      Save Date
+                      <Play size={13} fill="currentColor" /> Watch in Drawer
                     </button>
+                    {sermon.youtubeId && (
+                      <a
+                        href={`https://www.youtube.com/watch?v=${sermon.youtubeId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn btn-outline btn-sm"
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}
+                      >
+                        YouTube <ExternalLink size={12} />
+                      </a>
+                    )}
                   </div>
                 </div>
               </article>

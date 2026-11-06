@@ -14,10 +14,10 @@ import { useApp } from '../context/AppContext';
 import {
   ARTICLES_OF_FAITH,
   ArticleOfFaith,
-  DIASPORA_LEADERS,
   FLAG_URLS,
   FOUNDER_INFO,
-  LANGUAGES
+  LANGUAGES,
+  MOTHER_CHURCH_MINISTRIES
 } from '../data/ministryData';
 
 const PILLARS: ('All' | ArticleOfFaith['pillar'])[] = [
@@ -55,7 +55,7 @@ export const AboutPage: React.FC = () => {
                 { href: '#schools', label: '5 Training Schools' },
                 { href: '#beliefs', label: '12 Beliefs' },
                 { href: '#founder', label: 'Our Founder' },
-                { href: '#leaders', label: 'Ministry Leaders' },
+                { href: '#ministries', label: 'Ministry Arms' },
                 { href: '#belong', label: 'Member vs Affiliate' }
               ].map(ch => (
                 <a key={ch.href} href={ch.href} className="btn btn-ghost-light btn-sm">
@@ -339,56 +339,66 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. DIASPORA LEADERSHIP TEAM (ALL 7 COORDINATORS) */}
-      <section id="leaders" className="section">
+      {/* 5. MOTHER CHURCH MINISTRIES & ARMS */}
+      <section id="ministries" className="section">
+        <div id="leaders" style={{ position: 'relative', top: '-80px' }} />
         <div className="container">
           <div className="section-head-split">
             <div>
-              <span className="eyebrow">Servant Leadership</span>
+              <span className="eyebrow">Mother Church Ministries & Arms</span>
               <h2 className="section-title">
-                The Team Serving the <span className="accent-serif">Global Family</span>
+                Six Pillars of <span className="accent-serif">Kingdom Impact</span>
               </h2>
               <p className="section-lead">
-                Dedicated coordinators and department leaders across administration, welfare, online service, and the Education &amp; Training Unit.
+                From our sanctuary at The Son Place in Accra to student outreaches and worldwide digital broadcasts, explore how the ministry strengthens the body of Christ.
               </p>
             </div>
-            <Link to="/contact" className="btn btn-outline">
-              Contact Leadership <ArrowRight size={16} />
+            <Link to="/join" className="btn btn-outline">
+              Get Involved <ArrowRight size={16} />
             </Link>
           </div>
 
-          <div className="grid-4">
-            {DIASPORA_LEADERS.map(leader => (
-              <article key={leader.id} className="card card-interactive leader-card">
-                <div className="leader-photo-wrap">
-                  <img src={leader.image} alt={leader.name} className="portrait" loading="lazy" />
-                  <span className="leader-country-badge">
-                    <img src={FLAG_URLS[leader.flagCode]} alt="" className="flag-mini" />
-                    {leader.country}
-                  </span>
+          <div className="grid-3">
+            {MOTHER_CHURCH_MINISTRIES.map(pillar => (
+              <article key={pillar.id} className="card card-interactive event-card">
+                <div className="event-media">
+                  <img src={pillar.image} alt={pillar.title} loading="lazy" />
                 </div>
-                <div className="leader-body">
-                  <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-gold)' }}>
-                    {leader.role}
+                <div className="event-body">
+                  <div>
+                    <span className="badge badge-gold" style={{ marginBottom: '0.65rem' }}>
+                      {pillar.category}
+                    </span>
+                    <h3 style={{ fontSize: '1.24rem', lineHeight: 1.35, marginBottom: '0.55rem' }}>
+                      {pillar.title}
+                    </h3>
+                    <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '1rem' }}>
+                      {pillar.description}
+                    </p>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 1.15rem 0', display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
+                      {pillar.highlights.map(hl => (
+                        <li key={hl} style={{ fontSize: '0.82rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                          <CheckCircle2 size={13} style={{ color: 'var(--brand-royal)', flexShrink: 0 }} />
+                          {hl}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <h3 style={{ fontSize: '1.18rem' }}>{leader.name}</h3>
-                  <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', flex: 1 }}>
-                    {leader.focus}
-                  </p>
-                  <a
-                    href={`mailto:${leader.email}`}
-                    style={{
-                      marginTop: '0.65rem',
-                      fontSize: '0.8rem',
-                      fontWeight: 600,
-                      color: 'var(--brand-royal)',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '0.35rem'
-                    }}
-                  >
-                    <Mail size={13} /> {leader.email}
-                  </a>
+                  <div style={{ paddingTop: '0.85rem', borderTop: '1px solid var(--border-subtle)' }}>
+                    <Link
+                      to={pillar.link.to}
+                      style={{
+                        fontWeight: 700,
+                        fontSize: '0.88rem',
+                        color: 'var(--brand-primary)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.35rem'
+                      }}
+                    >
+                      {pillar.link.label} <ArrowRight size={14} />
+                    </Link>
+                  </div>
                 </div>
               </article>
             ))}
@@ -416,7 +426,7 @@ export const AboutPage: React.FC = () => {
               </span>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Members</h3>
               <p style={{ color: 'var(--text-secondary)', marginBottom: '1.1rem' }}>
-                For believers outside Ghana who have prayerfully chosen EGW as their primary church family for growth, shepherding, and service.
+                For believers who have prayerfully chosen Ephesus Gatherings Worldwide as their primary church home for spiritual growth, apostolic shepherding, and kingdom service.
               </p>
               <ul className="check-list" style={{ marginBottom: '1.5rem' }}>
                 <li><CheckCircle2 size={17} style={{ color: 'var(--ok-green)', flexShrink: 0, marginTop: 3 }} /> Full pastoral care and personal shepherding from EGW leadership</li>

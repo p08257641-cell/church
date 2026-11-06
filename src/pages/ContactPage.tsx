@@ -72,7 +72,7 @@ export const ContactPage: React.FC = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
               <Phone size={18} style={{ color: 'var(--gold-300)' }} />
               <a href="tel:+17809537153" style={{ fontWeight: 600 }}>
-                +1 (780) 953-7153 (International / Diaspora)
+                +1 (780) 953-7153 (International Inquiries)
               </a>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
@@ -220,7 +220,7 @@ export const ContactPage: React.FC = () => {
                 <div style={{ display: 'flex', gap: '0.6rem' }}>
                   <MapPin size={18} style={{ color: 'var(--brand-royal)', flexShrink: 0, marginTop: 2 }} />
                   <div>
-                    <strong>International / Diaspora Correspondence (Canada)</strong>
+                    <strong>International Correspondence (Canada)</strong>
                     <div style={{ color: 'var(--text-secondary)' }}>
                       10620 99 Ave NW, Unit 407, Edmonton, AB T5K 0L3, Canada
                     </div>

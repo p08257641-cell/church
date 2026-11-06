@@ -147,11 +147,11 @@ export const Header: React.FC = () => {
                       <div className="mega-link-desc">What we believe with full Scripture foundations</div>
                     </div>
                   </Link>
-                  <Link to="/about#leaders" className="mega-link-item">
+                  <Link to="/about#ministries" className="mega-link-item">
                     <span className="mega-icon"><Users size={18} /></span>
                     <div>
-                      <div className="mega-link-title">Founder & Ministry Leaders</div>
-                      <div className="mega-link-desc">Meet our Lead Convener & Global Ministry Leaders</div>
+                      <div className="mega-link-title">Ministry Arms & Mandate</div>
+                      <div className="mega-link-desc">Explore the 6 core pillars of Ephesus Gatherings</div>
                     </div>
                   </Link>
                 </div>

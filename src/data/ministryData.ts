@@ -330,7 +330,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     description:
       'Enroll in the Foundation School, School of Discipleship, School of the Word, School of the Prophets, and School of Faith designed to raise mature overcomers in Christ.',
     image: '/images/training-discipleship-session.jpg',
-    imagePosition: 'center 20%',
+    imagePosition: 'center 35%',
     primaryCta: { label: 'Explore Training Programs', to: '/about#schools' },
     secondaryCta: { label: 'Join as Member or Student', to: '/join' },
     scripture: '2 Timothy 2:15 — Study to shew thyself approved unto God, a workman that needeth not to be ashamed.'
@@ -353,8 +353,8 @@ export const FOUNDER_INFO = {
   name: 'Prophet Edem Julius-Cudjoe',
   role: 'Visionary & Lead Convener',
   ministry: 'The Ephesus Gatherings Worldwide',
-  portraitPrimary: '/images/prophet-edem-pulpit.jpg',
-  portraitSquare: '/images/prophet-edem-holding-bible.jpg',
+  portraitPrimary: '/images/prophet-edem-founder.jpg',
+  portraitSquare: '/images/prophet-edem-founder.jpg',
   portraitWithWife: '/images/prophet-mrs-julius-cudjoe.png',
   shortBio:
     'Prophet Edem Julius-Cudjoe is a devoted bondservant of the Lord Jesus Christ, a passionate revivalist, and a prophet with an apostolic mandate to strengthen the body of Christ by establishing the Church in Him and His finished work.',
@@ -468,6 +468,79 @@ export const MINISTRY_LEADERS: LeaderMember[] = [
 
 // Backwards-compatible alias for existing imports
 export const DIASPORA_LEADERS = MINISTRY_LEADERS;
+
+export interface MinistryPillar {
+  id: string;
+  title: string;
+  category: string;
+  image: string;
+  description: string;
+  highlights: string[];
+  link: { label: string; to: string };
+}
+
+export const MOTHER_CHURCH_MINISTRIES: MinistryPillar[] = [
+  {
+    id: 'sanctuary-worship',
+    title: 'Sanctuary Worship & Altar Ministrations',
+    category: 'The Son Place · Headquarters',
+    image: '/images/sanctuary-prayer-worship.jpg',
+    description:
+      'Our mother church sanctuary at Mikaddo Plaza, Labone, Accra gathers every Sunday for dynamic corporate praise, prophetic impartation, divine healing, and apostolic preaching.',
+    highlights: ['Weekly Sunday Service at 15:00 GMT', 'Altar Ministry & Corporate Prayer', 'In-Person Fellowship & Healing'],
+    link: { label: 'Service Schedule', to: '/events' }
+  },
+  {
+    id: 'education-training-schools',
+    title: 'The Education & Training Unit (5 Schools)',
+    category: 'Apostolic Equipping',
+    image: '/images/training-discipleship-session.jpg',
+    description:
+      'A structured spiritual education system encompassing the Foundation School, School of Discipleship, School of the Word, School of the Prophets, and School of Faith.',
+    highlights: ['Systematic Biblical Instruction', 'Ministerial Authority & Mentorship', 'Discipleship Cohorts'],
+    link: { label: 'Explore 5 Schools', to: '/about#schools' }
+  },
+  {
+    id: 'schools-campus-outreaches',
+    title: 'Secondary & Campus Evangelistic Missions',
+    category: 'AACA Outreach Mandate',
+    image: '/images/schools-outreach-stage.jpg',
+    description:
+      'Impacting high schools, universities, and student assemblies with the glorious Gospel of grace. Over 5,500 students have been reached with thousands won for Christ.',
+    highlights: ['High School Rallies & Conferences', 'Student Discipleship & Mentorship', 'Campus Fellowship Hubs'],
+    link: { label: 'Read Good Reports', to: '/testimonies' }
+  },
+  {
+    id: 'worldwide-media-broadcast',
+    title: 'Ephesus Worldwide Media & Broadcasts',
+    category: 'Global Digital Reach',
+    image: '/images/prophet-edem-worship-lead.jpg',
+    description:
+      'Taking apostolic revelation to over 20 nations through Ephesus Radio on Mixlr, YouTube livestreaming, and The Emergence Podcast.',
+    highlights: ['Ephesus Radio Mixlr Audio Stream', 'YouTube Global Live Broadcasts', 'The Emergence Podcast on Spotify & Apple'],
+    link: { label: 'Stream Online', to: '/online-service' }
+  },
+  {
+    id: 'benevolence-community-welfare',
+    title: 'Benevolence, Welfare & Student Aid',
+    category: 'Compassion in Action',
+    image: '/images/itf-camp-family.jpg',
+    description:
+      'Demonstrating the love of Christ through practical care, student scholarships, free Bible distributions, family welfare relief, and benevolence to communities in need.',
+    highlights: ['Student Educational Grants', 'Free Bible & Literature Donations', 'Family Welfare & Practical Aid'],
+    link: { label: 'Support the Mission', to: '/give' }
+  },
+  {
+    id: 'prophetic-convocations-camps',
+    title: 'Prophetic Convocations & Holy Convocations',
+    category: 'Conferences & Conclaves',
+    image: '/images/sanctuary-corporate-worship.jpg',
+    description:
+      'Flagship annual and seasonal convocations including The Father’s Blessing, Prophetic Warfare Worship Conference (PWWC), and International Camp Meetings.',
+    highlights: ['The Father’s Blessing Annual Impartation', 'PWWC Prophetic Worship Conferences', 'Holy Ghost Camp Encounters'],
+    link: { label: 'View Gathering Calendar', to: '/events' }
+  }
+];
 
 export interface ArticleOfFaith {
   number: string;
@@ -699,11 +772,23 @@ export const MINISTRY_EVENTS: MinistryEvent[] = [
   }
 ];
 
+export const SERMON_CATEGORIES = [
+  'All',
+  'Overcomers Series',
+  'Prophetic & All-Night Prayer',
+  'Holy Spirit & Discipleship',
+  'Family Life & Kingdom Living',
+  'Shabbat & Special Convocations',
+  'Worship Song'
+] as const;
+
+export type SermonCategory = typeof SERMON_CATEGORIES[number];
+
 export interface MediaItem {
   id: string;
   title: string;
   speaker: string;
-  category: 'Worship Song' | 'Prophetic Word' | 'Teaching Series' | 'Camp Highlight';
+  category: SermonCategory | string;
   duration: string;
   thumbnail: string;
   youtubeId?: string;
@@ -714,64 +799,264 @@ export interface MediaItem {
 
 export const MEDIA_LIBRARY: MediaItem[] = [
   {
-    id: 'by-my-side',
-    title: 'By My Side (Live Worship)',
-    speaker: 'Prophet Edem Julius-Cudjoe',
-    category: 'Worship Song',
-    duration: '07:42',
-    thumbnail:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/05/By-My-Side-Thumbnail-1-300x169.jpg',
-    youtubeId: '0m1lZvlf1mA',
-    description:
-      'A heartfelt live worship anthem celebrating the unfailing nearness, covenant faithfulness, and finished work of Jesus Christ.'
+    id: "by-my-side",
+    title: "By My Side (Live Worship)",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Worship Song",
+    duration: "07:42",
+    thumbnail: "https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/05/By-My-Side-Thumbnail-1-300x169.jpg",
+    youtubeId: "0m1lZvlf1mA",
+    description: "A heartfelt live worship anthem celebrating the unfailing nearness, covenant faithfulness, and finished work of Jesus Christ."
   },
   {
-    id: 'suach-hagah',
-    title: 'SUACH HAGAH 3.0 — The Word in Prayer',
-    speaker: 'Prophet Edem Julius-Cudjoe',
-    category: 'Teaching Series',
-    duration: '1:32:15',
-    thumbnail:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/11/SUACH-HAGAR-3.0-300x300.jpg',
-    youtubeId: '0pxcuNwbmaE',
-    description:
-      'Unlocking the art of meditation, deep contemplation, and releasing spiritual power through speaking the Word of God.'
+    id: "yt-Mf-qcDb3y0c",
+    title: "The Remnants: Overcomers in Sardis (Overcomers Part 5)",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Overcomers Series",
+    duration: "1:34:10",
+    thumbnail: "https://img.youtube.com/vi/Mf-qcDb3y0c/hqdefault.jpg",
+    youtubeId: "Mf-qcDb3y0c",
+    description: "An apostolic exposition of the letter to the Church in Sardis, uncovering what it means to keep garments clean and walk with Christ."
   },
   {
-    id: 'crisis-of-galatians',
-    title: 'The Crisis of the Galatians 2.0',
-    speaker: 'Prophet Edem Julius-Cudjoe',
-    category: 'Teaching Series',
-    duration: '1:24:40',
-    thumbnail:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/11/THE-CRISES-OF-THE-GALATIANS-copy.jpg',
-    youtubeId: 'JJlVc8X333E',
-    description:
-      'A decisive apostolic defense of the true Gospel of grace against legalism, works, and human effort.'
+    id: "yt-9bXjwY3eYM4",
+    title: "Overcomers in the Worldly Church: Pergamos & Thyatira (Part 4)",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Overcomers Series",
+    duration: "1:42:25",
+    thumbnail: "https://img.youtube.com/vi/9bXjwY3eYM4/hqdefault.jpg",
+    youtubeId: "9bXjwY3eYM4",
+    description: "Unpacking spiritual discernment, overcoming the doctrine of Balaam, and standing faithful against cultural compromise."
   },
   {
-    id: 'grace-for-life',
-    title: 'Grace for Life — Living in His Fullness',
-    speaker: 'Prophet Edem Julius-Cudjoe',
-    category: 'Prophetic Word',
-    duration: '1:18:24',
-    thumbnail:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/12/GRACE-FOR-LIFE-TV-1-300x169.jpg',
-    youtubeId: 'qcwVAVxsayU',
-    description:
-      'Discover how the unearned favor and righteousness of Jesus Christ empowers effortless success in everyday life.'
+    id: "yt-WlM72xV-CZM",
+    title: "Pergamos (The Worldly Church) \u2014 The Overcomers Part 3",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Overcomers Series",
+    duration: "1:28:40",
+    thumbnail: "https://img.youtube.com/vi/WlM72xV-CZM/hqdefault.jpg",
+    youtubeId: "WlM72xV-CZM",
+    description: "Examining the compromise of the worldly church and the divine promise of hidden manna and a white stone for overcomers."
   },
   {
-    id: 'itfc-prayer-moment',
-    title: 'ITFC Corporate Intercession & Praise Clip',
-    speaker: 'Ephesus Gatherings Worldwide Family',
-    category: 'Camp Highlight',
-    duration: '01:45',
-    thumbnail: '/images/sanctuary-prayer-worship.jpg',
-    videoUrl:
-      'https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/10/WhatsApp-Video-2026-10-23-at-02.03.46.mp4',
-    description:
-      'A glimpse into the fervency of prayer, joyful unity, and prophetic atmosphere when the Ephesus family gathers.'
+    id: "yt-_nUTCcZnqlc",
+    title: "The Churches of Ephesus and Smyrna \u2014 The Overcomers Part 2",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Overcomers Series",
+    duration: "1:31:15",
+    thumbnail: "https://img.youtube.com/vi/_nUTCcZnqlc/hqdefault.jpg",
+    youtubeId: "_nUTCcZnqlc",
+    description: "Returning to your first love and standing firm through tribulations and persecution with the crown of life in view."
+  },
+  {
+    id: "yt-LdszRr5biwk",
+    title: "The Overcomers \u2014 Foundation & Apostolic Mandate",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Overcomers Series",
+    duration: "1:48:50",
+    thumbnail: "https://img.youtube.com/vi/LdszRr5biwk/hqdefault.jpg",
+    youtubeId: "LdszRr5biwk",
+    description: "The foundational calling, mindset, and spiritual DNA of the overcomer in Christ across the seven letters of Revelation."
+  },
+  {
+    id: "yt-V1Ax2ChIiew",
+    title: "The Long Night Service \u2014 Fervent Midnight Watch",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Prophetic & All-Night Prayer",
+    duration: "2:15:30",
+    thumbnail: "https://img.youtube.com/vi/V1Ax2ChIiew/hqdefault.jpg",
+    youtubeId: "V1Ax2ChIiew",
+    description: "An intensive midnight prophetic prayer vigil contending for breakthroughs, family deliverance, and national revival."
+  },
+  {
+    id: "yt-o2kN1tAeRqg",
+    title: "The Anointing and Prayer \u2014 CWAT Monthly Service",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Prophetic & All-Night Prayer",
+    duration: "1:52:10",
+    thumbnail: "https://img.youtube.com/vi/o2kN1tAeRqg/hqdefault.jpg",
+    youtubeId: "o2kN1tAeRqg",
+    description: "Understanding how the Holy Spirit's unction fuels persevering intercession, destroying yokes and opening prophetic doors."
+  },
+  {
+    id: "yt-BV71VPtB3hg",
+    title: "The Practicality of Spirituality \u2014 Prayer, Praise and Prophecy",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Prophetic & All-Night Prayer",
+    duration: "1:39:45",
+    thumbnail: "https://img.youtube.com/vi/BV71VPtB3hg/hqdefault.jpg",
+    youtubeId: "BV71VPtB3hg",
+    description: "A practical roadmap on aligning prayer, high praise, and accurate prophetic utterance for everyday victory."
+  },
+  {
+    id: "yt-6oZU_aNlzKg",
+    title: "The Spoon of Faith \u2014 CWAT Special All-Night",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Prophetic & All-Night Prayer",
+    duration: "2:04:20",
+    thumbnail: "https://img.youtube.com/vi/6oZU_aNlzKg/hqdefault.jpg",
+    youtubeId: "6oZU_aNlzKg",
+    description: "A transformative all-night consecration service releasing faith to receive the impossible in every sphere of life."
+  },
+  {
+    id: "yt-9L0jSFlAbrc",
+    title: "Prayer, Praise and Prophecy Encounter",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Prophetic & All-Night Prayer",
+    duration: "1:44:00",
+    thumbnail: "https://img.youtube.com/vi/9L0jSFlAbrc/hqdefault.jpg",
+    youtubeId: "9L0jSFlAbrc",
+    description: "A dynamic corporate gathering intertwining apostolic preaching, corporate prophetic praise, and supernatural warfare."
+  },
+  {
+    id: "yt-Fdb3ZMQWIhg",
+    title: "The Lordship of the Holy Spirit",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Holy Spirit & Discipleship",
+    duration: "1:26:15",
+    thumbnail: "https://img.youtube.com/vi/Fdb3ZMQWIhg/hqdefault.jpg",
+    youtubeId: "Fdb3ZMQWIhg",
+    description: "Yielding full sovereignty of our wills, decisions, and ministries to the active governance of the Holy Spirit."
+  },
+  {
+    id: "yt-azo2dJybYeg",
+    title: "Under the Influence \u2014 Walking in the Fullness of the Spirit",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Holy Spirit & Discipleship",
+    duration: "1:35:40",
+    thumbnail: "https://img.youtube.com/vi/azo2dJybYeg/hqdefault.jpg",
+    youtubeId: "azo2dJybYeg",
+    description: "Moving beyond natural human capacity into the continuous, intoxicating power and presence of God."
+  },
+  {
+    id: "yt-bwp71Pzmijg",
+    title: "The Occupying Army \u2014 Kingdom Authority",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Holy Spirit & Discipleship",
+    duration: "1:19:50",
+    thumbnail: "https://img.youtube.com/vi/bwp71Pzmijg/hqdefault.jpg",
+    youtubeId: "bwp71Pzmijg",
+    description: "The apostolic mandate to occupy territories, advance God's kingdom, and establish the righteousness of Christ in the earth."
+  },
+  {
+    id: "yt-Eah63H8vLZY",
+    title: "What to Do After an Encounter",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Holy Spirit & Discipleship",
+    duration: "1:15:30",
+    thumbnail: "https://img.youtube.com/vi/Eah63H8vLZY/hqdefault.jpg",
+    youtubeId: "Eah63H8vLZY",
+    description: "Guarding the fire, walking in continuous obedience, and structuring your daily spiritual walk after divine visitation."
+  },
+  {
+    id: "yt-KvXETGS3GMc",
+    title: "Influencers \u2014 Manifesting Kingdom Impact in Culture",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Holy Spirit & Discipleship",
+    duration: "1:21:05",
+    thumbnail: "https://img.youtube.com/vi/KvXETGS3GMc/hqdefault.jpg",
+    youtubeId: "KvXETGS3GMc",
+    description: "How believers are positioned to influence society, marketplace gates, and governance through spiritual excellence."
+  },
+  {
+    id: "yt-NsHIQQ3ecpI",
+    title: "Paristano \u2014 The Art of Yielding",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Holy Spirit & Discipleship",
+    duration: "1:28:10",
+    thumbnail: "https://img.youtube.com/vi/NsHIQQ3ecpI/hqdefault.jpg",
+    youtubeId: "NsHIQQ3ecpI",
+    description: "Exploring Romans 6 and the biblical art of presenting your bodily members as instruments of righteousness unto God."
+  },
+  {
+    id: "yt-kyBpWLW2Lrc",
+    title: "The Privilege of Parenting (Family Life Conference Part B)",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Family Life & Kingdom Living",
+    duration: "1:38:20",
+    thumbnail: "https://img.youtube.com/vi/kyBpWLW2Lrc/hqdefault.jpg",
+    youtubeId: "kyBpWLW2Lrc",
+    description: "Raising god-fearing children in an ungodly culture, instilling covenant identity and spiritual discipline in the home."
+  },
+  {
+    id: "yt-zQiKqHkwDJg",
+    title: "Factors to Consider When Choosing a Spouse (Part A)",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Family Life & Kingdom Living",
+    duration: "1:45:15",
+    thumbnail: "https://img.youtube.com/vi/zQiKqHkwDJg/hqdefault.jpg",
+    youtubeId: "zQiKqHkwDJg",
+    description: "Biblical wisdom, spiritual maturity, emotional alignment, and practical clarity for choosing a godly spouse."
+  },
+  {
+    id: "yt-Cwm3KrGP9yE",
+    title: "Sin and the Righteous Man \u2014 The Power of Grace",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Family Life & Kingdom Living",
+    duration: "1:22:40",
+    thumbnail: "https://img.youtube.com/vi/Cwm3KrGP9yE/hqdefault.jpg",
+    youtubeId: "Cwm3KrGP9yE",
+    description: "A deep theological study on the believer's new nature, righteousness in Christ, and walking free from the law of sin."
+  },
+  {
+    id: "yt-N86efZXfSjY",
+    title: "The Conduct of the Righteous Man",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Family Life & Kingdom Living",
+    duration: "1:18:30",
+    thumbnail: "https://img.youtube.com/vi/N86efZXfSjY/hqdefault.jpg",
+    youtubeId: "N86efZXfSjY",
+    description: "How the inward righteousness of Christ reflects outwardly through character, business ethics, speech, and honor."
+  },
+  {
+    id: "yt-3zsE-di_i9s",
+    title: "Family Life Fast & Consecration",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Family Life & Kingdom Living",
+    duration: "1:32:00",
+    thumbnail: "https://img.youtube.com/vi/3zsE-di_i9s/hqdefault.jpg",
+    youtubeId: "3zsE-di_i9s",
+    description: "Consecrated prayer, fasting, and intercession for marital harmony, household peace, and spiritual inheritance."
+  },
+  {
+    id: "yt-T3UFLVav2r4",
+    title: "The Spirit of Glory \u2014 Shabbat Special 3.0",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Shabbat & Special Convocations",
+    duration: "1:56:45",
+    thumbnail: "https://img.youtube.com/vi/T3UFLVav2r4/hqdefault.jpg",
+    youtubeId: "T3UFLVav2r4",
+    description: "A prophetic convocation celebrating the glory of God's Sabbath rest and releasing fresh grace for supernatural fruitfulness."
+  },
+  {
+    id: "yt-bDp8AJdmqFA",
+    title: "The Glory That Abides \u2014 Shabbat Special 2.0",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Shabbat & Special Convocations",
+    duration: "1:41:20",
+    thumbnail: "https://img.youtube.com/vi/bDp8AJdmqFA/hqdefault.jpg",
+    youtubeId: "bDp8AJdmqFA",
+    description: "Experiencing the abiding presence and heavy weight of God's glory that stays with you into daily challenges."
+  },
+  {
+    id: "yt-X_aKCwuxYgU",
+    title: "The Praise Congress \u2014 Corporate Celebration",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Shabbat & Special Convocations",
+    duration: "2:10:00",
+    thumbnail: "https://img.youtube.com/vi/X_aKCwuxYgU/hqdefault.jpg",
+    youtubeId: "X_aKCwuxYgU",
+    description: "A triumphant corporate celebration of high praise, thanksgiving, dance, and spiritual victory before the Lord."
+  },
+  {
+    id: "yt-EphsAg4h_6k",
+    title: "The Blessedness of Fatherhood & Mentorship",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Shabbat & Special Convocations",
+    duration: "1:27:10",
+    thumbnail: "https://img.youtube.com/vi/EphsAg4h_6k/hqdefault.jpg",
+    youtubeId: "EphsAg4h_6k",
+    description: "Honoring spiritual and biological fathers, unlocking generational blessings, and stepping into spiritual sonship."
   }
 ];
 
