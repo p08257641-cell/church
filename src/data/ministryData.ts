@@ -375,6 +375,111 @@ export const FOUNDER_INFO = {
   }
 };
 
+
+export interface PastoralLetter {
+  eyebrow: string;
+  subtitle: string;
+  paragraphs: string[];
+  role: string;
+}
+
+export const PASTORAL_WELCOME_LETTERS: Record<string, PastoralLetter> = {
+  en: {
+    eyebrow: 'So Glad You Are Here',
+    subtitle: 'A Word From Our Founder',
+    paragraphs: [
+      'We want you to know that you are God’s beloved, and that He has great plans and good things in store for you! He wants you blessed wherever you are and in whatever you put your hands to.',
+      'You can look forward to and enjoy all the blessings of being a child of God because of what Jesus has done for you at the cross. By His one perfect sacrifice, He has paid the price for all your sins — past, present and future (Hebrews 10:10). So God will never again condemn or judge you. And today, He is totally for you and always with you.',
+      'May you continue to receive fresh revelations of God’s love for you. It is our prayer that you will grow in your knowledge of Jesus and His loveliness, and find rest in His finished work for you, as you feed on His Word.'
+    ],
+    role: 'Visionary & Lead Convener'
+  },
+  es: {
+    eyebrow: 'Muy felices de tenerte aquí',
+    subtitle: 'Unas palabras de nuestro fundador',
+    paragraphs: [
+      '¡Queremos que sepas que eres el amado de Dios, y que Él tiene grandes planes y cosas buenas preparadas para ti! Desea que seas bendecido dondequiera que estés y en todo lo que emprendas.',
+      'Puedes esperar con gozo y disfrutar de todas las bendiciones de ser hijo de Dios gracias a lo que Jesús hizo por ti en la cruz. Por Su único y perfecto sacrificio, Él pagó el precio de todos tus pecados: pasados, presentes y futuros (Hebreos 10:10). Por lo tanto, Dios nunca más te condenará ni juzgará. Hoy, Él está totalmente a tu favor y siempre contigo.',
+      'Que continúes recibiendo revelaciones frescas del amor que Dios tiene por ti. Nuestra oración es que crezcas en el conocimiento de Jesús y de Su hermosura, y encuentres descanso en Su obra consumada mientras te alimentas de Su Palabra.'
+    ],
+    role: 'Visionario y Convocante Principal'
+  },
+  fr: {
+    eyebrow: 'Heureux de vous accueillir',
+    subtitle: 'Un mot de notre fondateur',
+    paragraphs: [
+      'Nous désirons que vous sachiez que vous êtes le bien-aimé de Dieu, et qu’Il a de grands projets et d’excellentes choses en réserve pour vous ! Il désire vous bénir où que vous soyez et dans tout ce que vous entreprenez.',
+      'Vous pouvez vous réjouir et vivre pleinement toutes les bénédictions d’être un enfant de Dieu grâce à ce que Jésus a accompli pour vous à la croix. Par Son sacrifice unique et parfait, Il a payé le prix de tous vos péchés — passés, présents et à venir (Hébreux 10:10). Ainsi, Dieu ne vous condamnera ni ne vous jugera plus jamais. Aujourd’hui, Il est pleinement avec vous et pour vous.',
+      'Puissiez-vous continuer à recevoir des révélations fraîches de l’amour de Dieu pour vous. Notre prière est que vous grandissiez dans la connaissance de Jésus et de Sa beauté, et que vous trouviez le repos dans Son œuvre achevée en vous nourrissant de Sa Parole.'
+    ],
+    role: 'Visionnaire & Coordinateur Principal'
+  },
+  tw: {
+    eyebrow: 'Yɛn ani agye paa sɛ wowɔ ha',
+    subtitle: 'Asɛm a efi yɛn Panyin hɔ',
+    paragraphs: [
+      'Yɛpɛ sɛ wohunu sɛ woyɛ Onyankopɔn dɔfo panyin, na ɔwɔ nhyehyɛe kɛse ne nneɛma pa bebree a wasie ama wo! Ɔpɛ sɛ wohyira wo baabiara a wowɔ ne biribiara a wode wo nsa bɛka no mu.',
+      'Wubetumi ahwɛ kwan na woanya Onyankopɔn ba a woyɛ no nhyira nyinaa mu anigye, esiane deɛ Yesu ayɛ ama wo wɔ asɛndua no so nti. Ɔnam ne bɔne afɔrebɔ pɛpɛɛpɛ koro no so atua wo bɔne nyinaa ho ka — deɛ atwam, deɛ ɛwɔ hɔ seesei ne deɛ ɛbɛba daakye (Hebrifo 10:10). Enti Onyankopɔn remmu wo fɔ da, na ɔremmu wo atɛn bio. Ɛnnɛ nso, ɔwɔ w’afã koraa na ɔka wo ho daa.',
+      'Bere a woredidi wɔ N’asɛm no mu no, yɛbɔ mpae sɛ wobɛkɔ so anya Onyankopɔn dɔ a ɔwɔ ma wo no ho adiyisɛm foforo daa, anyin wɔ Yesu nimdeɛ ne Ne fɛ no mu, na woanya ahomegye wɔ N’adwuma a wawie no mu.'
+    ],
+    role: 'Anisoadehunufoɔ & Panyin Kɛseɛ'
+  },
+  gaa: {
+    eyebrow: 'Mli filiki akɛ oyɛ biɛ kɛ wɔ',
+    subtitle: 'Wiemɔ kɛjɛ Wɔ-Shishitolɔ ŋɔɔ',
+    paragraphs: [
+      'Wɔsumɔɔ ni ole akɛ Nyɔŋmɔ suɔlɔ ji bo, kɛji akɛ eyɛ nibii kpakpai kɛ jwɛŋmɔi agboi ehã bo! Esumɔɔ ni ajɔɔ bo he fɛɛ he ni oyɔɔ kɛ nɔ fɛɛ nɔ ni okɛ odɛŋ baasa he.',
+      'Obaanyɛ okwɛ hiɛ kɛ miishɛɛ kɛya jɔɔmɔi fɛɛ ni yɔɔ Nyɔŋmɔ bi feemɔ mli lɛ nɔ, ejaakɛ nɔ ni Yesu fee ehã bo yɛ sɛŋmɔtso lɛ nɔ lɛ hewɔ. Kɛtsɔ e-afɔleshaa kometoo ni eye emuu lɛ nɔ lɛ, ewo oeshei fɛɛ ahe nyɔmɔ — be ni eho, amrɔ nɛɛ kɛ wɔsɛɛ gbii lɛ (Hebribii 10:10). No hewɔ lɛ Nyɔŋmɔ ebuŋ bo fɔ dɔŋŋ. Ŋmɛnɛ nɛɛ, eyɛ ohilɛgbɛ kwraa kɛ okɛbaahi daa.',
+      'Wɔsɔlemo ji akɛ obaaná Nyɔŋmɔ suɔmɔ lɛ he adekpɔɔ hee daa. Eba fee akɛ obaaná shishinumɔ kɛ daa gbɛyeli yɛ Yesu kɛ ehe fɛo lɛ mli, ni oná hejɔɔmɔ yɛ enitsumɔ ni egbe naa lɛ mli be ni oyeko E-wiemɔ lɛ.'
+    ],
+    role: 'Ninaatsɛ kɛ Shishitolɔ Nukpa'
+  },
+  ig: {
+    eyebrow: 'Obi dị anyị ezigbo ụtọ na ị nọ ebe a',
+    subtitle: 'Okwu si n’aka Onye guzobere Anyị',
+    paragraphs: [
+      'Anyị chọrọ ka ị mara na ị bụ onye Chineke hụrụ n’anya nke ukwuu, nakwa na O nwere atụmatụ dị ebube na ihe ọma niile e debere maka gị! Ọ chọrọ ka a gọzie gị n’ebe ọ bụla ị nọ nakwa n’ihe niile aka gị metụrụ.',
+      'Ị nwere ike ịtụ anya ma nwee anụrị na ngọzi niile nke ịbụ nwa Chineke n’ihi ihe Jizọs meere gị n’obe. Site n’otu àjà Ya zuru oke, Ọ kwụrụ ụgwọ maka mmehie gị niile — nke oge gara aga, nke ugbua, na nke ga-abịa n’ọdịnihu (Ndị Hibru 10:10). Ya mere Chineke agaghị ama gị ikpe ma ọ bụ kpee gị ikpe ọzọ ma ọlị. Taa, Ọ kwadoro gị kpamkpam ma nọrọnyere gị mgbe niile.',
+      'Ka ị na-aga n’ihu na-enweta mkpughe ọhụrụ banyere ịhụnanya Chineke nwere n’ebe ị nọ. Ekpere anyị bụ ka ị too na mmụta banyere Jizọs na ịma mma Ya, ma nweta izu ike n’ọrụ Ya rụchara arụcha ka ị na-eri nri site n’Okwu Ya.'
+    ],
+    role: 'Onye Ọhụụ na Onye Nchikota Ukwu'
+  },
+  yo: {
+    eyebrow: 'Inú wa dùn púpọ̀ pé o wà níhìn-ín',
+    subtitle: 'Ọ̀rọ̀ Láti Ọwọ́ Olùdásílẹ̀ Wa',
+    paragraphs: [
+      'A fẹ́ kí o mọ̀ pé olùfẹ́ Ọlọ́run ni ọ́, àti pé Ó ní àwọn ètò títóbi àti ohun rere tí a ti pèsè sílẹ̀ fún ọ! Ó fẹ́ kí o di ẹni ìbùkún níbikíbi tí o bá wà àti nínú ohun gbogbo tí ọwọ́ rẹ bá tọ́.',
+      'O lè máa retí kí o sì gbádùn gbogbo ìbùkún jíjẹ́ ọmọ Ọlọ́run nítorí ohun tí Jésù ti ṣe fún ọ lórí àgbélébùú. Nípa ẹbọ pípé kan ṣoṣo Rẹ̀, Ó ti san gbèsè gbogbo ẹ̀ṣẹ̀ rẹ — ti àtijọ́, ti ìsinsìnyí, àti ti ọjọ́ iwájú (Hébérù 10:10). Nítorí náà, Ọlọ́run kì yóò tún dá ọ lẹ́bi tàbí kẹ́gàn rẹ mọ́. Lónìí, Ó wà pẹ̀lú rẹ pátápátá, Ó sì ń tì ọ́ lẹ́yìn títí láé.',
+      'Kí o máa tẹ̀síwájú láti gba ìfihàn tuntun ti ìfẹ́ Ọlọ́run fún ọ. Àdúrà wa ni pé kí o dàgbà nínú ìmọ̀ nípa Jésù àti ẹwà Rẹ̀, kí o sì rí ìsinmi nínú iṣẹ́ tí Ó ti parí fún ọ, bí o ṣe ń jẹun nínú Ọ̀rọ̀ Rẹ̀.'
+    ],
+    role: 'Olùríran & Olùpèjọ Àgbà'
+  },
+  sw: {
+    eyebrow: 'Tunafurahi sana kuwa uko hapa nasi',
+    subtitle: 'Neno Kutoka kwa Mwanzilishi Wetu',
+    paragraphs: [
+      'Tunapenda ujue kwamba wewe ni mpendwa wa Mungu, na kwamba Ana mipango mikubwa na mema tele yaliyowekwa kwa ajili yako! Anataka ubarikiwe popote ulipo na katika kila jambo unalolifanya kwa mikono yako.',
+      'Unaweza kutazamia na kufurahia baraka zote za kuwa mtoto wa Mungu kwa sababu ya kile ambacho Yesu alikufanyia msalabani. Kwa dhabihu Yake moja kamilifu, Amelipa gharama ya dhambi zako zote — zilizopita, za sasa, na za baadaye (Waebrania 10:10). Kwa hivyo, Mungu hatakuhukumu wala kukulaumu tena kamwe. Na leo, Yuko upande wako kikamilifu na yu pamoja nawe daima.',
+      'Upate kuendelea kupokea ufunuo mpya wa upendo wa Mungu kwako. Maombi yetu ni kwamba ukue katika kumjua Yesu na uzuri Wake, na upate pumziko katika kazi Yake iliyokamilika unapojilisha kwa Neno Lake.'
+    ],
+    role: 'Mwonozi na Kiongozi Mkuu'
+  },
+  zh: {
+    eyebrow: '衷心欢迎您的到来',
+    subtitle: '创办人的牧者心语',
+    paragraphs: [
+      '我们渴望您深知：您是神所深爱的宝贝！祂为您预备了极其美好的计划与丰盛的恩典。无论您身在何方、手中所行何事，神都切望赐福于您！',
+      '因着耶稣基督在十字架上为您成就的一切，您可以怀着喜乐的心，享受作为神儿女的一切福分。借着祂那一次永远完全的献祭，祂已经为您所有的罪偿清了赎价——包括过去、现在和将来的罪（希伯来书 10:10）。因此，神决不再定您的罪，也决不再审判您。今天，祂完全站在您这一边，时刻与您同在！',
+      '愿您不断领受神对您那份长阔高深之爱的新鲜启示。我们深切祈愿：当您饱尝祂话语的丰盛时，您对耶稣及其荣美认识得越发深刻，并能在祂已完全成就的救赎大工中，得享真正的安息。'
+    ],
+    role: '异象领袖与总召集人'
+  }
+};
+
+export const getPastoralWelcomeLetter = (langCode: string): PastoralLetter => {
+  return PASTORAL_WELCOME_LETTERS[langCode] || PASTORAL_WELCOME_LETTERS['en'];
+};
+
 export interface LeaderMember {
   id: string;
   name: string;

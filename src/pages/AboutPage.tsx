@@ -17,7 +17,8 @@ import {
   FLAG_URLS,
   FOUNDER_INFO,
   LANGUAGES,
-  MOTHER_CHURCH_MINISTRIES
+  MOTHER_CHURCH_MINISTRIES,
+  getPastoralWelcomeLetter
 } from '../data/ministryData';
 
 const PILLARS: ('All' | ArticleOfFaith['pillar'])[] = [
@@ -31,6 +32,7 @@ const PILLARS: ('All' | ArticleOfFaith['pillar'])[] = [
 export const AboutPage: React.FC = () => {
   const { language, setLanguage, currentLang } = useApp();
   const [selectedPillar, setSelectedPillar] = useState<'All' | ArticleOfFaith['pillar']>('All');
+  const pastoralLetter = getPastoralWelcomeLetter(language);
 
   const filteredArticles =
     selectedPillar === 'All'
@@ -79,9 +81,9 @@ export const AboutPage: React.FC = () => {
         <div className="container">
           <div className="section-head-split">
             <div>
-              <span className="eyebrow">So Glad You Are Here</span>
+              <span className="eyebrow">{pastoralLetter.eyebrow}</span>
               <h2 className="section-title">
-                {currentLang.welcomeGreeting} — <span className="accent-serif">A Word From Our Founder</span>
+                {currentLang.welcomeGreeting} — <span className="accent-serif">{pastoralLetter.subtitle}</span>
               </h2>
             </div>
             <div className="chip-group" aria-label="Welcome greetings in 9 languages">
@@ -106,7 +108,7 @@ export const AboutPage: React.FC = () => {
 
           <div className="card split-card-welcome">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
-              {FOUNDER_INFO.welcomeLetter.map((para, idx) => (
+              {pastoralLetter.paragraphs.map((para, idx) => (
                 <p key={idx} style={{ fontSize: '1.06rem', color: 'var(--text-secondary)', lineHeight: 1.75 }}>
                   {para}
                 </p>
@@ -116,7 +118,7 @@ export const AboutPage: React.FC = () => {
                   {FOUNDER_INFO.name}
                 </strong>
                 <span style={{ fontSize: '0.86rem', color: 'var(--text-gold)', fontWeight: 700 }}>
-                  {FOUNDER_INFO.role}, Ephesus Gatherings Worldwide
+                  {pastoralLetter.role}, Ephesus Gatherings Worldwide
                 </span>
               </div>
             </div>

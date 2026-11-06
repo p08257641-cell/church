@@ -23,7 +23,8 @@ import {
   MEDIA_LIBRARY,
   MINISTRY_EVENTS,
   SERMON_CATEGORIES,
-  TESTIMONIES_DATA
+  TESTIMONIES_DATA,
+  getPastoralWelcomeLetter
 } from '../data/ministryData';
 import {
   WEEKLY_SERVICES,
@@ -32,7 +33,8 @@ import {
 } from '../utils/time';
 
 export const HomePage: React.FC = () => {
-  const { nextGathering, playMedia, openLightbox } = useApp();
+  const { nextGathering, playMedia, openLightbox, language } = useApp();
+  const pastoralLetter = getPastoralWelcomeLetter(language);
   const [slideIdx, setSlideIdx] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -426,7 +428,7 @@ export const HomePage: React.FC = () => {
               {FOUNDER_INFO.shortBio}
             </p>
             <p style={{ fontSize: '0.96rem', color: 'rgba(248,250,252,0.78)', marginBottom: '1.65rem' }}>
-              “{FOUNDER_INFO.welcomeLetter[0]}”
+              “{pastoralLetter.paragraphs[0]}”
             </p>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '2rem' }}>
