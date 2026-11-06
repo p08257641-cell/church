@@ -26,27 +26,27 @@ export const WEEKLY_SERVICES: WeeklyService[] = [
   },
   {
     id: 'wednesday-prayer',
-    title: 'Wednesday Prayer Session',
-    subtitle: 'Mixlr Midweek Intercession & Prayer Watch',
-    dayOfWeek: 3,
-    hourGMT: 23,
-    minuteGMT: 59,
+    title: 'Top Mission Service',
+    subtitle: 'The Son Place, Labone & Global Online Stream',
+    dayOfWeek: 2,
+    hourGMT: 18,
+    minuteGMT: 30,
     durationMinutes: 120,
-    category: 'Prayer Watch',
-    description: 'Fervent midnight intercession, prophetic declarations, and prayer watch streamed live on Mixlr and digital channels.',
-    location: 'Ephesus Radio Mixlr & Online Channels'
+    category: 'Main Gathering',
+    description: 'Gather in-person at The Son Place (Mikaddo Plaza, Labone, Accra) or stream live globally for Spirit-filled worship, apostolic exposition, and divine transformation',
+    location: 'The Son Place, Mikaddo Plaza, Labone Junction, Accra, Ghana'
   },
   {
     id: 'saturday-word',
-    title: 'Mixlr Word Session & Discipleship',
+    title: 'Departmental Prayer Meetings',
     subtitle: 'Equipping God’s Overcomers in the Word',
     dayOfWeek: 6,
     hourGMT: 18,
     minuteGMT: 30,
     durationMinutes: 120,
-    category: 'Word & Discipleship',
-    description: 'Apostolic teaching, foundation discipleship, and spiritual equipping to establish every believer firmly in Christ and His finished work.',
-    location: 'Ephesus Radio Mixlr & Online Broadcast'
+    category: 'Prayer',
+    description: 'Departmental Prayer Meetings.',
+    location: 'Online Google meet Sessions'
   }
 ];
 
