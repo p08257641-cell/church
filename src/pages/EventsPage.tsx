@@ -13,25 +13,36 @@ import {
   Sparkles,
   X
 } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 import { MINISTRY_EVENTS, MinistryEvent } from '../data/ministryData';
-import { downloadICS, getVisitorTimezone } from '../utils/time';
+import {
+  WEEKLY_SERVICES,
+  computeServiceCountdown,
+  downloadICS,
+  getNextServiceOccurrence,
+  getVisitorTimezone,
+  isTopMissionDateUTC,
+  isTopMissionOverrideMonth
+} from '../utils/time';
 
 const CATEGORIES: ('All' | MinistryEvent['category'])[] = [
   'All',
-  'Special Gathering',
+  'Monthly Convocation',
   'Weekly Service',
-  'Conference & Camp',
-  'Prayer & Fasting'
+  'Special Gathering',
+  'Conference & Camp'
 ];
 
 export const EventsPage: React.FC = () => {
+  useApp(); // Subscribes to 1s tick for live Top Mission countdown
   const [selectedCategory, setSelectedCategory] = useState<'All' | MinistryEvent['category']>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [calMonth, setCalMonth] = useState(() => new Date(2026, 10, 1)); // Nov 2026 default
   const [rsvpEvent, setRsvpEvent] = useState<MinistryEvent | null>(null);
   const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
 
-  const spotlight = MINISTRY_EVENTS[0]; // Night with the King 2026
+  const spotlight = MINISTRY_EVENTS.find(e => e.id === 'top-mission-service') || MINISTRY_EVENTS[0];
+  const topMissionTimer = computeServiceCountdown(WEEKLY_SERVICES[1]);
 
   const filteredEvents = useMemo(() => {
     return MINISTRY_EVENTS.filter(ev => {
@@ -62,8 +73,7 @@ export const EventsPage: React.FC = () => {
       const dow = dateObj.getDay();
       const svcs: string[] = [];
       if (dow === 0) svcs.push('Sun 15:00 GMT');
-      if (dow === 3) svcs.push('Wed 23:59 GMT');
-      if (dow === 6) svcs.push('Sat 18:30 GMT');
+      if (isTopMissionDateUTC(year, month, d)) svcs.push('Top Mission 18:30 GMT');
 
       let special: string | undefined;
       if (month === 11 && d === 31) special = 'Cross Over Service';
@@ -73,6 +83,12 @@ export const EventsPage: React.FC = () => {
     }
     return cells;
   }, [calMonth]);
+
+  const getEventStartIso = (ev: MinistryEvent) => {
+    if (ev.id === 'sunday-main-sanctuary') return getNextServiceOccurrence(WEEKLY_SERVICES[0]).toISOString();
+    if (ev.id === 'top-mission-service') return getNextServiceOccurrence(WEEKLY_SERVICES[1]).toISOString();
+    return ev.startIso;
+  };
 
   return (
     <div>
@@ -87,10 +103,13 @@ export const EventsPage: React.FC = () => {
             </p>
           </div>
           <div className="card" style={{ background: 'rgba(255,255,255,0.08)', borderColor: 'rgba(212,175,55,0.4)', color: '#FFFFFF' }}>
-            <span className="badge badge-gold" style={{ marginBottom: '0.6rem' }}>Featured Crossover</span>
+            <span className="badge badge-gold" style={{ marginBottom: '0.6rem' }}>{spotlight.category}</span>
             <h3 style={{ color: '#FFFFFF', fontSize: '1.35rem', marginBottom: '0.35rem' }}>{spotlight.title}</h3>
             <p style={{ fontSize: '0.9rem', color: 'rgba(248,250,252,0.82)', marginBottom: '1rem' }}>
-              {spotlight.dateLabel} · {spotlight.timeGMT} · With {spotlight.speaker}
+              {isTopMissionOverrideMonth(topMissionTimer.targetDate)
+                ? 'This Month: Tue, Nov 10 & Wed, Nov 11'
+                : spotlight.dateLabel}{' '}
+              · {spotlight.timeGMT} · With {spotlight.speaker}
             </p>
             <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
               <button
@@ -110,7 +129,7 @@ export const EventsPage: React.FC = () => {
                   downloadICS({
                     title: spotlight.title,
                     description: spotlight.description,
-                    startIso: spotlight.startIso,
+                    startIso: getEventStartIso(spotlight),
                     durationMinutes: spotlight.durationMinutes,
                     location: spotlight.location
                   })
@@ -132,26 +151,99 @@ export const EventsPage: React.FC = () => {
               borderColor: 'var(--border-gold)'
             }}
           >
-            <div style={{ borderRadius: 'var(--radius-md)', overflow: 'hidden', maxHeight: 420 }}>
+            <div
+              style={{
+                borderRadius: 'var(--radius-md)',
+                overflow: 'hidden',
+                aspectRatio: spotlight.id === 'top-mission-service' ? '1 / 1' : undefined,
+                maxWidth: spotlight.id === 'top-mission-service' ? 400 : undefined,
+                maxHeight: 420,
+                width: '100%',
+                marginInline: 'auto',
+                background: '#050b14'
+              }}
+            >
               <img
                 src={spotlight.image}
                 alt={spotlight.title}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: spotlight.id === 'top-mission-service' ? 'contain' : 'cover'
+                }}
               />
             </div>
             <div>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.85rem' }}>
                 <span className="badge badge-gold"><Sparkles size={13} /> Spotlight Gathering</span>
                 <span className="badge badge-navy">{spotlight.dateLabel}</span>
+                {isTopMissionOverrideMonth(topMissionTimer.targetDate) && (
+                  <span
+                    className="badge"
+                    style={{
+                      background: '#071226',
+                      color: 'var(--gold-300)',
+                      borderColor: 'rgba(212,175,55,0.45)'
+                    }}
+                  >
+                    This Month: Tue, Nov 10 &amp; Wed, Nov 11
+                  </span>
+                )}
                 <span className="badge badge-navy">{spotlight.timeGMT}</span>
               </div>
               <h2 style={{ fontSize: 'var(--text-3xl)', marginBottom: '0.6rem' }}>{spotlight.title}</h2>
               <p style={{ fontWeight: 700, color: 'var(--brand-royal)', marginBottom: '0.85rem' }}>
-                Ministering: {spotlight.speaker}
+                Ministering: {spotlight.speaker} · Grace Grounds (Mikaddo Conference Centre, Labone Junction)
               </p>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
-                {spotlight.description}
-              </p>
+
+              <div className="flyer-timer-panel">
+                <div className="flyer-timer-head">
+                  <span
+                    style={{
+                      fontSize: '0.72rem',
+                      fontWeight: 700,
+                      letterSpacing: '0.09em',
+                      textTransform: 'uppercase',
+                      color: topMissionTimer.isLive ? '#F87171' : 'var(--gold-300)'
+                    }}
+                  >
+                    {topMissionTimer.isLive
+                      ? '● Top Mission Live Right Now'
+                      : 'Next Top Mission Service Timer'}
+                  </span>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'rgba(248,250,252,0.88)' }}>
+                    {topMissionTimer.targetDateFormatted} ·{' '}
+                    {topMissionTimer.isSameAsGMT
+                      ? topMissionTimer.gmtFormatted
+                      : `${topMissionTimer.localTimeFormatted} (${topMissionTimer.gmtFormatted})`}
+                  </span>
+                </div>
+                {topMissionTimer.isLive ? (
+                  <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: '1.05rem' }}>
+                    Live now at Grace Grounds &amp; on the Online Broadcast Stage.
+                  </div>
+                ) : (
+                  <div className="countdown-boxes" role="timer" aria-live="off">
+                    <div className="countdown-cell">
+                      <span className="countdown-num">{topMissionTimer.days}</span>
+                      <span className="countdown-lbl">Days</span>
+                    </div>
+                    <div className="countdown-cell">
+                      <span className="countdown-num">{topMissionTimer.hours}</span>
+                      <span className="countdown-lbl">Hrs</span>
+                    </div>
+                    <div className="countdown-cell">
+                      <span className="countdown-num">{topMissionTimer.minutes}</span>
+                      <span className="countdown-lbl">Min</span>
+                    </div>
+                    <div className="countdown-cell">
+                      <span className="countdown-num">{topMissionTimer.seconds}</span>
+                      <span className="countdown-lbl">Sec</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
                 <button
                   type="button"
@@ -220,8 +312,20 @@ export const EventsPage: React.FC = () => {
           <div className="grid-3">
             {filteredEvents.map(ev => (
               <article key={ev.id} className="card card-interactive event-card">
-                <div className="event-media">
-                  <img src={ev.image} alt={ev.title} loading="lazy" />
+                <div
+                  className="event-media"
+                  style={ev.id === 'top-mission-service' ? { background: '#050b14' } : undefined}
+                >
+                  <img
+                    src={ev.image}
+                    alt={ev.title}
+                    loading="lazy"
+                    style={
+                      ev.id === 'top-mission-service'
+                        ? { objectFit: 'contain', objectPosition: 'center' }
+                        : undefined
+                    }
+                  />
                 </div>
                 <div className="event-body">
                   <div>
@@ -231,7 +335,9 @@ export const EventsPage: React.FC = () => {
                     </div>
                     <h3 style={{ fontSize: '1.25rem', marginBottom: '0.3rem' }}>{ev.title}</h3>
                     <div style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--brand-royal)', marginBottom: '0.5rem' }}>
-                      {ev.dateLabel}
+                      {ev.id === 'top-mission-service' && isTopMissionOverrideMonth(topMissionTimer.targetDate)
+                        ? `${ev.dateLabel} · This Month: Tue, Nov 10 & Wed, Nov 11`
+                        : ev.dateLabel}
                     </div>
                     <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '0.75rem' }}>
                       {ev.description}
@@ -259,7 +365,7 @@ export const EventsPage: React.FC = () => {
                         downloadICS({
                           title: ev.title,
                           description: ev.description,
-                          startIso: ev.startIso,
+                          startIso: getEventStartIso(ev),
                           durationMinutes: ev.durationMinutes,
                           location: ev.location
                         })
@@ -285,7 +391,7 @@ export const EventsPage: React.FC = () => {
                 Interactive Ministry <span className="accent-serif">Calendar</span>
               </h2>
               <p className="section-lead">
-                Blue markers indicate weekly online services (Sun, Wed, Sat); gold markers highlight special convocations.
+                Blue markers indicate Sunday Service (every Sunday, 15:00 GMT) and Top Mission Service (1st week monthly · Tue &amp; Wed, 18:30 GMT); gold markers highlight special convocations.
               </p>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>

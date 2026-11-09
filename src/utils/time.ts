@@ -2,7 +2,10 @@ export interface WeeklyService {
   id: string;
   title: string;
   subtitle: string;
-  dayOfWeek: number; // 0 = Sunday, 3 = Wednesday, 6 = Saturday
+  dayOfWeek: number; // 0 = Sunday, 2 = Tuesday, 3 = Wednesday
+  daysOfWeek?: number[];
+  scheduleType?: 'weekly' | 'monthly-first-tue-wed';
+  scheduleLabel?: string;
   hourGMT: number;
   minuteGMT: number;
   durationMinutes: number;
@@ -17,43 +20,95 @@ export const WEEKLY_SERVICES: WeeklyService[] = [
     title: 'Sunday Service & Worldwide Broadcast',
     subtitle: 'The Son Place, Labone & Global Online Stream',
     dayOfWeek: 0,
+    daysOfWeek: [0],
+    scheduleType: 'weekly',
+    scheduleLabel: 'Every Sunday',
     hourGMT: 15,
     minuteGMT: 0,
     durationMinutes: 150,
-    category: 'Main Gathering',
+    category: 'Weekly Service',
     description: 'Gather in-person at The Son Place (Mikaddo Plaza, Labone, Accra) or stream live globally for Spirit-filled worship, apostolic exposition, and divine transformation.',
     location: 'The Son Place, Mikaddo Plaza, Labone Junction, Accra, Ghana'
   },
   {
-    id: 'wednesday-prayer',
+    id: 'top-mission-service',
     title: 'Top Mission Service',
-    subtitle: 'The Son Place, Labone & Global Online Stream',
+    subtitle: 'First Week of Every Month · Tue & Wed with Prophet Edem Julius-Cudjoe',
     dayOfWeek: 2,
+    daysOfWeek: [2, 3],
+    scheduleType: 'monthly-first-tue-wed',
+    scheduleLabel: '1st Week Monthly · Tue & Wed',
     hourGMT: 18,
     minuteGMT: 30,
-    durationMinutes: 120,
-    category: 'Main Gathering',
-    description: 'Gather in-person at The Son Place (Mikaddo Plaza, Labone, Accra) or stream live globally for Spirit-filled worship, apostolic exposition, and divine transformation',
-    location: 'The Son Place, Mikaddo Plaza, Labone Junction, Accra, Ghana'
-  },
-  {
-    id: 'saturday-word',
-    title: 'Departmental Prayer Meetings',
-    subtitle: 'Equipping God’s Overcomers in the Word',
-    dayOfWeek: 6,
-    hourGMT: 18,
-    minuteGMT: 30,
-    durationMinutes: 120,
-    category: 'Prayer',
-    description: 'Departmental Prayer Meetings.',
-    location: 'Online Google meet Sessions'
+    durationMinutes: 150,
+    category: 'Monthly Service',
+    description: 'Held every first week of every month (Tuesdays & Wednesdays at 6:30 PM Prompt) with Prophet Edem Julius-Cudjoe at Grace Grounds (The Son Place), Mikaddo Conference Centre, Labone Junction & Online.',
+    location: 'Grace Grounds (The Son Place), Mikaddo Conference Centre, Labone Junction, Accra & Online'
   }
 ];
+
+export function getFirstTuesdayOfMonth(year: number, monthIndex: number): number {
+  const firstDow = new Date(Date.UTC(year, monthIndex, 1)).getUTCDay();
+  return 1 + ((2 - firstDow + 7) % 7);
+}
+
+// Explicit month overrides where Top Mission shifts from the regular first week (0-indexed month)
+const TOP_MISSION_MONTH_OVERRIDES: Record<string, [number, number]> = {
+  '2026-10': [10, 11] // November 2026: shifted from 1st week to Tue Nov 10 & Wed Nov 11
+};
+
+export function getTopMissionDaysForMonth(year: number, monthIndex: number): [number, number] {
+  const override = TOP_MISSION_MONTH_OVERRIDES[`${year}-${monthIndex}`];
+  if (override) return override;
+  const firstTue = getFirstTuesdayOfMonth(year, monthIndex);
+  return [firstTue, firstTue + 1];
+}
+
+export function isTopMissionDateUTC(year: number, monthIndex: number, dayOfMonth: number): boolean {
+  const [tue, wed] = getTopMissionDaysForMonth(year, monthIndex);
+  return dayOfMonth === tue || dayOfMonth === wed;
+}
+
+export function isTopMissionOverrideMonth(dateUTC: Date): boolean {
+  return Boolean(TOP_MISSION_MONTH_OVERRIDES[`${dateUTC.getUTCFullYear()}-${dateUTC.getUTCMonth()}`]);
+}
+
+export function doesServiceRunOnUTCDate(svc: WeeklyService, dateUTC: Date): boolean {
+  if (svc.scheduleType === 'monthly-first-tue-wed') {
+    return isTopMissionDateUTC(
+      dateUTC.getUTCFullYear(),
+      dateUTC.getUTCMonth(),
+      dateUTC.getUTCDate()
+    );
+  }
+  return dateUTC.getUTCDay() === svc.dayOfWeek;
+}
+
+export function getNextServiceOccurrence(svc: WeeklyService, nowMs = Date.now()): Date {
+  const now = new Date(nowMs);
+  for (let offset = 0; offset <= 45; offset++) {
+    const candidate = new Date(
+      Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate() + offset,
+        svc.hourGMT,
+        svc.minuteGMT,
+        0
+      )
+    );
+    if (doesServiceRunOnUTCDate(svc, candidate) && candidate.getTime() > nowMs) {
+      return candidate;
+    }
+  }
+  return new Date(nowMs + 86400000);
+}
 
 export interface NextGatheringState {
   service: WeeklyService;
   isLive: boolean;
   targetDate: Date;
+  targetDateFormatted: string;
   days: string;
   hours: string;
   minutes: string;
@@ -154,13 +209,16 @@ export function formatGMTServiceInLocal(dayOfWeek: number, hourGMT: number, minu
   }
 }
 
-export function computeNextGathering(nowMs = Date.now()): NextGatheringState {
+export function computeNextGatheringForServices(
+  services: WeeklyService[],
+  nowMs = Date.now()
+): NextGatheringState {
   const now = new Date(nowMs);
   let activeLive: { service: WeeklyService; start: Date; end: Date } | null = null;
   let soonestNext: { service: WeeklyService; start: Date } | null = null;
 
-  for (const svc of WEEKLY_SERVICES) {
-    for (let offset = -1; offset <= 7; offset++) {
+  for (const svc of services) {
+    for (let offset = -1; offset <= 45; offset++) {
       const d = new Date(Date.UTC(
         now.getUTCFullYear(),
         now.getUTCMonth(),
@@ -169,7 +227,7 @@ export function computeNextGathering(nowMs = Date.now()): NextGatheringState {
         svc.minuteGMT,
         0
       ));
-      if (d.getUTCDay() !== svc.dayOfWeek) continue;
+      if (!doesServiceRunOnUTCDate(svc, d)) continue;
       const end = new Date(d.getTime() + svc.durationMinutes * 60 * 1000);
 
       if (now >= d && now < end) {
@@ -180,6 +238,7 @@ export function computeNextGathering(nowMs = Date.now()): NextGatheringState {
         if (!soonestNext || d < soonestNext.start) {
           soonestNext = { service: svc, start: d };
         }
+        break;
       }
     }
   }
@@ -188,7 +247,7 @@ export function computeNextGathering(nowMs = Date.now()): NextGatheringState {
     ? { service: activeLive.service, targetDate: activeLive.start, isLive: true }
     : soonestNext
       ? { service: soonestNext.service, targetDate: soonestNext.start, isLive: false }
-      : { service: WEEKLY_SERVICES[0], targetDate: new Date(nowMs + 86400000), isLive: false };
+      : { service: services[0] || WEEKLY_SERVICES[0], targetDate: new Date(nowMs + 86400000), isLive: false };
 
   const diff = Math.max(0, chosen.targetDate.getTime() - nowMs);
   const totalSec = Math.floor(diff / 1000);
@@ -198,7 +257,7 @@ export function computeNextGathering(nowMs = Date.now()): NextGatheringState {
   const seconds = totalSec % 60;
 
   const fmt = formatGMTServiceInLocal(
-    chosen.service.dayOfWeek,
+    chosen.targetDate.getUTCDay(),
     chosen.service.hourGMT,
     chosen.service.minuteGMT,
     chosen.targetDate
@@ -221,6 +280,18 @@ export function computeNextGathering(nowMs = Date.now()): NextGatheringState {
     ? `${dayPhrase} at ${fmt.gmt}`
     : `${dayPhrase} at ${fmt.localTime} ${fmt.shortTz} (${fmt.gmt})`;
 
+  let targetDateFormatted = '';
+  try {
+    targetDateFormatted = new Intl.DateTimeFormat('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      timeZone: fmt.fullTz === 'GMT' ? 'UTC' : fmt.fullTz
+    }).format(chosen.targetDate);
+  } catch {
+    targetDateFormatted = chosen.targetDate.toUTCString().slice(0, 11);
+  }
+
   let compactCountdown = '';
   if (chosen.isLive) {
     compactCountdown = 'Live right now';
@@ -236,6 +307,7 @@ export function computeNextGathering(nowMs = Date.now()): NextGatheringState {
     service: chosen.service,
     isLive: chosen.isLive,
     targetDate: chosen.targetDate,
+    targetDateFormatted,
     days: String(days).padStart(2, '0'),
     hours: String(hours).padStart(2, '0'),
     minutes: String(minutes).padStart(2, '0'),
@@ -248,6 +320,17 @@ export function computeNextGathering(nowMs = Date.now()): NextGatheringState {
     humanWhen,
     compactCountdown
   };
+}
+
+export function computeNextGathering(nowMs = Date.now()): NextGatheringState {
+  return computeNextGatheringForServices(WEEKLY_SERVICES, nowMs);
+}
+
+export function computeServiceCountdown(
+  service: WeeklyService,
+  nowMs = Date.now()
+): NextGatheringState {
+  return computeNextGatheringForServices([service], nowMs);
 }
 
 export function computeAutoTheme(mode: 'auto' | 'light' | 'dark'): 'light' | 'dark' {

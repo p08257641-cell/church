@@ -216,7 +216,7 @@ export const Footer: React.FC = () => {
                   <strong style={{ color: '#FFFFFF', display: 'block' }}>The Son Place (Grace Grounds)</strong>
                   Mikaddo Plaza, Labone Junction, Accra, Ghana
                   <div style={{ color: 'var(--gold-200)', fontSize: '0.82rem', marginTop: 2 }}>
-                    Every Sunday at 3:00 PM GMT
+                    Sundays 3:00 PM GMT · Top Mission: 1st Week Monthly (Tue &amp; Wed, 6:30 PM Prompt)
                   </div>
                 </div>
               </div>

@@ -22,7 +22,6 @@ import {
   HERO_SLIDES,
   ITFC_MOMENT_VIDEO,
   MEDIA_LIBRARY,
-  MINISTRY_EVENTS,
   SERMON_CATEGORIES,
   TESTIMONIES_DATA,
   getPastoralWelcomeLetter
@@ -30,7 +29,9 @@ import {
 import {
   WEEKLY_SERVICES,
   downloadICS,
-  formatGMTServiceInLocal
+  formatGMTServiceInLocal,
+  getNextServiceOccurrence,
+  isTopMissionOverrideMonth
 } from '../utils/time';
 
 export const HomePage: React.FC = () => {
@@ -57,14 +58,17 @@ export const HomePage: React.FC = () => {
 
   const displayedSermons = useMemo(() => {
     if (selectedSermonCat === 'All') {
-      return [
-        MEDIA_LIBRARY[0], // By My Side (Live Worship)
-        MEDIA_LIBRARY[1], // The Remnants: Overcomers in Sardis
-        MEDIA_LIBRARY[6], // The Long Night Service
-        MEDIA_LIBRARY[11], // The Lordship of the Holy Spirit
-        MEDIA_LIBRARY[17], // The Privilege of Parenting
-        MEDIA_LIBRARY[22] // The Spirit of Glory Shabbat 3.0
+      const featuredIds = [
+        'by-my-side',
+        'yt--5wUHKAsoHA',
+        'yt-V1Ax2ChIiew',
+        'yt-Fdb3ZMQWIhg',
+        'yt-kyBpWLW2Lrc',
+        'yt-T3UFLVav2r4'
       ];
+      return featuredIds
+        .map(id => MEDIA_LIBRARY.find(m => m.id === id))
+        .filter((m): m is (typeof MEDIA_LIBRARY)[number] => Boolean(m));
     }
     return MEDIA_LIBRARY.filter(m => m.category === selectedSermonCat);
   }, [selectedSermonCat]);
@@ -196,14 +200,14 @@ export const HomePage: React.FC = () => {
 
           <div className="hero-ledger-cell">
             <div>
-              <div className="ledger-meta">Main Sanctuary Worship</div>
-              <div className="ledger-title">Sunday Service &amp; Global Broadcast</div>
+              <div className="ledger-meta">Main Sanctuary &amp; Monthly Mission</div>
+              <div className="ledger-title">Sunday Worship &amp; Top Mission Service</div>
               <div className="ledger-sub">
-                Every Sunday · 15:00 GMT · In-Person &amp; Online ({sundayTime.isSameAsGMT ? sundayTime.gmt : `${sundayTime.localTime} ${sundayTime.shortTz}`})
+                Every Sunday · 15:00 GMT ({sundayTime.isSameAsGMT ? sundayTime.gmt : `${sundayTime.localTime} ${sundayTime.shortTz}`}) · Top Mission: 1st Week Monthly (Tue &amp; Wed, 18:30 GMT)
               </div>
             </div>
             <Link to="/events" className="ledger-link">
-              See full weekly schedule <ArrowRight size={14} />
+              See full gathering schedule <ArrowRight size={14} />
             </Link>
           </div>
 
@@ -222,17 +226,17 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. WEEKLY ONLINE SERVICES IN VISITOR'S TIMEZONE */}
+      {/* 2. SANCTUARY & ONLINE SERVICES IN VISITOR'S TIMEZONE */}
       <section className="section section-stage">
         <div className="container">
           <div className="section-head-split">
             <div>
-              <span className="eyebrow">Gather Every Week</span>
+              <span className="eyebrow">Gather With Us</span>
               <h2 className="section-title">
-                Three Weekly Online Services, <span className="accent-serif">Synchronised to You</span>
+                Weekly &amp; Monthly Services, <span className="accent-serif">Synchronised to You</span>
               </h2>
               <p className="section-lead">
-                Every service streams online for our global family—automatically shown in GMT and your device’s time zone ({nextGathering.timezoneName}).
+                Join us in person at The Son Place (Labone Junction, Accra) or stream online—times shown in GMT and your device’s time zone ({nextGathering.timezoneName}).
               </p>
             </div>
             <Link to="/online-service" className="btn btn-primary">
@@ -240,9 +244,75 @@ export const HomePage: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid-3">
+          {/* Separate Live Timer Box for Whichever Sunday or Top Mission Service Is Next */}
+          <div className="next-service-timer-band" aria-label="Next service live countdown">
+            <div>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.6rem' }}>
+                <span className={`badge ${nextGathering.isLive ? 'badge-live' : 'badge-gold'}`}>
+                  {nextGathering.isLive && <span className="pulse-dot" />}
+                  {nextGathering.isLive ? 'Live Broadcast In Progress' : 'Next Service Countdown'}
+                </span>
+                <span className="badge" style={{ background: 'rgba(255,255,255,0.1)', color: '#F8FAFC', borderColor: 'rgba(255,255,255,0.2)' }}>
+                  {nextGathering.targetDateFormatted}
+                </span>
+              </div>
+              <h3 style={{ fontSize: 'clamp(1.35rem, 2.3vw, 1.8rem)', color: '#FFFFFF', marginBottom: '0.3rem' }}>
+                {nextGathering.service.title}
+              </h3>
+              <p style={{ fontSize: '0.94rem', color: 'rgba(248,250,252,0.82)', marginBottom: '1rem' }}>
+                {nextGathering.humanWhen} · {nextGathering.service.location || 'The Son Place, Labone Junction & Online'}
+              </p>
+              <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+                <Link to="/online-service" className="btn btn-gold btn-sm">
+                  {nextGathering.isLive ? 'Watch Stream Live' : 'Open Broadcast Stage'} <ArrowRight size={15} />
+                </Link>
+                <button
+                  type="button"
+                  className="btn btn-ghost-light btn-sm"
+                  onClick={handleHeroReminder}
+                >
+                  <Calendar size={15} /> Save Next Reminder (.ics)
+                </button>
+              </div>
+            </div>
+
+            <div>
+              {nextGathering.isLive ? (
+                <div className="countdown-cell" style={{ padding: '1.25rem' }}>
+                  <span className="countdown-num" style={{ color: '#F87171', fontSize: '1.45rem' }}>
+                    ● LIVE RIGHT NOW
+                  </span>
+                  <span className="countdown-lbl" style={{ display: 'block', marginTop: '0.35rem', color: 'rgba(248,250,252,0.8)' }}>
+                    Join the sanctuary broadcast
+                  </span>
+                </div>
+              ) : (
+                <div className="countdown-boxes" role="timer" aria-live="off">
+                  <div className="countdown-cell">
+                    <span className="countdown-num">{nextGathering.days}</span>
+                    <span className="countdown-lbl">Days</span>
+                  </div>
+                  <div className="countdown-cell">
+                    <span className="countdown-num">{nextGathering.hours}</span>
+                    <span className="countdown-lbl">Hrs</span>
+                  </div>
+                  <div className="countdown-cell">
+                    <span className="countdown-num">{nextGathering.minutes}</span>
+                    <span className="countdown-lbl">Min</span>
+                  </div>
+                  <div className="countdown-cell">
+                    <span className="countdown-num">{nextGathering.seconds}</span>
+                    <span className="countdown-lbl">Sec</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="grid-2">
             {WEEKLY_SERVICES.map(svc => {
-              const local = formatGMTServiceInLocal(svc.dayOfWeek, svc.hourGMT, svc.minuteGMT);
+              const nextDate = getNextServiceOccurrence(svc);
+              const local = formatGMTServiceInLocal(nextDate.getUTCDay(), svc.hourGMT, svc.minuteGMT, nextDate);
               return (
                 <article key={svc.id} className="card card-interactive service-card">
                   <div>
@@ -258,7 +328,9 @@ export const HomePage: React.FC = () => {
                     <div className="time-callout">
                       <div>
                         <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)', fontWeight: 700 }}>
-                          Every {local.localDayFull}
+                          {svc.id === 'top-mission-service' && isTopMissionOverrideMonth(nextDate)
+                            ? 'This Month: Tue, Nov 10 & Wed, Nov 11'
+                            : svc.scheduleLabel || `Every ${local.localDayFull}`}
                         </div>
                         <strong>{local.gmt}</strong>
                       </div>
@@ -288,8 +360,9 @@ export const HomePage: React.FC = () => {
                           downloadICS({
                             title: `EGW — ${svc.title}`,
                             description: svc.description,
-                            startIso: new Date().toISOString(),
-                            durationMinutes: svc.durationMinutes
+                            startIso: nextDate.toISOString(),
+                            durationMinutes: svc.durationMinutes,
+                            location: svc.location
                           })
                         }
                       >

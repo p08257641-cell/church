@@ -247,7 +247,7 @@ export const CHURCH_INFO = {
     city: 'Accra',
     country: 'Ghana',
     fullAddress: 'The Son Place, Mikaddo Plaza, Labone Junction, Accra, Ghana',
-    serviceTimes: 'Every Sunday at 3:00 PM GMT (15:00 HRS GMT)'
+    serviceTimes: 'Sundays at 3:00 PM GMT · Top Mission: 1st Week Monthly (Tue & Wed, 6:30 PM Prompt)'
   },
   contact: {
     phoneGhana: '+233 20 194 4006',
@@ -758,7 +758,7 @@ export interface MinistryEvent {
   id: string;
   title: string;
   subtitle: string;
-  category: 'Weekly Service' | 'Special Gathering' | 'Conference & Camp' | 'Prayer & Fasting';
+  category: 'Weekly Service' | 'Monthly Convocation' | 'Special Gathering' | 'Conference & Camp';
   dateLabel: string;
   startIso: string;
   timeGMT: string;
@@ -778,7 +778,7 @@ export const MINISTRY_EVENTS: MinistryEvent[] = [
     subtitle: 'Worship at The Son Place & Global Streaming',
     category: 'Weekly Service',
     dateLabel: 'Every Sunday',
-    startIso: '2026-11-08T15:00:00Z',
+    startIso: '2026-11-15T15:00:00Z',
     timeGMT: '15:00 GMT',
     durationMinutes: 150,
     location: 'The Son Place, Mikaddo Plaza, Labone & Online',
@@ -790,38 +790,21 @@ export const MINISTRY_EVENTS: MinistryEvent[] = [
       'Our flagship worship service. Gather in-person at The Son Place, Mikaddo Plaza, Labone, Accra or join the worldwide broadcast for apostolic preaching, prophetic ministry, and corporate worship.'
   },
   {
-    id: 'wednesday-prayer-session',
-    title: 'Wednesday Prayer Session',
-    subtitle: 'Midweek Midnight Intercession & Watch',
-    category: 'Prayer & Fasting',
-    dateLabel: 'Every Wednesday',
-    startIso: '2026-11-11T23:59:00Z',
-    timeGMT: '23:59 GMT',
-    durationMinutes: 120,
-    location: 'Ephesus Radio Mixlr & Digital Channels',
+    id: 'top-mission-service',
+    title: 'Top Mission Service',
+    subtitle: 'Every First Week Monthly · Tuesdays & Wednesdays',
+    category: 'Monthly Convocation',
+    dateLabel: 'First Week of Every Month · Tue & Wed',
+    startIso: '2026-11-10T18:30:00Z',
+    timeGMT: '18:30 GMT (6:30 PM Prompt)',
+    durationMinutes: 150,
+    location: 'Grace Grounds (The Son Place), Mikaddo Conference Centre, Labone Junction & Online',
     isOnline: true,
-    speaker: 'Prophet Edem Julius-Cudjoe & EGW Prayer Team',
-    image:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-4243-scaled-1.jpg',
+    featured: true,
+    speaker: 'Prophet Edem Julius-Cudjoe',
+    image: '/images/top-mission-service.jpg',
     description:
-      'Stand together on the watchtower at the turn of midweek to contend in prayer for families, nations, divine health, and spiritual awakening streamed live on Mixlr and digital channels.'
-  },
-  {
-    id: 'saturday-word-session',
-    title: 'Mixlr Word Session & Discipleship',
-    subtitle: 'Foundation Teaching & Spiritual Equipping',
-    category: 'Weekly Service',
-    dateLabel: 'Every Saturday',
-    startIso: '2026-11-07T18:30:00Z',
-    timeGMT: '18:30 GMT',
-    durationMinutes: 120,
-    location: 'Ephesus Radio Mixlr Broadcast',
-    isOnline: true,
-    speaker: 'Prophet Edem Julius-Cudjoe & Teaching Pastors',
-    image:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2024/06/SOFC@21-162-1-1024x683.jpg',
-    description:
-      'Apostolic doctrine, foundation discipleship, and spiritual equipping to ground every believer firmly in Christ and His finished work.'
+      'Held every first week of every month on Tuesdays and Wednesdays at 6:30 PM Prompt with Prophet Edem Julius-Cudjoe at Grace Grounds (The Son Place), Mikaddo Conference Centre, Labone Junction & Online.'
   },
   {
     id: 'cross-over-service',
@@ -923,6 +906,16 @@ export const MEDIA_LIBRARY: MediaItem[] = [
     thumbnail: "https://ephesusgatheringsworldwide.com/wp-content/uploads/2026/05/By-My-Side-Thumbnail-1-300x169.jpg",
     youtubeId: "0m1lZvlf1mA",
     description: "A heartfelt live worship anthem celebrating the unfailing nearness, covenant faithfulness, and finished work of Jesus Christ."
+  },
+  {
+    id: "yt--5wUHKAsoHA",
+    title: "God’s Dream Church vs. Satan’s Dream Church (Overcomers Part 6)",
+    speaker: "Prophet Edem Julius-Cudjoe",
+    category: "Overcomers Series",
+    duration: "2:50:08",
+    thumbnail: "https://img.youtube.com/vi/-5wUHKAsoHA/hqdefault.jpg",
+    youtubeId: "-5wUHKAsoHA",
+    description: "Latest Sunday service exposition contrasting Christ’s Spirit-built, glorious Church with spiritual counterfeits and calling believers to stand as true overcomers."
   },
   {
     id: "yt-Mf-qcDb3y0c",
@@ -1253,7 +1246,7 @@ export const TESTIMONIES_DATA: Testimony[] = [
       '“What God spoke through His prophet did not return void. He did exceedingly and abundantly above our prayers.”',
     paragraphs: [
       'Our family had faced an unresolved legal and immigration stalemate spanning almost five years with no progress.',
-      'During the Wednesday midnight prayer session on Mixlr, Prophet Edem declared a season of divine speed and open gates for members waiting on official responses.',
+      'During a live prophetic prayer broadcast on Mixlr, Prophet Edem declared a season of divine speed and open gates for members waiting on official responses.',
       'Within three weeks, we received unexpected approval letters without further interview or dispute. We give glory to the God of Ephesus!'
     ]
   },
@@ -1429,7 +1422,7 @@ export const ECOSYSTEM_RESOURCES: EcosystemResource[] = [
     name: 'Ephesus Radio (Mixlr 24/7)',
     category: 'Media',
     status: 'Available Now',
-    description: 'Live midweek prayer broadcasts, Saturday word sessions, and continuous preaching from Prophet Edem Julius-Cudjoe.',
+    description: 'Live sanctuary audio streams, Top Mission Service broadcasts, and continuous preaching from Prophet Edem Julius-Cudjoe.',
     externalUrl: 'https://ephesus-radio.mixlr.com/events/4361028',
     actionLabel: 'Listen on Mixlr'
   },

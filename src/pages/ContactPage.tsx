@@ -239,14 +239,19 @@ export const ContactPage: React.FC = () => {
             </div>
 
             <div className="card" style={{ background: 'var(--bg-stage)' }}>
-              <h4 style={{ fontSize: '1.05rem', marginBottom: '0.65rem' }}>When We Gather Online</h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <h4 style={{ fontSize: '1.05rem', marginBottom: '0.65rem' }}>When We Gather Online &amp; In Person</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                 {WEEKLY_SERVICES.map(s => {
                   const t = formatGMTServiceInLocal(s.dayOfWeek, s.hourGMT, s.minuteGMT);
                   return (
-                    <div key={s.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.86rem' }}>
-                      <strong>{s.title}</strong>
-                      <span style={{ color: 'var(--brand-royal)', fontWeight: 600 }}>
+                    <div key={s.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.75rem', fontSize: '0.86rem' }}>
+                      <div>
+                        <strong style={{ display: 'block' }}>{s.title}</strong>
+                        <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                          {s.scheduleLabel || `Every ${t.localDayFull}`}
+                        </span>
+                      </div>
+                      <span style={{ color: 'var(--brand-royal)', fontWeight: 600, textAlign: 'right', whiteSpace: 'nowrap' }}>
                         {t.isSameAsGMT ? t.gmt : `${t.localTime} ${t.shortTz} (${t.gmt})`}
                       </span>
                     </div>

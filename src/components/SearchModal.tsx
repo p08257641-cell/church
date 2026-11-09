@@ -34,9 +34,9 @@ export const SearchModal: React.FC = () => {
   const allEntries = useMemo<SearchEntry[]>(() => {
     const pages: SearchEntry[] = [
       { id: 'p-home', title: 'Home', subtitle: 'Overview, service countdown, vision & gallery', kind: 'Page', route: '/' },
-      { id: 'p-online', title: 'Online Service & Live Stage', subtitle: 'Watch Sunday 15:00 GMT, Wednesday prayer & Saturday word live', kind: 'Page', route: '/online-service' },
+      { id: 'p-online', title: 'Online Service & Live Stage', subtitle: 'Watch Sunday 15:00 GMT & Monthly Top Mission Service (Tue & Wed 18:30 GMT) live', kind: 'Page', route: '/online-service' },
       { id: 'p-about', title: 'About Us, Founder & Leadership', subtitle: 'Prophet Edem Julius-Cudjoe, 5 Schools, 12 Beliefs & Leaders', kind: 'Page', route: '/about' },
-      { id: 'p-events', title: 'Events & Global Calendar', subtitle: 'Night with the King, ITFC Camp & weekly schedule', kind: 'Page', route: '/events' },
+      { id: 'p-events', title: 'Events & Global Calendar', subtitle: 'Sunday Worship, Monthly Top Mission Service & Global Calendar', kind: 'Page', route: '/events' },
       { id: 'p-testimonies', title: 'Testimonies Wall', subtitle: 'Stories of healing, restoration & provision', kind: 'Page', route: '/testimonies' },
       { id: 'p-readings', title: 'Daily Bible Readings', subtitle: '1-Year, 10-Month & 9-Month plans + Proverbs challenge', kind: 'Page', route: '/daily-readings' },
       { id: 'p-salvation', title: 'Salvation — Receive Jesus', subtitle: 'The Gospel & guided salvation prayer', kind: 'Page', route: '/salvation' },

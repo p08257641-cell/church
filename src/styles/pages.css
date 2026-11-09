@@ -342,11 +342,12 @@ html[data-theme="dark"] .ledger-link {
 
 .countdown-boxes {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.65rem;
 }
 
 .countdown-cell {
+  min-width: 0;
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-sm);
@@ -369,6 +370,60 @@ html[data-theme="dark"] .ledger-link {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(248, 250, 252, 0.62);
+}
+
+/* --- Home Page Live Countdown Timer Bands --- */
+.next-service-timer-band {
+  background: var(--bg-royal-band);
+  color: #FFFFFF;
+  border: 1px solid rgba(212, 175, 55, 0.42);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.25rem, 2.5vw, 1.85rem);
+  box-shadow: var(--shadow-float);
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 1.75rem;
+}
+
+.flyer-timer-panel {
+  background: linear-gradient(155deg, #071226 0%, #0D1E3D 100%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.2rem;
+  color: #FFFFFF;
+  margin-bottom: 1.25rem;
+}
+
+.flyer-timer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.85rem;
+}
+
+@media (max-width: 860px) {
+  .next-service-timer-band {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .countdown-boxes {
+    gap: 0.4rem;
+  }
+
+  .countdown-cell {
+    padding: 0.6rem 0.25rem;
+  }
+
+  .flyer-timer-panel {
+    padding: 0.9rem 0.85rem;
+  }
 }
 
 /* --- Section Header Row --- */

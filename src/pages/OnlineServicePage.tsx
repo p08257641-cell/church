@@ -19,7 +19,15 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { FOUNDER_INFO, MEDIA_LIBRARY, SERMON_CATEGORIES } from '../data/ministryData';
-import { WEEKLY_SERVICES, downloadICS, formatGMTServiceInLocal } from '../utils/time';
+import {
+  WEEKLY_SERVICES,
+  downloadICS,
+  formatGMTServiceInLocal,
+  getNextServiceOccurrence,
+  isTopMissionOverrideMonth
+} from '../utils/time';
+
+const LATEST_SERVICE = MEDIA_LIBRARY.find(m => m.id === 'yt--5wUHKAsoHA') || MEDIA_LIBRARY[1];
 
 type ConsoleTab = 'notes' | 'prayer' | 'salvation' | 'share';
 
@@ -148,9 +156,9 @@ export const OnlineServicePage: React.FC = () => {
                         <button
                           type="button"
                           className="btn btn-gold btn-sm"
-                          onClick={() => setStageYoutubeId('qcwVAVxsayU')}
+                          onClick={() => setStageYoutubeId(LATEST_SERVICE.youtubeId || '-5wUHKAsoHA')}
                         >
-                          <Play size={15} fill="currentColor" /> Watch Latest Message on Stage
+                          <Play size={15} fill="currentColor" /> Watch Latest Sunday Service (Overcomers 6)
                         </button>
                         <a
                           href="https://ephesus-radio.mixlr.com/events/4361028"
@@ -183,7 +191,7 @@ export const OnlineServicePage: React.FC = () => {
                   <Radio size={17} style={{ color: 'var(--gold-400)' }} />
                   <span>
                     {stageYoutubeId
-                      ? 'Now Playing on Stage: Featured Message / Worship'
+                      ? `Now Playing on Stage: ${(MEDIA_LIBRARY.find(m => m.youtubeId === stageYoutubeId) || LATEST_SERVICE).title}`
                       : `Up Next: ${nextGathering.service.title} (${nextGathering.gmtFormatted})`}
                   </span>
                 </div>
@@ -419,16 +427,25 @@ export const OnlineServicePage: React.FC = () => {
             ))}
           </div>
 
-          {/* Weekly Schedule Row */}
-          <div className="grid-3" style={{ marginTop: '1.5rem' }}>
+          {/* Sanctuary & Monthly Schedule Row */}
+          <div className="grid-2" style={{ marginTop: '1.5rem' }}>
             {WEEKLY_SERVICES.map(svc => {
-              const t = formatGMTServiceInLocal(svc.dayOfWeek, svc.hourGMT, svc.minuteGMT);
+              const nextDate = getNextServiceOccurrence(svc);
+              const t = formatGMTServiceInLocal(nextDate.getUTCDay(), svc.hourGMT, svc.minuteGMT, nextDate);
               return (
                 <div key={svc.id} className="card" style={{ padding: '1.25rem 1.4rem' }}>
                   <div style={{ fontWeight: 700, fontSize: '1.08rem', marginBottom: '0.25rem' }}>{svc.title}</div>
                   <div style={{ fontSize: '0.9rem', color: 'var(--text-gold)', fontWeight: 600 }}>
-                    Every {t.localDayFull} · {t.isSameAsGMT ? t.gmt : `${t.localTime} ${t.shortTz} (${t.gmt})`}
+                    {svc.id === 'top-mission-service' && isTopMissionOverrideMonth(nextDate)
+                      ? 'This Month: Tue, Nov 10 & Wed, Nov 11'
+                      : svc.scheduleLabel || `Every ${t.localDayFull}`}{' '}
+                    · {t.isSameAsGMT ? t.gmt : `${t.localTime} ${t.shortTz} (${t.gmt})`}
                   </div>
+                  {svc.location && (
+                    <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>
+                      {svc.location}
+                    </div>
+                  )}
                 </div>
               );
             })}
