@@ -129,7 +129,7 @@ export const OnlineServicePage: React.FC = () => {
                 ) : (
                   <>
                     <img
-                      src="https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-4243-scaled-1.jpg"
+                      src="/images/sanctuary-prayer-worship.jpg"
                       alt={t('Ephesus Gatherings Worldwide Sanctuary Broadcast')}
                       className="poster"
                     />

@@ -86,6 +86,25 @@ export const EventsPage: React.FC = () => {
     return cells;
   }, [calMonth]);
 
+  const monthAgenda = useMemo(() => {
+    const year = calMonth.getFullYear();
+    const month = calMonth.getMonth();
+    const fmt = new Intl.DateTimeFormat(locale, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      timeZone: 'UTC'
+    });
+    return calendarCells
+      .filter(c => c.day !== null && (c.services.length > 0 || Boolean(c.special)))
+      .map(c => ({
+        day: c.day as number,
+        dateText: fmt.format(new Date(Date.UTC(year, month, c.day as number))),
+        services: c.services,
+        special: c.special
+      }));
+  }, [calendarCells, calMonth, locale]);
+
   const getEventStartIso = (ev: MinistryEvent) => {
     if (ev.id === 'sunday-main-sanctuary') return getNextServiceOccurrence(WEEKLY_SERVICES[0]).toISOString();
     if (ev.id === 'top-mission-service') return getNextServiceOccurrence(WEEKLY_SERVICES[1]).toISOString();
@@ -117,7 +136,7 @@ export const EventsPage: React.FC = () => {
                 : t(spotlight.dateLabel)}{' '}
               · {t(spotlight.timeGMT)} · {t('With {speaker}', { speaker: spotlight.speaker })}
             </p>
-            <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+            <div className="events-hero-actions">
               <button
                 type="button"
                 className="btn btn-gold btn-sm"
@@ -157,30 +176,14 @@ export const EventsPage: React.FC = () => {
               borderColor: 'var(--border-gold)'
             }}
           >
-            <div
-              style={{
-                borderRadius: 'var(--radius-md)',
-                overflow: 'hidden',
-                aspectRatio: spotlight.id === 'top-mission-service' ? '1 / 1' : undefined,
-                maxWidth: spotlight.id === 'top-mission-service' ? 400 : undefined,
-                maxHeight: 420,
-                width: '100%',
-                marginInline: 'auto',
-                background: '#050b14'
-              }}
-            >
+            <div className={`events-spotlight-media ${spotlight.id === 'top-mission-service' ? 'is-square' : ''}`}>
               <img
                 src={spotlight.image}
                 alt={t(spotlight.title)}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: spotlight.id === 'top-mission-service' ? 'contain' : 'cover'
-                }}
               />
             </div>
             <div>
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.85rem' }}>
+              <div className="events-spotlight-badges">
                 <span className="badge badge-gold"><Sparkles size={13} /> {t('Spotlight Gathering')}</span>
                 <span className="badge badge-navy">{t(spotlight.dateLabel)}</span>
                 {isTopMissionOverrideMonth(topMissionTimer.targetDate) && (
@@ -197,7 +200,7 @@ export const EventsPage: React.FC = () => {
                 )}
                 <span className="badge badge-navy">{t(spotlight.timeGMT)}</span>
               </div>
-              <h2 style={{ fontSize: 'var(--text-3xl)', marginBottom: '0.6rem' }}>{t(spotlight.title)}</h2>
+              <h2 className="events-spotlight-title">{t(spotlight.title)}</h2>
               <p style={{ fontWeight: 700, color: 'var(--brand-royal)', marginBottom: '0.85rem' }}>
                 {t('Ministering: {speaker} · Grace Grounds (Mikaddo Conference Centre, Labone Junction)', {
                   speaker: spotlight.speaker
@@ -252,7 +255,7 @@ export const EventsPage: React.FC = () => {
                 )}
               </div>
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+              <div className="events-spotlight-actions">
                 <button
                   type="button"
                   className="btn btn-primary"
@@ -358,7 +361,7 @@ export const EventsPage: React.FC = () => {
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', paddingTop: '0.75rem', borderTop: '1px solid var(--border-subtle)' }}>
+                  <div className="events-card-actions">
                     <button
                       type="button"
                       className="btn btn-primary btn-sm"
@@ -405,7 +408,7 @@ export const EventsPage: React.FC = () => {
                 {t('Blue markers indicate Sunday Service (every Sunday, 15:00 GMT) and Top Mission Service (1st week monthly · Tue & Wed, 18:30 GMT); gold markers highlight special convocations.')}
               </p>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <div className="calendar-month-nav">
               <button
                 type="button"
                 className="icon-btn"
@@ -414,7 +417,7 @@ export const EventsPage: React.FC = () => {
               >
                 <ChevronLeft size={18} />
               </button>
-              <strong style={{ minWidth: 155, textAlign: 'center', fontFamily: 'var(--font-display)', fontSize: '1.08rem' }}>
+              <strong className="calendar-month-label">
                 {t('{month} {year}', { month: t(monthEnLong), year: calMonth.getFullYear() })}
               </strong>
               <button
@@ -429,38 +432,82 @@ export const EventsPage: React.FC = () => {
           </div>
 
           <div className="calendar-shell">
-            <div className="calendar-weekdays">
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
-                <div key={d}>{t(d)}</div>
-              ))}
+            <div className="calendar-desktop-view">
+              <div className="calendar-weekdays">
+                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
+                  <div key={d}>{t(d)}</div>
+                ))}
+              </div>
+              <div className="calendar-days">
+                {calendarCells.map((cell, idx) => (
+                  <div
+                    key={idx}
+                    className={`cal-day-cell ${cell.day === null ? 'is-muted' : ''} ${
+                      cell.services.length > 0 || cell.special ? 'has-service' : ''
+                    }`}
+                  >
+                    <span style={{ fontWeight: 700 }}>{cell.day ?? ''}</span>
+                    <div>
+                      {cell.special && (
+                        <div style={{ fontSize: '0.68rem', fontWeight: 700, color: 'var(--text-gold)', lineHeight: 1.2, marginBottom: 2 }}>
+                          ★ {t(cell.special)}
+                        </div>
+                      )}
+                      {cell.services.map(s => (
+                        <div key={s} style={{ fontSize: '0.68rem', color: 'var(--brand-royal)', fontWeight: 600 }}>
+                          {t(s)}
+                        </div>
+                      ))}
+                      <div className="cal-dot-row" style={{ marginTop: 3 }}>
+                        {cell.services.length > 0 && <span className="cal-dot" />}
+                        {cell.special && <span className="cal-dot gold" />}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="calendar-days">
-              {calendarCells.map((cell, idx) => (
-                <div
-                  key={idx}
-                  className={`cal-day-cell ${cell.day === null ? 'is-muted' : ''} ${
-                    cell.services.length > 0 || cell.special ? 'has-service' : ''
-                  }`}
-                >
-                  <span style={{ fontWeight: 700 }}>{cell.day ?? ''}</span>
-                  <div>
-                    {cell.special && (
-                      <div style={{ fontSize: '0.68rem', fontWeight: 700, color: 'var(--text-gold)', lineHeight: 1.2, marginBottom: 2 }}>
-                        ★ {t(cell.special)}
-                      </div>
-                    )}
-                    {cell.services.map(s => (
-                      <div key={s} style={{ fontSize: '0.68rem', color: 'var(--brand-royal)', fontWeight: 600 }}>
-                        {t(s)}
-                      </div>
-                    ))}
-                    <div className="cal-dot-row" style={{ marginTop: 3 }}>
+
+            <div className="calendar-mobile-view">
+              <div className="cal-mini-weekdays">
+                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
+                  <div key={d}>{t(d)}</div>
+                ))}
+              </div>
+              <div className="cal-mini-days">
+                {calendarCells.map((cell, idx) => (
+                  <div
+                    key={idx}
+                    className={`cal-mini-cell ${cell.day === null ? 'is-muted' : ''} ${
+                      cell.services.length > 0 || cell.special ? 'has-service' : ''
+                    }`}
+                  >
+                    <span className="cal-mini-num">{cell.day ?? ''}</span>
+                    <div className="cal-dot-row" style={{ justifyContent: 'center' }}>
                       {cell.services.length > 0 && <span className="cal-dot" />}
                       {cell.special && <span className="cal-dot gold" />}
                     </div>
                   </div>
+                ))}
+              </div>
+
+              {monthAgenda.length > 0 && (
+                <div className="cal-agenda-list">
+                  {monthAgenda.map(item => (
+                    <div key={item.day} className="cal-agenda-row">
+                      <span className="cal-agenda-date">{item.dateText}</span>
+                      <div className="cal-agenda-tags">
+                        {item.special && (
+                          <span className="badge badge-gold">★ {t(item.special)}</span>
+                        )}
+                        {item.services.map(s => (
+                          <span key={s} className="badge badge-navy">{t(s)}</span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -470,7 +517,7 @@ export const EventsPage: React.FC = () => {
       {rsvpEvent && (
         <div className="modal-backdrop" onClick={() => setRsvpEvent(null)} role="dialog" aria-modal="true">
           <div className="modal-panel" onClick={e => e.stopPropagation()}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.75rem', marginBottom: '1rem' }}>
               <div>
                 <span className="badge badge-gold" style={{ marginBottom: '0.45rem' }}>{t(rsvpEvent.category)}</span>
                 <h3 style={{ fontSize: '1.45rem' }}>{t(rsvpEvent.title)}</h3>
@@ -513,7 +560,7 @@ export const EventsPage: React.FC = () => {
                   <label className="field-label">{t('WhatsApp Number (Optional for SMS/WhatsApp Alert)')}</label>
                   <input type="tel" className="field-input" placeholder="+1 / +44 / +233..." />
                 </div>
-                <div className="form-full" style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
+                <div className="form-full" style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
                   <button type="button" className="btn btn-outline btn-sm" onClick={() => setRsvpEvent(null)}>
                     {t('Cancel')}
                   </button>

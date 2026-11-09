@@ -820,7 +820,7 @@ export const MINISTRY_EVENTS: MinistryEvent[] = [
     featured: true,
     speaker: 'Prophet Edem Julius-Cudjoe & Guest Ministers',
     image:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/photo_2025-06-25_13-24-57.jpg',
+      '/images/sanctuary-corporate-worship.jpg',
     description:
       '31st December crossover service happening at the Grace Grounds (The Son Place), Mikaddo Plaza, Labone Junction, Accra and streamed to the ends of the earth.'
   },
@@ -837,7 +837,7 @@ export const MINISTRY_EVENTS: MinistryEvent[] = [
     isOnline: true,
     speaker: 'Prophet Edem Julius-Cudjoe',
     image:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2024/12/The-Fathers-Blessing-2024-01.jpg',
+      '/images/minister-altar-prayer.jpg',
     description:
       'A powerful prophetic convocation releasing the fatherly mantle, favor, and covenant blessings upon the 11th hour generation of believers.'
   },
@@ -854,7 +854,7 @@ export const MINISTRY_EVENTS: MinistryEvent[] = [
     isOnline: true,
     speaker: 'Prophet Edem Julius-Cudjoe & Guest Ministers',
     image:
-      'https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-3853-scaled-1.jpg',
+      '/images/itf-camp-family.jpg',
     description:
       'Unforgettable days of prayer, Flag Night celebration of nations, prophetic impartation, and deep spiritual renewal with the entire Ephesus family.'
   }
