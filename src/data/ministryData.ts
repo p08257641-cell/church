@@ -837,7 +837,7 @@ export const MINISTRY_EVENTS: MinistryEvent[] = [
     isOnline: true,
     speaker: 'Prophet Edem Julius-Cudjoe',
     image:
-      '/images/minister-altar-prayer.jpg',
+      '/images/fathers-blessing.jpg',
     description:
       'A powerful prophetic convocation releasing the fatherly mantle, favor, and covenant blessings upon the 11th hour generation of believers.'
   },
