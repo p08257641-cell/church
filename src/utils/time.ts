@@ -47,6 +47,22 @@ export const WEEKLY_SERVICES: WeeklyService[] = [
   }
 ];
 
+export type TranslateFn = (text: string, vars?: Record<string, string | number>) => string;
+
+export interface TimeFormatOptions {
+  t?: TranslateFn;
+  locale?: string;
+}
+
+const defaultTranslate: TranslateFn = (text, vars) => {
+  if (!vars) return text;
+  let out = text;
+  for (const [k, v] of Object.entries(vars)) {
+    out = out.replace(new RegExp(`\\{${k}\\}`, 'g'), String(v));
+  }
+  return out;
+};
+
 export function getFirstTuesdayOfMonth(year: number, monthIndex: number): number {
   const firstDow = new Date(Date.UTC(year, monthIndex, 1)).getUTCDay();
   return 1 + ((2 - firstDow + 7) % 7);
@@ -133,7 +149,14 @@ export function getVisitorTimezone(): string {
   }
 }
 
-export function formatGMTServiceInLocal(dayOfWeek: number, hourGMT: number, minuteGMT: number, referenceDate?: Date) {
+export function formatGMTServiceInLocal(
+  dayOfWeek: number,
+  hourGMT: number,
+  minuteGMT: number,
+  referenceDate?: Date,
+  opts?: TimeFormatOptions
+) {
+  const tr = opts?.t || defaultTranslate;
   const tz = getVisitorTimezone();
   const base = referenceDate ? new Date(referenceDate.getTime()) : new Date();
   const currentDay = base.getUTCDay();
@@ -160,18 +183,18 @@ export function formatGMTServiceInLocal(dayOfWeek: number, hourGMT: number, minu
       timeZone: tz
     }).format(candidate);
 
-    const localTime = new Intl.DateTimeFormat('en-US', {
+    const localTime = new Intl.DateTimeFormat(opts?.locale || 'en-US', {
       hour: 'numeric',
       minute: '2-digit',
       timeZone: tz
     }).format(candidate);
 
-    const localDay = new Intl.DateTimeFormat('en-US', {
+    const localDayEn = new Intl.DateTimeFormat('en-US', {
       weekday: 'short',
       timeZone: tz
     }).format(candidate);
 
-    const localDayFull = new Intl.DateTimeFormat('en-US', {
+    const localDayFullEn = new Intl.DateTimeFormat('en-US', {
       weekday: 'long',
       timeZone: tz
     }).format(candidate);
@@ -183,15 +206,15 @@ export function formatGMTServiceInLocal(dayOfWeek: number, hourGMT: number, minu
 
     const expectedGmt24 = `${String(hourGMT).padStart(2, '0')}:${String(minuteGMT).padStart(2, '0')}`;
     const isSameAsGMT =
-      (localHour24 === expectedGmt24 && localDay === DAY_NAMES_SHORT[dayOfWeek]) ||
+      (localHour24 === expectedGmt24 && localDayEn === DAY_NAMES_SHORT[dayOfWeek]) ||
       shortTz === 'GMT' ||
       shortTz === 'UTC';
 
     return {
       gmt: gmtStr,
       localTime,
-      localDay,
-      localDayFull,
+      localDay: tr(localDayEn),
+      localDayFull: tr(localDayFullEn),
       shortTz,
       fullTz: tz,
       isSameAsGMT
@@ -200,8 +223,8 @@ export function formatGMTServiceInLocal(dayOfWeek: number, hourGMT: number, minu
     return {
       gmt: gmtStr,
       localTime: gmtStr,
-      localDay: DAY_NAMES_SHORT[dayOfWeek],
-      localDayFull: DAY_NAMES_FULL[dayOfWeek],
+      localDay: tr(DAY_NAMES_SHORT[dayOfWeek]),
+      localDayFull: tr(DAY_NAMES_FULL[dayOfWeek]),
       shortTz: 'GMT',
       fullTz: 'GMT',
       isSameAsGMT: true
@@ -211,8 +234,10 @@ export function formatGMTServiceInLocal(dayOfWeek: number, hourGMT: number, minu
 
 export function computeNextGatheringForServices(
   services: WeeklyService[],
-  nowMs = Date.now()
+  nowMs = Date.now(),
+  opts?: TimeFormatOptions
 ): NextGatheringState {
+  const tr = opts?.t || defaultTranslate;
   const now = new Date(nowMs);
   let activeLive: { service: WeeklyService; start: Date; end: Date } | null = null;
   let soonestNext: { service: WeeklyService; start: Date } | null = null;
@@ -260,7 +285,8 @@ export function computeNextGatheringForServices(
     chosen.targetDate.getUTCDay(),
     chosen.service.hourGMT,
     chosen.service.minuteGMT,
-    chosen.targetDate
+    chosen.targetDate,
+    opts
   );
 
   // Build natural human day phrasing (Today / Tonight / Tomorrow / Sunday)
@@ -271,36 +297,49 @@ export function computeNextGatheringForServices(
 
   let dayPhrase = fmt.localDayFull;
   if (sameLocalDate) {
-    dayPhrase = chosen.targetDate.getHours() >= 18 ? 'Tonight' : 'Today';
+    dayPhrase = chosen.targetDate.getHours() >= 18 ? tr('Tonight') : tr('Today');
   } else if (isTomorrow) {
-    dayPhrase = 'Tomorrow';
+    dayPhrase = tr('Tomorrow');
   }
 
   const humanWhen = fmt.isSameAsGMT
-    ? `${dayPhrase} at ${fmt.gmt}`
-    : `${dayPhrase} at ${fmt.localTime} ${fmt.shortTz} (${fmt.gmt})`;
+    ? tr('{day} at {gmt}', { day: dayPhrase, gmt: fmt.gmt })
+    : tr('{day} at {localTime} {shortTz} ({gmt})', {
+        day: dayPhrase,
+        localTime: fmt.localTime,
+        shortTz: fmt.shortTz,
+        gmt: fmt.gmt
+      });
 
   let targetDateFormatted = '';
   try {
-    targetDateFormatted = new Intl.DateTimeFormat('en-US', {
+    const parts = new Intl.DateTimeFormat('en-US', {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
       timeZone: fmt.fullTz === 'GMT' ? 'UTC' : fmt.fullTz
-    }).format(chosen.targetDate);
+    }).formatToParts(chosen.targetDate);
+    const wdPart = parts.find(p => p.type === 'weekday')?.value || '';
+    const moPart = parts.find(p => p.type === 'month')?.value || '';
+    const dayPart = parts.find(p => p.type === 'day')?.value || '';
+    targetDateFormatted = tr('{weekday}, {month} {day}', {
+      weekday: tr(wdPart),
+      month: tr(moPart),
+      day: dayPart
+    });
   } catch {
     targetDateFormatted = chosen.targetDate.toUTCString().slice(0, 11);
   }
 
   let compactCountdown = '';
   if (chosen.isLive) {
-    compactCountdown = 'Live right now';
+    compactCountdown = tr('Live right now');
   } else if (days > 0) {
-    compactCountdown = `in ${days}d ${hours}h`;
+    compactCountdown = tr('in {days}d {hours}h', { days, hours });
   } else if (hours > 0) {
-    compactCountdown = `in ${hours}h ${minutes}m`;
+    compactCountdown = tr('in {hours}h {minutes}m', { hours, minutes });
   } else {
-    compactCountdown = `in ${Math.max(1, minutes)} min`;
+    compactCountdown = tr('in {minutes} min', { minutes: Math.max(1, minutes) });
   }
 
   return {
@@ -322,15 +361,16 @@ export function computeNextGatheringForServices(
   };
 }
 
-export function computeNextGathering(nowMs = Date.now()): NextGatheringState {
-  return computeNextGatheringForServices(WEEKLY_SERVICES, nowMs);
+export function computeNextGathering(nowMs = Date.now(), opts?: TimeFormatOptions): NextGatheringState {
+  return computeNextGatheringForServices(WEEKLY_SERVICES, nowMs, opts);
 }
 
 export function computeServiceCountdown(
   service: WeeklyService,
-  nowMs = Date.now()
+  nowMs = Date.now(),
+  opts?: TimeFormatOptions
 ): NextGatheringState {
-  return computeNextGatheringForServices([service], nowMs);
+  return computeNextGatheringForServices([service], nowMs, opts);
 }
 
 export function computeAutoTheme(mode: 'auto' | 'light' | 'dark'): 'light' | 'dark' {

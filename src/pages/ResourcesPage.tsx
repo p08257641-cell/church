@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ExternalLink, Layers, Search, Sparkles } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 import { ECOSYSTEM_RESOURCES, EcosystemResource } from '../data/ministryData';
 
 const CATS: ('All' | EcosystemResource['category'])[] = [
@@ -13,6 +14,7 @@ const CATS: ('All' | EcosystemResource['category'])[] = [
 ];
 
 export const ResourcesPage: React.FC = () => {
+  const { t } = useApp();
   const [selectedCat, setSelectedCat] = useState<'All' | EcosystemResource['category']>('All');
   const [query, setQuery] = useState('');
 
@@ -23,21 +25,24 @@ export const ResourcesPage: React.FC = () => {
       const qOk =
         !q ||
         r.name.toLowerCase().includes(q) ||
+        t(r.name).toLowerCase().includes(q) ||
         r.description.toLowerCase().includes(q) ||
-        r.category.toLowerCase().includes(q);
+        t(r.description).toLowerCase().includes(q) ||
+        r.category.toLowerCase().includes(q) ||
+        t(r.category).toLowerCase().includes(q);
       return catOk && qOk;
     });
-  }, [selectedCat, query]);
+  }, [selectedCat, query, t]);
 
   return (
     <div>
       <section className="page-hero">
         <div className="container page-hero-inner">
           <div>
-            <span className="eyebrow eyebrow-light">Ephesus Ecosystem & Extras</span>
-            <h1>Your Gateway to Every EGW Ministry Resource</h1>
+            <span className="eyebrow eyebrow-light">{t('Ephesus Ecosystem & Extras')}</span>
+            <h1>{t('Your Gateway to Every EGW Ministry Resource')}</h1>
             <p className="lead">
-              Explore live broadcasts, daily reading trackers, confidential prayer care, WhatsApp alerts, volunteer departments, and upcoming Ephesus platforms—all in one place with zero dead links.
+              {t('Explore live broadcasts, daily reading trackers, confidential prayer care, WhatsApp alerts, volunteer departments, and upcoming Ephesus platforms—all in one place with zero dead links.')}
             </p>
           </div>
           <div className="stats-ribbon" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
@@ -45,13 +50,13 @@ export const ResourcesPage: React.FC = () => {
               <div className="stat-value">
                 {ECOSYSTEM_RESOURCES.filter(r => r.status === 'Available Now').length}
               </div>
-              <div className="stat-label">Active Today</div>
+              <div className="stat-label">{t('Active Today')}</div>
             </div>
             <div className="stat-item">
               <div className="stat-value">
                 {ECOSYSTEM_RESOURCES.filter(r => r.status !== 'Available Now').length}
               </div>
-              <div className="stat-label">In Preview / Opening</div>
+              <div className="stat-label">{t('In Preview / Opening')}</div>
             </div>
           </div>
         </div>
@@ -68,7 +73,7 @@ export const ResourcesPage: React.FC = () => {
                   className={`chip-btn ${selectedCat === cat ? 'is-active' : ''}`}
                   onClick={() => setSelectedCat(cat)}
                 >
-                  {cat}
+                  {t(cat)}
                 </button>
               ))}
             </div>
@@ -79,7 +84,7 @@ export const ResourcesPage: React.FC = () => {
                 type="text"
                 className="field-input"
                 style={{ paddingLeft: '2.35rem', minHeight: 42, borderRadius: 'var(--radius-pill)' }}
-                placeholder="Search resources..."
+                placeholder={t('Search resources...')}
                 value={query}
                 onChange={e => setQuery(e.target.value)}
               />
@@ -98,14 +103,14 @@ export const ResourcesPage: React.FC = () => {
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem', gap: '0.5rem' }}>
                       <span className="badge badge-navy">
-                        <Layers size={12} /> {res.category}
+                        <Layers size={12} /> {t(res.category)}
                       </span>
                       <span className={`badge ${isLiveNow ? 'badge-ok' : 'badge-gold'}`}>
-                        {isLiveNow ? 'Available Now' : <><Sparkles size={11} /> Preview</>}
+                        {isLiveNow ? t('Available Now') : <><Sparkles size={11} /> {t('Preview')}</>}
                       </span>
                     </div>
-                    <h3 style={{ fontSize: '1.22rem', marginBottom: '0.4rem' }}>{res.name}</h3>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{res.description}</p>
+                    <h3 style={{ fontSize: '1.22rem', marginBottom: '0.4rem' }}>{t(res.name)}</h3>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{t(res.description)}</p>
                   </div>
 
                   <div>
@@ -116,14 +121,14 @@ export const ResourcesPage: React.FC = () => {
                         rel="noreferrer"
                         className="btn btn-primary btn-sm"
                       >
-                        {res.actionLabel} <ExternalLink size={14} />
+                        {res.actionLabel ? t(res.actionLabel) : ''} <ExternalLink size={14} />
                       </a>
                     ) : (
                       <Link
                         to={res.internalRoute || '/contact'}
                         className={`btn ${isLiveNow ? 'btn-primary' : 'btn-outline'} btn-sm`}
                       >
-                        {res.actionLabel} <ArrowRight size={14} />
+                        {res.actionLabel ? t(res.actionLabel) : ''} <ArrowRight size={14} />
                       </Link>
                     )}
                   </div>

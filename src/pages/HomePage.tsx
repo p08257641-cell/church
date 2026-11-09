@@ -35,7 +35,7 @@ import {
 } from '../utils/time';
 
 export const HomePage: React.FC = () => {
-  const { nextGathering, playMedia, openLightbox, language } = useApp();
+  const { nextGathering, playMedia, openLightbox, language, locale, t } = useApp();
   const pastoralLetter = getPastoralWelcomeLetter(language);
   const [slideIdx, setSlideIdx] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -52,7 +52,7 @@ export const HomePage: React.FC = () => {
   const featuredTestimony = TESTIMONIES_DATA[0];
   const worshipTrack = MEDIA_LIBRARY[0]; // By My Side (Live Worship)
   const campClip = ITFC_MOMENT_VIDEO; // Authentic YouTube ITFC Ministry Moment
-  const sundayTime = formatGMTServiceInLocal(0, 15, 0);
+  const sundayTime = formatGMTServiceInLocal(0, 15, 0, undefined, { t, locale });
 
   const [selectedSermonCat, setSelectedSermonCat] = useState<string>('All');
 
@@ -75,8 +75,8 @@ export const HomePage: React.FC = () => {
 
   const handleHeroReminder = () => {
     downloadICS({
-      title: `EGW — ${nextGathering.service.title}`,
-      description: nextGathering.service.description,
+      title: `EGW — ${t(nextGathering.service.title)}`,
+      description: t(nextGathering.service.description),
       startIso: nextGathering.targetDate.toISOString(),
       durationMinutes: nextGathering.service.durationMinutes
     });
@@ -105,27 +105,27 @@ export const HomePage: React.FC = () => {
 
         <div className="container hero-editorial-frame">
           <div className="hero-copy-block">
-            <div className="hero-kicker">{currentSlide.eyebrow}</div>
+            <div className="hero-kicker">{t(currentSlide.eyebrow)}</div>
 
-            <h1 className="hero-title">{currentSlide.title}</h1>
+            <h1 className="hero-title">{t(currentSlide.title)}</h1>
 
-            <p className="hero-desc">{currentSlide.description}</p>
+            <p className="hero-desc">{t(currentSlide.description)}</p>
 
             <div className="hero-cta-row">
               <Link to={currentSlide.primaryCta.to} className="btn btn-white">
-                {currentSlide.primaryCta.label} <ArrowRight size={16} />
+                {t(currentSlide.primaryCta.label)} <ArrowRight size={16} />
               </Link>
               <Link to={currentSlide.secondaryCta.to} className="btn btn-ghost-light">
-                {currentSlide.secondaryCta.label}
+                {t(currentSlide.secondaryCta.label)}
               </Link>
             </div>
 
             {currentSlide.scripture && (
-              <p className="hero-scripture-note">{currentSlide.scripture}</p>
+              <p className="hero-scripture-note">{t(currentSlide.scripture)}</p>
             )}
           </div>
 
-          <div className="hero-Controls" aria-label="Slide navigation">
+          <div className="hero-Controls" aria-label={t('Slide navigation')}>
             <div className="hero-counter-row">
               <span>
                 {String(slideIdx + 1).padStart(2, '0')} / {String(HERO_SLIDES.length).padStart(2, '0')}
@@ -134,7 +134,7 @@ export const HomePage: React.FC = () => {
                 type="button"
                 className="hero-arrow-btn"
                 onClick={() => setSlideIdx(prev => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
-                aria-label="Previous slide"
+                aria-label={t('Previous slide')}
               >
                 <ArrowLeft size={16} />
               </button>
@@ -142,7 +142,7 @@ export const HomePage: React.FC = () => {
                 type="button"
                 className="hero-arrow-btn"
                 onClick={() => setSlideIdx(prev => (prev + 1) % HERO_SLIDES.length)}
-                aria-label="Next slide"
+                aria-label={t('Next slide')}
               >
                 <ArrowRight size={16} />
               </button>
@@ -155,7 +155,7 @@ export const HomePage: React.FC = () => {
                   type="button"
                   role="tab"
                   aria-selected={idx === slideIdx}
-                  aria-label={`Slide ${idx + 1}: ${s.title}`}
+                  aria-label={t('Slide {num}: {title}', { num: idx + 1, title: t(s.title) })}
                   className={`hero-bar ${idx === slideIdx ? 'is-active' : ''}`}
                   onClick={() => setSlideIdx(idx)}
                 />
@@ -166,61 +166,65 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* DOCKED ARCHITECTURAL SANCTUARY LEDGER */}
-      <section className="hero-ledger-band" aria-label="Key ministry details">
+      <section className="hero-ledger-band" aria-label={t('Key ministry details')}>
         <div className="container hero-ledger-grid">
           <div className="hero-ledger-cell">
             <div>
               <div className="ledger-meta">
                 {nextGathering.isLive ? (
-                  <span style={{ color: 'var(--live-red)' }}>● Live Broadcast Now</span>
+                  <span style={{ color: 'var(--live-red)' }}>{t('● Live Broadcast Now')}</span>
                 ) : (
                   <>
-                    <span>Up Next</span>
+                    <span>{t('Up Next')}</span>
                     <span>·</span>
-                    <span style={{ color: 'var(--text-gold)' }}>Starts {nextGathering.compactCountdown}</span>
+                    <span style={{ color: 'var(--text-gold)' }}>
+                      {t('Starts {countdown}', { countdown: nextGathering.compactCountdown })}
+                    </span>
                   </>
                 )}
               </div>
-              <div className="ledger-title">{nextGathering.service.title}</div>
+              <div className="ledger-title">{t(nextGathering.service.title)}</div>
               <div className="ledger-sub">{nextGathering.humanWhen}</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1.1rem', flexWrap: 'wrap' }}>
               <Link to="/online-service" className="ledger-link">
-                Join online service <ArrowRight size={14} />
+                {t('Join online service')} <ArrowRight size={14} />
               </Link>
               <button
                 type="button"
                 onClick={handleHeroReminder}
                 style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}
               >
-                + Save reminder (.ics)
+                {t('+ Save reminder (.ics)')}
               </button>
             </div>
           </div>
 
           <div className="hero-ledger-cell">
             <div>
-              <div className="ledger-meta">Main Sanctuary &amp; Monthly Mission</div>
-              <div className="ledger-title">Sunday Worship &amp; Top Mission Service</div>
+              <div className="ledger-meta">{t('Main Sanctuary & Monthly Mission')}</div>
+              <div className="ledger-title">{t('Sunday Worship & Top Mission Service')}</div>
               <div className="ledger-sub">
-                Every Sunday · 15:00 GMT ({sundayTime.isSameAsGMT ? sundayTime.gmt : `${sundayTime.localTime} ${sundayTime.shortTz}`}) · Top Mission: 1st Week Monthly (Tue &amp; Wed, 18:30 GMT)
+                {t('Every Sunday · 15:00 GMT ({time}) · Top Mission: 1st Week Monthly (Tue & Wed, 18:30 GMT)', {
+                  time: sundayTime.isSameAsGMT ? sundayTime.gmt : `${sundayTime.localTime} ${sundayTime.shortTz}`
+                })}
               </div>
             </div>
             <Link to="/events" className="ledger-link">
-              See full gathering schedule <ArrowRight size={14} />
+              {t('See full gathering schedule')} <ArrowRight size={14} />
             </Link>
           </div>
 
           <div className="hero-ledger-cell">
             <div>
-              <div className="ledger-meta">Education &amp; Training Unit</div>
-              <div className="ledger-title">5 Specialized Schools</div>
+              <div className="ledger-meta">{t('Education & Training Unit')}</div>
+              <div className="ledger-title">{t('5 Specialized Schools')}</div>
               <div className="ledger-sub">
-                From Foundation School to School of the Prophets—equipping God’s overcomers.
+                {t('From Foundation School to School of the Prophets—equipping God’s overcomers.')}
               </div>
             </div>
             <Link to="/about#schools" className="ledger-link">
-              Explore the 5 Schools <ArrowRight size={14} />
+              {t('Explore the 5 Schools')} <ArrowRight size={14} />
             </Link>
           </div>
         </div>
@@ -231,47 +235,49 @@ export const HomePage: React.FC = () => {
         <div className="container">
           <div className="section-head-split">
             <div>
-              <span className="eyebrow">Gather With Us</span>
+              <span className="eyebrow">{t('Gather With Us')}</span>
               <h2 className="section-title">
-                Weekly &amp; Monthly Services, <span className="accent-serif">Synchronised to You</span>
+                {t('Weekly & Monthly Services,')} <span className="accent-serif">{t('Synchronised to You')}</span>
               </h2>
               <p className="section-lead">
-                Join us in person at The Son Place (Labone Junction, Accra) or stream online—times shown in GMT and your device’s time zone ({nextGathering.timezoneName}).
+                {t('Join us in person at The Son Place (Labone Junction, Accra) or stream online—times shown in GMT and your device’s time zone ({tz}).', {
+                  tz: nextGathering.timezoneName
+                })}
               </p>
             </div>
             <Link to="/online-service" className="btn btn-primary">
-              How to Join in 3 Steps <ArrowRight size={16} />
+              {t('How to Join in 3 Steps')} <ArrowRight size={16} />
             </Link>
           </div>
 
           {/* Separate Live Timer Box for Whichever Sunday or Top Mission Service Is Next */}
-          <div className="next-service-timer-band" aria-label="Next service live countdown">
+          <div className="next-service-timer-band" aria-label={t('Next service live countdown')}>
             <div>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.6rem' }}>
                 <span className={`badge ${nextGathering.isLive ? 'badge-live' : 'badge-gold'}`}>
                   {nextGathering.isLive && <span className="pulse-dot" />}
-                  {nextGathering.isLive ? 'Live Broadcast In Progress' : 'Next Service Countdown'}
+                  {nextGathering.isLive ? t('Live Broadcast In Progress') : t('Next Service Countdown')}
                 </span>
                 <span className="badge" style={{ background: 'rgba(255,255,255,0.1)', color: '#F8FAFC', borderColor: 'rgba(255,255,255,0.2)' }}>
                   {nextGathering.targetDateFormatted}
                 </span>
               </div>
               <h3 style={{ fontSize: 'clamp(1.35rem, 2.3vw, 1.8rem)', color: '#FFFFFF', marginBottom: '0.3rem' }}>
-                {nextGathering.service.title}
+                {t(nextGathering.service.title)}
               </h3>
               <p style={{ fontSize: '0.94rem', color: 'rgba(248,250,252,0.82)', marginBottom: '1rem' }}>
-                {nextGathering.humanWhen} · {nextGathering.service.location || 'The Son Place, Labone Junction & Online'}
+                {nextGathering.humanWhen} · {t(nextGathering.service.location || 'The Son Place, Labone Junction & Online')}
               </p>
               <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
                 <Link to="/online-service" className="btn btn-gold btn-sm">
-                  {nextGathering.isLive ? 'Watch Stream Live' : 'Open Broadcast Stage'} <ArrowRight size={15} />
+                  {nextGathering.isLive ? t('Watch Stream Live') : t('Open Broadcast Stage')} <ArrowRight size={15} />
                 </Link>
                 <button
                   type="button"
                   className="btn btn-ghost-light btn-sm"
                   onClick={handleHeroReminder}
                 >
-                  <Calendar size={15} /> Save Next Reminder (.ics)
+                  <Calendar size={15} /> {t('Save Next Reminder (.ics)')}
                 </button>
               </div>
             </div>
@@ -280,29 +286,29 @@ export const HomePage: React.FC = () => {
               {nextGathering.isLive ? (
                 <div className="countdown-cell" style={{ padding: '1.25rem' }}>
                   <span className="countdown-num" style={{ color: '#F87171', fontSize: '1.45rem' }}>
-                    ● LIVE RIGHT NOW
+                    {t('● LIVE RIGHT NOW')}
                   </span>
                   <span className="countdown-lbl" style={{ display: 'block', marginTop: '0.35rem', color: 'rgba(248,250,252,0.8)' }}>
-                    Join the sanctuary broadcast
+                    {t('Join the sanctuary broadcast')}
                   </span>
                 </div>
               ) : (
                 <div className="countdown-boxes" role="timer" aria-live="off">
                   <div className="countdown-cell">
                     <span className="countdown-num">{nextGathering.days}</span>
-                    <span className="countdown-lbl">Days</span>
+                    <span className="countdown-lbl">{t('Days')}</span>
                   </div>
                   <div className="countdown-cell">
                     <span className="countdown-num">{nextGathering.hours}</span>
-                    <span className="countdown-lbl">Hrs</span>
+                    <span className="countdown-lbl">{t('Hrs')}</span>
                   </div>
                   <div className="countdown-cell">
                     <span className="countdown-num">{nextGathering.minutes}</span>
-                    <span className="countdown-lbl">Min</span>
+                    <span className="countdown-lbl">{t('Min')}</span>
                   </div>
                   <div className="countdown-cell">
                     <span className="countdown-num">{nextGathering.seconds}</span>
-                    <span className="countdown-lbl">Sec</span>
+                    <span className="countdown-lbl">{t('Sec')}</span>
                   </div>
                 </div>
               )}
@@ -312,16 +318,16 @@ export const HomePage: React.FC = () => {
           <div className="grid-2">
             {WEEKLY_SERVICES.map(svc => {
               const nextDate = getNextServiceOccurrence(svc);
-              const local = formatGMTServiceInLocal(nextDate.getUTCDay(), svc.hourGMT, svc.minuteGMT, nextDate);
+              const local = formatGMTServiceInLocal(nextDate.getUTCDay(), svc.hourGMT, svc.minuteGMT, nextDate, { t, locale });
               return (
                 <article key={svc.id} className="card card-interactive service-card">
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.9rem' }}>
-                      <span className="badge badge-navy">{svc.category}</span>
+                      <span className="badge badge-navy">{t(svc.category)}</span>
                       <Clock size={17} style={{ color: 'var(--brand-gold)' }} />
                     </div>
-                    <h3 style={{ fontSize: '1.35rem', marginBottom: '0.35rem' }}>{svc.title}</h3>
-                    <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)' }}>{svc.description}</p>
+                    <h3 style={{ fontSize: '1.35rem', marginBottom: '0.35rem' }}>{t(svc.title)}</h3>
+                    <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)' }}>{t(svc.description)}</p>
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -329,15 +335,17 @@ export const HomePage: React.FC = () => {
                       <div>
                         <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)', fontWeight: 700 }}>
                           {svc.id === 'top-mission-service' && isTopMissionOverrideMonth(nextDate)
-                            ? 'This Month: Tue, Nov 10 & Wed, Nov 11'
-                            : svc.scheduleLabel || `Every ${local.localDayFull}`}
+                            ? t('This Month: Tue, Nov 10 & Wed, Nov 11')
+                            : svc.scheduleLabel
+                              ? t(svc.scheduleLabel)
+                              : t('Every {day}', { day: local.localDayFull })}
                         </div>
                         <strong>{local.gmt}</strong>
                       </div>
                       {!local.isSameAsGMT && (
                         <div style={{ textAlign: 'right' }}>
                           <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-gold)', fontWeight: 700 }}>
-                            Your Time
+                            {t('Your Time')}
                           </div>
                           <strong style={{ color: 'var(--brand-royal)' }}>
                             {local.localTime} {local.shortTz}
@@ -351,22 +359,22 @@ export const HomePage: React.FC = () => {
                         to="/online-service"
                         style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--brand-primary)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                       >
-                        Watch on Stage <ArrowRight size={15} />
+                        {t('Watch on Stage')} <ArrowRight size={15} />
                       </Link>
                       <button
                         type="button"
                         className="btn btn-outline btn-sm"
                         onClick={() =>
                           downloadICS({
-                            title: `EGW — ${svc.title}`,
-                            description: svc.description,
+                            title: `EGW — ${t(svc.title)}`,
+                            description: t(svc.description),
                             startIso: nextDate.toISOString(),
                             durationMinutes: svc.durationMinutes,
                             location: svc.location
                           })
                         }
                       >
-                        + Calendar
+                        {t('+ Calendar')}
                       </button>
                     </div>
                   </div>
@@ -381,9 +389,9 @@ export const HomePage: React.FC = () => {
       <section className="section">
         <div className="container vision-split">
           <div>
-            <span className="eyebrow">Who We Are & Why We Exist</span>
+            <span className="eyebrow">{t('Who We Are & Why We Exist')}</span>
             <h2 className="section-title">
-              A Christ-Centred Extension of Our <span className="accent-serif">Mother Church in Ghana</span>
+              {t('A Christ-Centred Extension of Our')} <span className="accent-serif">{t('Mother Church in Ghana')}</span>
             </h2>
             <blockquote
               className="scripture-quote"
@@ -395,37 +403,37 @@ export const HomePage: React.FC = () => {
                 marginBlock: '1.25rem'
               }}
             >
-              “Ephesus Gatherings Worldwide serves as a training centre for equipping God’s overcomers to take their place on earth for the Lord Jesus Christ.”
+              {t('“Ephesus Gatherings Worldwide serves as a training centre for equipping God’s overcomers to take their place on earth for the Lord Jesus Christ.”')}
             </blockquote>
             <p style={{ color: 'var(--text-secondary)' }}>
-              Located at Mikaddo Plaza, Labone Junction, Accra, Ghana, Ephesus Gatherings Worldwide hosts dynamic worship services, offers practical discipleship programs, and connects believers across continents through Spirit-filled worship and sound biblical training.
+              {t('Located at Mikaddo Plaza, Labone Junction, Accra, Ghana, Ephesus Gatherings Worldwide hosts dynamic worship services, offers practical discipleship programs, and connects believers across continents through Spirit-filled worship and sound biblical training.')}
             </p>
 
             <div className="pillar-list">
               <div className="pillar-row">
                 <span className="pillar-num">01</span>
                 <div>
-                  <h4 style={{ fontSize: '1.05rem', marginBottom: '0.2rem' }}>Spirit-Filled Worship</h4>
+                  <h4 style={{ fontSize: '1.05rem', marginBottom: '0.2rem' }}>{t('Spirit-Filled Worship')}</h4>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                    Dynamic weekly online gatherings saturated with the tangible presence and gifts of the Holy Spirit.
+                    {t('Dynamic weekly online gatherings saturated with the tangible presence and gifts of the Holy Spirit.')}
                   </p>
                 </div>
               </div>
               <div className="pillar-row">
                 <span className="pillar-num">02</span>
                 <div>
-                  <h4 style={{ fontSize: '1.05rem', marginBottom: '0.2rem' }}>Sound Biblical Teaching</h4>
+                  <h4 style={{ fontSize: '1.05rem', marginBottom: '0.2rem' }}>{t('Sound Biblical Teaching')}</h4>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                    Christ-exalting exposition and discipleship tracks anchored in the finished work of the Cross.
+                    {t('Christ-exalting exposition and discipleship tracks anchored in the finished work of the Cross.')}
                   </p>
                 </div>
               </div>
               <div className="pillar-row">
                 <span className="pillar-num">03</span>
                 <div>
-                  <h4 style={{ fontSize: '1.05rem', marginBottom: '0.2rem' }}>Practical Ministry Training</h4>
+                  <h4 style={{ fontSize: '1.05rem', marginBottom: '0.2rem' }}>{t('Practical Ministry Training')}</h4>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                    Fellowship, intercession, and equipping that empower every believer to transform their sphere of influence.
+                    {t('Fellowship, intercession, and equipping that empower every believer to transform their sphere of influence.')}
                   </p>
                 </div>
               </div>
@@ -436,24 +444,24 @@ export const HomePage: React.FC = () => {
             <div className="vision-media-stack">
               <img
                 src="/images/sanctuary-corporate-worship.jpg"
-                alt="Worship and fellowship at Ephesus Gatherings Worldwide"
+                alt={t('Worship and fellowship at Ephesus Gatherings Worldwide')}
               />
               <div className="vision-play-overlay">
                 <div style={{ maxWidth: '72%' }}>
                   <span className="badge badge-gold" style={{ marginBottom: '0.4rem' }}>
-                    Ministry Moment
+                    {t('Ministry Moment')}
                   </span>
                   <div style={{ fontWeight: 700, fontSize: '1rem' }}>
-                    Watch Corporate Prayer & Fellowship at ITFC 2026
+                    {t('Watch Corporate Prayer & Fellowship at ITFC 2026')}
                   </div>
                 </div>
                 <button
                   type="button"
                   className="btn btn-gold"
                   onClick={() => playMedia(campClip)}
-                  aria-label="Play fellowship video highlight"
+                  aria-label={t('Play fellowship video highlight')}
                 >
-                  <Play size={18} fill="currentColor" /> Watch
+                  <Play size={18} fill="currentColor" /> {t('Watch')}
                 </button>
               </div>
             </div>
@@ -472,14 +480,14 @@ export const HomePage: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
                 <Globe2 size={28} style={{ color: 'var(--brand-royal)', flexShrink: 0 }} />
                 <div>
-                  <strong style={{ display: 'block' }}>Two Ways to Belong</strong>
+                  <strong style={{ display: 'block' }}>{t('Two Ways to Belong')}</strong>
                   <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-                    Join as a primary <strong>Member</strong> or walk alongside us as an <strong>Affiliate</strong>.
+                    {t('Join as a primary Member or walk alongside us as an Affiliate.')}
                   </span>
                 </div>
               </div>
               <Link to="/join" className="btn btn-outline btn-sm">
-                Explore Paths <ArrowRight size={15} />
+                {t('Explore Paths')} <ArrowRight size={15} />
               </Link>
             </div>
           </div>
@@ -494,12 +502,12 @@ export const HomePage: React.FC = () => {
           </div>
 
           <div>
-            <span className="eyebrow eyebrow-light">Founder & Lead Convener</span>
+            <span className="eyebrow eyebrow-light">{t('Founder & Lead Convener')}</span>
             <h2 style={{ fontSize: 'var(--text-3xl)', color: '#FFFFFF', marginBottom: '1rem' }}>
               {FOUNDER_INFO.name}
             </h2>
             <p style={{ fontSize: '1.08rem', color: 'rgba(248,250,252,0.9)', marginBottom: '1rem' }}>
-              {FOUNDER_INFO.shortBio}
+              {t(FOUNDER_INFO.shortBio)}
             </p>
             <p style={{ fontSize: '0.96rem', color: 'rgba(248,250,252,0.78)', marginBottom: '1.65rem' }}>
               “{pastoralLetter.paragraphs[0]}”
@@ -507,7 +515,7 @@ export const HomePage: React.FC = () => {
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '2rem' }}>
               <Link to="/about#welcome" className="btn btn-gold">
-                Read Pastor’s Full Letter <ArrowRight size={16} />
+                {t('Read Pastor’s Full Letter')} <ArrowRight size={16} />
               </Link>
               <a
                 href={FOUNDER_INFO.podcasts.spotify}
@@ -515,7 +523,7 @@ export const HomePage: React.FC = () => {
                 rel="noreferrer"
                 className="btn btn-ghost-light"
               >
-                The Emergence Podcast <ExternalLink size={15} />
+                {t('The Emergence Podcast')} <ExternalLink size={15} />
               </a>
             </div>
 
@@ -536,14 +544,14 @@ export const HomePage: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.95rem' }}>
                 <img
                   src={worshipTrack.thumbnail}
-                  alt={worshipTrack.title}
+                  alt={t(worshipTrack.title)}
                   style={{ width: 76, height: 50, objectFit: 'cover', borderRadius: 8 }}
                 />
                 <div>
                   <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--gold-300)', fontWeight: 700 }}>
-                    <Music size={12} style={{ display: 'inline', marginRight: 4 }} /> Featured Worship Song
+                    <Music size={12} style={{ display: 'inline', marginRight: 4 }} /> {t('Featured Worship Song')}
                   </div>
-                  <strong style={{ color: '#FFFFFF', fontSize: '1rem' }}>{worshipTrack.title}</strong>
+                  <strong style={{ color: '#FFFFFF', fontSize: '1rem' }}>{t(worshipTrack.title)}</strong>
                   <div style={{ fontSize: '0.8rem', color: 'rgba(248,250,252,0.72)' }}>
                     {worshipTrack.speaker} · {worshipTrack.duration}
                   </div>
@@ -554,7 +562,7 @@ export const HomePage: React.FC = () => {
                 className="btn btn-gold btn-sm"
                 onClick={() => playMedia(worshipTrack)}
               >
-                <Play size={15} fill="currentColor" /> Play Live Worship
+                <Play size={15} fill="currentColor" /> {t('Play Live Worship')}
               </button>
             </div>
           </div>
@@ -566,17 +574,17 @@ export const HomePage: React.FC = () => {
         <div className="container">
           <div className="section-head-split">
             <div>
-              <span className="eyebrow">Apostolic Sermons & Broadcasts</span>
+              <span className="eyebrow">{t('Apostolic Sermons & Broadcasts')}</span>
               <h2 className="section-title">
-                Watch Sermons & <span className="accent-serif">Live Messages</span>
+                {t('Watch Sermons &')} <span className="accent-serif">{t('Live Messages')}</span>
               </h2>
               <p className="section-lead">
-                Stream apostolic teachings, prophetic prayer vigils, and live worship messages directly from Prophet Edem Julius-Cudjoe on YouTube.
+                {t('Stream apostolic teachings, prophetic prayer vigils, and live worship messages directly from Prophet Edem Julius-Cudjoe on YouTube.')}
               </p>
             </div>
             <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
               <Link to="/online-service#library" className="btn btn-primary">
-                <Play size={15} fill="currentColor" /> Full Sermon Library
+                <Play size={15} fill="currentColor" /> {t('Full Sermon Library')}
               </Link>
               <a
                 href="https://www.youtube.com/@officialprophetedem"
@@ -584,7 +592,7 @@ export const HomePage: React.FC = () => {
                 rel="noreferrer"
                 className="btn btn-outline"
               >
-                YouTube Channel <ExternalLink size={14} />
+                {t('YouTube Channel')} <ExternalLink size={14} />
               </a>
             </div>
           </div>
@@ -599,12 +607,14 @@ export const HomePage: React.FC = () => {
                   className={`chip-btn ${selectedSermonCat === cat ? 'is-active' : ''}`}
                   onClick={() => setSelectedSermonCat(cat)}
                 >
-                  {cat}
+                  {t(cat)}
                 </button>
               ))}
             </div>
             <span style={{ fontSize: '0.86rem', color: 'var(--text-muted)' }}>
-              Showing {displayedSermons.length} {selectedSermonCat === 'All' ? 'featured sermons' : 'sermons'}
+              {selectedSermonCat === 'All'
+                ? t('Showing {count} featured sermons', { count: displayedSermons.length })
+                : t('Showing {count} sermons', { count: displayedSermons.length })}
             </span>
           </div>
 
@@ -612,10 +622,10 @@ export const HomePage: React.FC = () => {
             {displayedSermons.map(sermon => (
               <article key={sermon.id} className="card card-interactive event-card">
                 <div className="event-media" style={{ position: 'relative' }}>
-                  <img src={sermon.thumbnail} alt={sermon.title} loading="lazy" />
+                  <img src={sermon.thumbnail} alt={t(sermon.title)} loading="lazy" />
                   <button
                     type="button"
-                    aria-label={`Play ${sermon.title}`}
+                    aria-label={t('Play {title}', { title: t(sermon.title) })}
                     onClick={() => playMedia(sermon)}
                     style={{
                       position: 'absolute',
@@ -666,14 +676,14 @@ export const HomePage: React.FC = () => {
                 <div className="event-body">
                   <div>
                     <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '0.65rem' }}>
-                      <span className="badge badge-gold">{sermon.category}</span>
+                      <span className="badge badge-gold">{t(sermon.category)}</span>
                     </div>
-                    <h3 style={{ fontSize: '1.18rem', lineHeight: 1.35, marginBottom: '0.45rem' }}>{sermon.title}</h3>
+                    <h3 style={{ fontSize: '1.18rem', lineHeight: 1.35, marginBottom: '0.45rem' }}>{t(sermon.title)}</h3>
                     <p style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--brand-royal)', marginBottom: '0.55rem' }}>
                       {sermon.speaker}
                     </p>
                     <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                      {sermon.description}
+                      {t(sermon.description)}
                     </p>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.85rem', borderTop: '1px solid var(--border-subtle)', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -683,7 +693,7 @@ export const HomePage: React.FC = () => {
                       onClick={() => playMedia(sermon)}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                     >
-                      <Play size={13} fill="currentColor" /> Watch in Drawer
+                      <Play size={13} fill="currentColor" /> {t('Watch in Drawer')}
                     </button>
                     {sermon.youtubeId && (
                       <a
@@ -711,16 +721,16 @@ export const HomePage: React.FC = () => {
           <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1.25rem' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <span className="badge badge-gold">Featured Testimony</span>
+                <span className="badge badge-gold">{t('Featured Testimony')}</span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 600 }}>
                   <img src={FLAG_URLS[featuredTestimony.flagCode]} alt="" className="flag-mini" />
-                  {featuredTestimony.country}
+                  {t(featuredTestimony.country)}
                 </span>
               </div>
               <Quote size={28} style={{ color: 'var(--brand-gold)', marginBottom: '0.6rem' }} />
-              <h3 style={{ fontSize: '1.45rem', marginBottom: '0.65rem' }}>{featuredTestimony.title}</h3>
+              <h3 style={{ fontSize: '1.45rem', marginBottom: '0.65rem' }}>{t(featuredTestimony.title)}</h3>
               <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-                {featuredTestimony.summary}
+                {t(featuredTestimony.summary)}
               </p>
               <blockquote
                 style={{
@@ -732,7 +742,7 @@ export const HomePage: React.FC = () => {
                   borderLeft: '3px solid var(--brand-gold)'
                 }}
               >
-                “{featuredTestimony.closingQuote}”
+                {t(featuredTestimony.closingQuote)}
               </blockquote>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
@@ -740,7 +750,7 @@ export const HomePage: React.FC = () => {
                 — {featuredTestimony.author}
               </span>
               <Link to="/testimonies" className="btn btn-primary btn-sm">
-                Read All Testimonies <ArrowRight size={15} />
+                {t('Read All Testimonies')} <ArrowRight size={15} />
               </Link>
             </div>
           </div>
@@ -756,16 +766,16 @@ export const HomePage: React.FC = () => {
               }}
             >
               <span className="badge badge-gold" style={{ marginBottom: '0.75rem' }}>
-                The Greatest Decision
+                {t('The Greatest Decision')}
               </span>
               <h3 style={{ fontSize: '1.5rem', color: '#FFFFFF', marginBottom: '0.5rem' }}>
-                Jesus Christ — The Way, The Truth, and The Life
+                {t('Jesus Christ — The Way, The Truth, and The Life')}
               </h3>
               <p style={{ color: 'rgba(248,250,252,0.85)', fontSize: '0.95rem', marginBottom: '1.2rem' }}>
-                Salvation is not earned by human works—it is a living relationship with Jesus, received freely by grace through faith. Pray the guided salvation prayer today and let our pastors walk with you.
+                {t('Salvation is not earned by human works—it is a living relationship with Jesus, received freely by grace through faith. Pray the guided salvation prayer today and let our pastors walk with you.')}
               </p>
               <Link to="/salvation" className="btn btn-gold btn-sm">
-                <Heart size={15} /> Receive Jesus Today
+                <Heart size={15} /> {t('Receive Jesus Today')}
               </Link>
             </div>
 
@@ -773,18 +783,18 @@ export const HomePage: React.FC = () => {
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.5rem' }}>
                   <BookOpen size={20} style={{ color: 'var(--brand-royal)' }} />
-                  <h3 style={{ fontSize: '1.25rem' }}>Daily Bible Readings & Proverbs Streak</h3>
+                  <h3 style={{ fontSize: '1.25rem' }}>{t('Daily Bible Readings & Proverbs Streak')}</h3>
                 </div>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.93rem' }}>
-                  Feed on God’s Word daily with our 1-Year, 10-Month, or 9-Month plans, track your streak right on your device, and explore the Book of the Month.
+                  {t('Feed on God’s Word daily with our 1-Year, 10-Month, or 9-Month plans, track your streak right on your device, and explore the Book of the Month.')}
                 </p>
               </div>
               <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
                 <Link to="/daily-readings" className="btn btn-outline btn-sm">
-                  Open Today’s Passages <ArrowRight size={15} />
+                  {t('Open Today’s Passages')} <ArrowRight size={15} />
                 </Link>
                 <Link to="/give" className="btn btn-outline btn-sm">
-                  Kingdom Stewardship
+                  {t('Kingdom Stewardship')}
                 </Link>
               </div>
             </div>
@@ -797,16 +807,16 @@ export const HomePage: React.FC = () => {
         <div className="container">
           <div className="section-head-split">
             <div>
-              <span className="eyebrow">Moments of Unity</span>
+              <span className="eyebrow">{t('Moments of Unity')}</span>
               <h2 className="section-title">
-                One Global Family <span className="accent-serif">In Worship & Fellowship</span>
+                {t('One Global Family')} <span className="accent-serif">{t('In Worship & Fellowship')}</span>
               </h2>
               <p className="section-lead">
-                Click any photograph from our sanctuary services, Ignite The Fire Camp, and global outreach missions to view in full screen.
+                {t('Click any photograph from our sanctuary services, Ignite The Fire Camp, and global outreach missions to view in full screen.')}
               </p>
             </div>
             <Link to="/join" className="btn btn-primary">
-              <Users size={16} /> Join the EGW Family
+              <Users size={16} /> {t('Join the EGW Family')}
             </Link>
           </div>
 
@@ -822,13 +832,13 @@ export const HomePage: React.FC = () => {
                   if (e.key === 'Enter' || e.key === ' ') openLightbox(photo);
                 }}
               >
-                <img src={photo.src} alt={photo.caption} loading="lazy" />
+                <img src={photo.src} alt={t(photo.caption)} loading="lazy" />
                 <div className="gallery-tile-caption">
                   <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--gold-300)', fontWeight: 700 }}>
-                    {photo.category}
+                    {t(photo.category)}
                   </span>
                   <span style={{ fontSize: '0.84rem', fontWeight: 600, lineHeight: 1.3 }}>
-                    {photo.location}
+                    {t(photo.location)}
                   </span>
                 </div>
               </div>

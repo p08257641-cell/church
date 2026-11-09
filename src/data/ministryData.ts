@@ -132,7 +132,7 @@ export const LANGUAGES: LanguageOption[] = [
       contact: 'Bi Wɔ',
       watchLive: 'Kwɛmɔ Amrɔ Nɛɛ'
     },
-    heroTagline: 'Equipping God’s Overcomers Across the Nations'
+    heroTagline: 'Wɔmiisaa Nyɔŋmɔ Nɔkunimyelɔi Lɛ Yɛ Jeŋ Fɛɛ'
   },
   {
     code: 'ig',
@@ -152,7 +152,7 @@ export const LANGUAGES: LanguageOption[] = [
       join: 'Soro Anyị',
       resources: 'Ngwaọrụ',
       contact: 'Kpọtụrụ Anyị',
-      watchLive: 'onyonyo Ndụ'
+      watchLive: 'Onyonyo Ndụ'
     },
     heroTagline: 'Ikwadebe Ndị Na-emeri nke Chineke n’Ofesi'
   },
@@ -1502,9 +1502,9 @@ export interface DailyReadingPlanDay {
     theme: string;
   };
   passages: {
-    '1-year': { id: string; reference: string; focus: string }[];
-    '10-month': { id: string; reference: string; focus: string }[];
-    '9-month': { id: string; reference: string; focus: string }[];
+    '1-year': { id: string; book: string; chapters: string; reference: string; focus: string }[];
+    '10-month': { id: string; book: string; chapters: string; reference: string; focus: string }[];
+    '9-month': { id: string; book: string; chapters: string; reference: string; focus: string }[];
   };
 }
 
@@ -1565,20 +1565,20 @@ export function getReadingsForDate(date: Date): DailyReadingPlanDay {
     },
     passages: {
       '1-year': [
-        { id: `1y-ot-${dayOfYear}`, reference: `${otBook1} ${otChap1}–${otChap1 + 1}`, focus: 'Old Testament Counsel & Covenant History' },
-        { id: `1y-nt-${dayOfYear}`, reference: `${ntBook1} ${ntChap1}`, focus: 'New Testament Revelation in Christ' },
-        { id: `1y-ps-${dayOfYear}`, reference: `Psalm ${psalmNumber}`, focus: 'Devotional Praise & Prayer' }
+        { id: `1y-ot-${dayOfYear}`, book: otBook1, chapters: `${otChap1}–${otChap1 + 1}`, reference: `${otBook1} ${otChap1}–${otChap1 + 1}`, focus: 'Old Testament Counsel & Covenant History' },
+        { id: `1y-nt-${dayOfYear}`, book: ntBook1, chapters: `${ntChap1}`, reference: `${ntBook1} ${ntChap1}`, focus: 'New Testament Revelation in Christ' },
+        { id: `1y-ps-${dayOfYear}`, book: 'Psalm', chapters: `${psalmNumber}`, reference: `Psalm ${psalmNumber}`, focus: 'Devotional Praise & Prayer' }
       ],
       '10-month': [
-        { id: `10m-ot-${dayOfYear}`, reference: `${otBook1} ${otChap1}–${otChap1 + 2}`, focus: 'Accelerated Old Testament Track' },
-        { id: `10m-nt-${dayOfYear}`, reference: `${ntBook1} ${ntChap1}–${ntChap1 + 1}`, focus: 'Apostolic Doctrine & Epistles' },
-        { id: `10m-ps-${dayOfYear}`, reference: `Psalm ${psalmNumber}–${(psalmNumber % 150) + 1}`, focus: 'Psalms of Ascent & Worship' }
+        { id: `10m-ot-${dayOfYear}`, book: otBook1, chapters: `${otChap1}–${otChap1 + 2}`, reference: `${otBook1} ${otChap1}–${otChap1 + 2}`, focus: 'Accelerated Old Testament Track' },
+        { id: `10m-nt-${dayOfYear}`, book: ntBook1, chapters: `${ntChap1}–${ntChap1 + 1}`, reference: `${ntBook1} ${ntChap1}–${ntChap1 + 1}`, focus: 'Apostolic Doctrine & Epistles' },
+        { id: `10m-ps-${dayOfYear}`, book: 'Psalm', chapters: `${psalmNumber}–${(psalmNumber % 150) + 1}`, reference: `Psalm ${psalmNumber}–${(psalmNumber % 150) + 1}`, focus: 'Psalms of Ascent & Worship' }
       ],
       '9-month': [
-        { id: `9m-ot-${dayOfYear}`, reference: `${otBookFast} ${otChap1}–${otChap1 + 3}`, focus: 'Intensive Old Testament Immersion' },
-        { id: `9m-nt-${dayOfYear}`, reference: `${ntBookFast} ${ntChap1}–${ntChap1 + 1}`, focus: 'Gospel & Kingdom Fulfilment' },
-        { id: `9m-ps-${dayOfYear}`, reference: `Psalm ${psalmNumber}`, focus: 'Heart Meditation' },
-        { id: `9m-pr-${dayOfYear}`, reference: `Proverbs ${proverbsChapter}`, focus: 'Daily Wisdom & Discernment' }
+        { id: `9m-ot-${dayOfYear}`, book: otBookFast, chapters: `${otChap1}–${otChap1 + 3}`, reference: `${otBookFast} ${otChap1}–${otChap1 + 3}`, focus: 'Intensive Old Testament Immersion' },
+        { id: `9m-nt-${dayOfYear}`, book: ntBookFast, chapters: `${ntChap1}–${ntChap1 + 1}`, reference: `${ntBookFast} ${ntChap1}–${ntChap1 + 1}`, focus: 'Gospel & Kingdom Fulfilment' },
+        { id: `9m-ps-${dayOfYear}`, book: 'Psalm', chapters: `${psalmNumber}`, reference: `Psalm ${psalmNumber}`, focus: 'Heart Meditation' },
+        { id: `9m-pr-${dayOfYear}`, book: 'Proverbs', chapters: `${proverbsChapter}`, reference: `Proverbs ${proverbsChapter}`, focus: 'Daily Wisdom & Discernment' }
       ]
     }
   };

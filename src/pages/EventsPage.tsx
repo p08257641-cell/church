@@ -34,7 +34,7 @@ const CATEGORIES: ('All' | MinistryEvent['category'])[] = [
 ];
 
 export const EventsPage: React.FC = () => {
-  useApp(); // Subscribes to 1s tick for live Top Mission countdown
+  const { t, locale } = useApp(); // Subscribes to 1s tick & locale updates
   const [selectedCategory, setSelectedCategory] = useState<'All' | MinistryEvent['category']>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [calMonth, setCalMonth] = useState(() => new Date(2026, 10, 1)); // Nov 2026 default
@@ -42,7 +42,7 @@ export const EventsPage: React.FC = () => {
   const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
 
   const spotlight = MINISTRY_EVENTS.find(e => e.id === 'top-mission-service') || MINISTRY_EVENTS[0];
-  const topMissionTimer = computeServiceCountdown(WEEKLY_SERVICES[1]);
+  const topMissionTimer = computeServiceCountdown(WEEKLY_SERVICES[1], Date.now(), { t, locale });
 
   const filteredEvents = useMemo(() => {
     return MINISTRY_EVENTS.filter(ev => {
@@ -51,11 +51,13 @@ export const EventsPage: React.FC = () => {
       const qOk =
         !q ||
         ev.title.toLowerCase().includes(q) ||
+        t(ev.title).toLowerCase().includes(q) ||
         ev.subtitle.toLowerCase().includes(q) ||
+        t(ev.subtitle).toLowerCase().includes(q) ||
         ev.speaker.toLowerCase().includes(q);
       return catOk && qOk;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategory, searchQuery, t]);
 
   // Build calendar grid for calMonth
   const calendarCells = useMemo(() => {
@@ -90,26 +92,30 @@ export const EventsPage: React.FC = () => {
     return ev.startIso;
   };
 
+  const monthEnLong = calMonth.toLocaleString('en-US', { month: 'long' });
+
   return (
     <div>
       {/* Hero */}
       <section className="page-hero">
         <div className="container page-hero-inner">
           <div>
-            <span className="eyebrow eyebrow-light">Global Programme & Calendar</span>
-            <h1>Services, Gatherings & Special Programmes Worldwide</h1>
+            <span className="eyebrow eyebrow-light">{t('Global Programme & Calendar')}</span>
+            <h1>{t('Services, Gatherings & Special Programmes Worldwide')}</h1>
             <p className="lead">
-              Every detail of what is coming up at Ephesus Gatherings Worldwide—shown alongside your local time zone ({getVisitorTimezone()}), with one-tap `.ics` calendar sync and online registration.
+              {t('Every detail of what is coming up at Ephesus Gatherings Worldwide—shown alongside your local time zone ({tz}), with one-tap `.ics` calendar sync and online registration.', {
+                tz: getVisitorTimezone()
+              })}
             </p>
           </div>
           <div className="card" style={{ background: 'rgba(255,255,255,0.08)', borderColor: 'rgba(212,175,55,0.4)', color: '#FFFFFF' }}>
-            <span className="badge badge-gold" style={{ marginBottom: '0.6rem' }}>{spotlight.category}</span>
-            <h3 style={{ color: '#FFFFFF', fontSize: '1.35rem', marginBottom: '0.35rem' }}>{spotlight.title}</h3>
+            <span className="badge badge-gold" style={{ marginBottom: '0.6rem' }}>{t(spotlight.category)}</span>
+            <h3 style={{ color: '#FFFFFF', fontSize: '1.35rem', marginBottom: '0.35rem' }}>{t(spotlight.title)}</h3>
             <p style={{ fontSize: '0.9rem', color: 'rgba(248,250,252,0.82)', marginBottom: '1rem' }}>
               {isTopMissionOverrideMonth(topMissionTimer.targetDate)
-                ? 'This Month: Tue, Nov 10 & Wed, Nov 11'
-                : spotlight.dateLabel}{' '}
-              · {spotlight.timeGMT} · With {spotlight.speaker}
+                ? t('This Month: Tue, Nov 10 & Wed, Nov 11')
+                : t(spotlight.dateLabel)}{' '}
+              · {t(spotlight.timeGMT)} · {t('With {speaker}', { speaker: spotlight.speaker })}
             </p>
             <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
               <button
@@ -120,22 +126,22 @@ export const EventsPage: React.FC = () => {
                   setRsvpSubmitted(false);
                 }}
               >
-                RSVP & Get Link
+                {t('RSVP & Get Link')}
               </button>
               <button
                 type="button"
                 className="btn btn-ghost-light btn-sm"
                 onClick={() =>
                   downloadICS({
-                    title: spotlight.title,
-                    description: spotlight.description,
+                    title: t(spotlight.title),
+                    description: t(spotlight.description),
                     startIso: getEventStartIso(spotlight),
                     durationMinutes: spotlight.durationMinutes,
                     location: spotlight.location
                   })
                 }
               >
-                <Bell size={14} /> Add to Calendar
+                <Bell size={14} /> {t('Add to Calendar')}
               </button>
             </div>
           </div>
@@ -165,7 +171,7 @@ export const EventsPage: React.FC = () => {
             >
               <img
                 src={spotlight.image}
-                alt={spotlight.title}
+                alt={t(spotlight.title)}
                 style={{
                   width: '100%',
                   height: '100%',
@@ -175,8 +181,8 @@ export const EventsPage: React.FC = () => {
             </div>
             <div>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.85rem' }}>
-                <span className="badge badge-gold"><Sparkles size={13} /> Spotlight Gathering</span>
-                <span className="badge badge-navy">{spotlight.dateLabel}</span>
+                <span className="badge badge-gold"><Sparkles size={13} /> {t('Spotlight Gathering')}</span>
+                <span className="badge badge-navy">{t(spotlight.dateLabel)}</span>
                 {isTopMissionOverrideMonth(topMissionTimer.targetDate) && (
                   <span
                     className="badge"
@@ -186,14 +192,16 @@ export const EventsPage: React.FC = () => {
                       borderColor: 'rgba(212,175,55,0.45)'
                     }}
                   >
-                    This Month: Tue, Nov 10 &amp; Wed, Nov 11
+                    {t('This Month: Tue, Nov 10 & Wed, Nov 11')}
                   </span>
                 )}
-                <span className="badge badge-navy">{spotlight.timeGMT}</span>
+                <span className="badge badge-navy">{t(spotlight.timeGMT)}</span>
               </div>
-              <h2 style={{ fontSize: 'var(--text-3xl)', marginBottom: '0.6rem' }}>{spotlight.title}</h2>
+              <h2 style={{ fontSize: 'var(--text-3xl)', marginBottom: '0.6rem' }}>{t(spotlight.title)}</h2>
               <p style={{ fontWeight: 700, color: 'var(--brand-royal)', marginBottom: '0.85rem' }}>
-                Ministering: {spotlight.speaker} · Grace Grounds (Mikaddo Conference Centre, Labone Junction)
+                {t('Ministering: {speaker} · Grace Grounds (Mikaddo Conference Centre, Labone Junction)', {
+                  speaker: spotlight.speaker
+                })}
               </p>
 
               <div className="flyer-timer-panel">
@@ -208,8 +216,8 @@ export const EventsPage: React.FC = () => {
                     }}
                   >
                     {topMissionTimer.isLive
-                      ? '● Top Mission Live Right Now'
-                      : 'Next Top Mission Service Timer'}
+                      ? t('● Top Mission Live Right Now')
+                      : t('Next Top Mission Service Timer')}
                   </span>
                   <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'rgba(248,250,252,0.88)' }}>
                     {topMissionTimer.targetDateFormatted} ·{' '}
@@ -220,25 +228,25 @@ export const EventsPage: React.FC = () => {
                 </div>
                 {topMissionTimer.isLive ? (
                   <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: '1.05rem' }}>
-                    Live now at Grace Grounds &amp; on the Online Broadcast Stage.
+                    {t('Live now at Grace Grounds & on the Online Broadcast Stage.')}
                   </div>
                 ) : (
                   <div className="countdown-boxes" role="timer" aria-live="off">
                     <div className="countdown-cell">
                       <span className="countdown-num">{topMissionTimer.days}</span>
-                      <span className="countdown-lbl">Days</span>
+                      <span className="countdown-lbl">{t('Days')}</span>
                     </div>
                     <div className="countdown-cell">
                       <span className="countdown-num">{topMissionTimer.hours}</span>
-                      <span className="countdown-lbl">Hrs</span>
+                      <span className="countdown-lbl">{t('Hrs')}</span>
                     </div>
                     <div className="countdown-cell">
                       <span className="countdown-num">{topMissionTimer.minutes}</span>
-                      <span className="countdown-lbl">Min</span>
+                      <span className="countdown-lbl">{t('Min')}</span>
                     </div>
                     <div className="countdown-cell">
                       <span className="countdown-num">{topMissionTimer.seconds}</span>
-                      <span className="countdown-lbl">Sec</span>
+                      <span className="countdown-lbl">{t('Sec')}</span>
                     </div>
                   </div>
                 )}
@@ -253,10 +261,10 @@ export const EventsPage: React.FC = () => {
                     setRsvpSubmitted(false);
                   }}
                 >
-                  Register Free for Stream Alert
+                  {t('Register Free for Stream Alert')}
                 </button>
                 <Link to="/online-service" className="btn btn-outline">
-                  <Radio size={16} /> View Broadcast Stage
+                  <Radio size={16} /> {t('View Broadcast Stage')}
                 </Link>
               </div>
             </div>
@@ -269,9 +277,9 @@ export const EventsPage: React.FC = () => {
         <div className="container">
           <div className="section-head-split">
             <div>
-              <span className="eyebrow">The Programme</span>
+              <span className="eyebrow">{t('The Programme')}</span>
               <h2 className="section-title">
-                Browse Services & <span className="accent-serif">Conferences</span>
+                {t('Browse Services &')} <span className="accent-serif">{t('Conferences')}</span>
               </h2>
             </div>
 
@@ -284,7 +292,7 @@ export const EventsPage: React.FC = () => {
                 type="text"
                 className="field-input"
                 style={{ paddingLeft: '2.4rem', borderRadius: 'var(--radius-pill)' }}
-                placeholder="Filter by title or speaker..."
+                placeholder={t('Filter by title or speaker...')}
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
               />
@@ -300,12 +308,15 @@ export const EventsPage: React.FC = () => {
                   className={`chip-btn ${selectedCategory === cat ? 'is-active' : ''}`}
                   onClick={() => setSelectedCategory(cat)}
                 >
-                  {cat}
+                  {t(cat)}
                 </button>
               ))}
             </div>
             <span style={{ fontSize: '0.86rem', color: 'var(--text-muted)' }}>
-              Showing {filteredEvents.length} of {MINISTRY_EVENTS.length} gatherings
+              {t('Showing {shown} of {total} gatherings', {
+                shown: filteredEvents.length,
+                total: MINISTRY_EVENTS.length
+              })}
             </span>
           </div>
 
@@ -318,7 +329,7 @@ export const EventsPage: React.FC = () => {
                 >
                   <img
                     src={ev.image}
-                    alt={ev.title}
+                    alt={t(ev.title)}
                     loading="lazy"
                     style={
                       ev.id === 'top-mission-service'
@@ -330,20 +341,20 @@ export const EventsPage: React.FC = () => {
                 <div className="event-body">
                   <div>
                     <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '0.7rem' }}>
-                      <span className="badge badge-gold">{ev.category}</span>
-                      <span className="badge badge-navy"><Clock size={12} /> {ev.timeGMT}</span>
+                      <span className="badge badge-gold">{t(ev.category)}</span>
+                      <span className="badge badge-navy"><Clock size={12} /> {t(ev.timeGMT)}</span>
                     </div>
-                    <h3 style={{ fontSize: '1.25rem', marginBottom: '0.3rem' }}>{ev.title}</h3>
+                    <h3 style={{ fontSize: '1.25rem', marginBottom: '0.3rem' }}>{t(ev.title)}</h3>
                     <div style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--brand-royal)', marginBottom: '0.5rem' }}>
                       {ev.id === 'top-mission-service' && isTopMissionOverrideMonth(topMissionTimer.targetDate)
-                        ? `${ev.dateLabel} · This Month: Tue, Nov 10 & Wed, Nov 11`
-                        : ev.dateLabel}
+                        ? `${t(ev.dateLabel)} · ${t('This Month: Tue, Nov 10 & Wed, Nov 11')}`
+                        : t(ev.dateLabel)}
                     </div>
                     <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '0.75rem' }}>
-                      {ev.description}
+                      {t(ev.description)}
                     </p>
                     <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                      <MapPin size={13} /> {ev.location}
+                      <MapPin size={13} /> {t(ev.location)}
                     </div>
                   </div>
 
@@ -356,15 +367,15 @@ export const EventsPage: React.FC = () => {
                         setRsvpSubmitted(false);
                       }}
                     >
-                      Remind Me
+                      {t('Remind Me')}
                     </button>
                     <button
                       type="button"
                       className="btn btn-outline btn-sm"
                       onClick={() =>
                         downloadICS({
-                          title: ev.title,
-                          description: ev.description,
+                          title: t(ev.title),
+                          description: t(ev.description),
                           startIso: getEventStartIso(ev),
                           durationMinutes: ev.durationMinutes,
                           location: ev.location
@@ -386,12 +397,12 @@ export const EventsPage: React.FC = () => {
         <div className="container">
           <div className="section-head-split">
             <div>
-              <span className="eyebrow">Monthly Schedule</span>
+              <span className="eyebrow">{t('Monthly Schedule')}</span>
               <h2 className="section-title">
-                Interactive Ministry <span className="accent-serif">Calendar</span>
+                {t('Interactive Ministry')} <span className="accent-serif">{t('Calendar')}</span>
               </h2>
               <p className="section-lead">
-                Blue markers indicate Sunday Service (every Sunday, 15:00 GMT) and Top Mission Service (1st week monthly · Tue &amp; Wed, 18:30 GMT); gold markers highlight special convocations.
+                {t('Blue markers indicate Sunday Service (every Sunday, 15:00 GMT) and Top Mission Service (1st week monthly · Tue & Wed, 18:30 GMT); gold markers highlight special convocations.')}
               </p>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
@@ -399,18 +410,18 @@ export const EventsPage: React.FC = () => {
                 type="button"
                 className="icon-btn"
                 onClick={() => setCalMonth(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1))}
-                aria-label="Previous month"
+                aria-label={t('Previous month')}
               >
                 <ChevronLeft size={18} />
               </button>
               <strong style={{ minWidth: 155, textAlign: 'center', fontFamily: 'var(--font-display)', fontSize: '1.08rem' }}>
-                {calMonth.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
+                {t('{month} {year}', { month: t(monthEnLong), year: calMonth.getFullYear() })}
               </strong>
               <button
                 type="button"
                 className="icon-btn"
                 onClick={() => setCalMonth(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1))}
-                aria-label="Next month"
+                aria-label={t('Next month')}
               >
                 <ChevronRight size={18} />
               </button>
@@ -420,7 +431,7 @@ export const EventsPage: React.FC = () => {
           <div className="calendar-shell">
             <div className="calendar-weekdays">
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
-                <div key={d}>{d}</div>
+                <div key={d}>{t(d)}</div>
               ))}
             </div>
             <div className="calendar-days">
@@ -435,12 +446,12 @@ export const EventsPage: React.FC = () => {
                   <div>
                     {cell.special && (
                       <div style={{ fontSize: '0.68rem', fontWeight: 700, color: 'var(--text-gold)', lineHeight: 1.2, marginBottom: 2 }}>
-                        ★ {cell.special}
+                        ★ {t(cell.special)}
                       </div>
                     )}
                     {cell.services.map(s => (
                       <div key={s} style={{ fontSize: '0.68rem', color: 'var(--brand-royal)', fontWeight: 600 }}>
-                        {s}
+                        {t(s)}
                       </div>
                     ))}
                     <div className="cal-dot-row" style={{ marginTop: 3 }}>
@@ -461,13 +472,13 @@ export const EventsPage: React.FC = () => {
           <div className="modal-panel" onClick={e => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
               <div>
-                <span className="badge badge-gold" style={{ marginBottom: '0.45rem' }}>{rsvpEvent.category}</span>
-                <h3 style={{ fontSize: '1.45rem' }}>{rsvpEvent.title}</h3>
+                <span className="badge badge-gold" style={{ marginBottom: '0.45rem' }}>{t(rsvpEvent.category)}</span>
+                <h3 style={{ fontSize: '1.45rem' }}>{t(rsvpEvent.title)}</h3>
                 <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-                  {rsvpEvent.dateLabel} · {rsvpEvent.timeGMT}
+                  {t(rsvpEvent.dateLabel)} · {t(rsvpEvent.timeGMT)}
                 </p>
               </div>
-              <button type="button" className="icon-btn" onClick={() => setRsvpEvent(null)} aria-label="Close modal">
+              <button type="button" className="icon-btn" onClick={() => setRsvpEvent(null)} aria-label={t('Close modal')}>
                 <X size={18} />
               </button>
             </div>
@@ -475,9 +486,11 @@ export const EventsPage: React.FC = () => {
             {rsvpSubmitted ? (
               <div style={{ padding: '1.5rem', borderRadius: 'var(--radius-md)', background: 'var(--ok-green-bg)', color: 'var(--ok-green)' }}>
                 <CheckCircle2 size={26} style={{ marginBottom: '0.5rem' }} />
-                <h4 style={{ fontSize: '1.15rem', marginBottom: '0.3rem' }}>Reminder Registered!</h4>
+                <h4 style={{ fontSize: '1.15rem', marginBottom: '0.3rem' }}>{t('Reminder Registered!')}</h4>
                 <p style={{ fontSize: '0.92rem' }}>
-                  We will send you the direct stream link 30 minutes before <strong>{rsvpEvent.title}</strong> begins.
+                  {t('We will send you the direct stream link 30 minutes before {title} begins.', {
+                    title: t(rsvpEvent.title)
+                  })}
                 </p>
               </div>
             ) : (
@@ -489,23 +502,23 @@ export const EventsPage: React.FC = () => {
                 className="form-grid"
               >
                 <div>
-                  <label className="field-label">First Name <span className="req">*</span></label>
-                  <input required type="text" className="field-input" placeholder="Your first name" />
+                  <label className="field-label">{t('First Name')} <span className="req">*</span></label>
+                  <input required type="text" className="field-input" placeholder={t('Your first name')} />
                 </div>
                 <div>
-                  <label className="field-label">Email Address <span className="req">*</span></label>
+                  <label className="field-label">{t('Email Address')} <span className="req">*</span></label>
                   <input required type="email" className="field-input" placeholder="you@example.com" />
                 </div>
                 <div className="form-full">
-                  <label className="field-label">WhatsApp Number (Optional for SMS/WhatsApp Alert)</label>
+                  <label className="field-label">{t('WhatsApp Number (Optional for SMS/WhatsApp Alert)')}</label>
                   <input type="tel" className="field-input" placeholder="+1 / +44 / +233..." />
                 </div>
                 <div className="form-full" style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
                   <button type="button" className="btn btn-outline btn-sm" onClick={() => setRsvpEvent(null)}>
-                    Cancel
+                    {t('Cancel')}
                   </button>
                   <button type="submit" className="btn btn-gold btn-sm">
-                    Confirm Reminder
+                    {t('Confirm Reminder')}
                   </button>
                 </div>
               </form>

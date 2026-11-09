@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
   GalleryPhoto,
   LANGUAGES,
@@ -7,12 +7,21 @@ import {
   MediaItem
 } from '../data/ministryData';
 import {
+  INTL_LOCALES,
+  LocaleDict,
+  getCachedLocale,
+  loadLocaleDict,
+  translateText
+} from '../i18n';
+import {
   NextGatheringState,
   computeAutoTheme,
   computeNextGathering
 } from '../utils/time';
 
-export type ThemeMode = 'auto' | 'light' | 'dark';
+export type ThemeMode = 'light' | 'dark' | 'auto';
+
+const THEME_STORAGE_KEY = 'egw-theme-mode-v2';
 
 interface AppContextValue {
   themeMode: ThemeMode;
@@ -21,6 +30,8 @@ interface AppContextValue {
   language: LanguageCode;
   currentLang: LanguageOption;
   setLanguage: (code: LanguageCode) => void;
+  locale: string;
+  t: (text: string, vars?: Record<string, string | number>) => string;
   nextGathering: NextGatheringState;
   isSearchOpen: boolean;
   openSearch: () => void;
@@ -38,8 +49,13 @@ const AppContext = createContext<AppContextValue | undefined>(undefined);
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [themeMode, setThemeModeState] = useState<ThemeMode>(() => {
     try {
-      const saved = localStorage.getItem('egw-theme-mode') as ThemeMode | null;
-      if (saved === 'auto' || saved === 'light' || saved === 'dark') return saved;
+      const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeMode | null;
+      if (saved === 'light' || saved === 'dark' || saved === 'auto') return saved;
+      const legacy = localStorage.getItem('egw-theme-mode');
+      if (legacy === 'dark') return 'dark';
+      if (legacy) {
+        localStorage.removeItem('egw-theme-mode');
+      }
     } catch {
       // ignore storage errors
     }
@@ -60,8 +76,52 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return 'en';
   });
 
+  const [localeDict, setLocaleDict] = useState<LocaleDict>(
+    () => getCachedLocale(language) || {}
+  );
+  const latestLangReqRef = useRef(0);
+
+  const locale = INTL_LOCALES[language] || 'en-US';
+
+  const t = useCallback(
+    (text: string, vars?: Record<string, string | number>) =>
+      translateText(localeDict, text, vars),
+    [localeDict]
+  );
+
+  const setLanguage = useCallback((code: LanguageCode) => {
+    const reqId = ++latestLangReqRef.current;
+    if (code === 'en') {
+      setLocaleDict({});
+      setLanguageState('en');
+      return;
+    }
+    const cached = getCachedLocale(code);
+    if (cached) {
+      setLocaleDict(cached);
+      setLanguageState(code);
+      return;
+    }
+    loadLocaleDict(code)
+      .then(dict => {
+        if (latestLangReqRef.current === reqId) {
+          setLocaleDict(dict);
+          setLanguageState(code);
+        }
+      })
+      .catch(() => {
+        if (latestLangReqRef.current === reqId) {
+          setLocaleDict({});
+          setLanguageState(code);
+        }
+      });
+  }, []);
+
   const [nextGathering, setNextGathering] = useState<NextGatheringState>(() =>
-    computeNextGathering()
+    computeNextGathering(Date.now(), {
+      t: (txt, vars) => translateText(getCachedLocale(language), txt, vars),
+      locale: INTL_LOCALES[language] || 'en-US'
+    })
   );
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -69,12 +129,35 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [lightboxPhoto, setLightboxPhoto] = useState<GalleryPhoto | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
+    if (language === 'en') {
+      setLocaleDict({});
+      return;
+    }
+    const cached = getCachedLocale(language);
+    if (cached) {
+      setLocaleDict(cached);
+      return;
+    }
+    loadLocaleDict(language)
+      .then(dict => {
+        if (!cancelled) setLocaleDict(dict);
+      })
+      .catch(() => {
+        if (!cancelled) setLocaleDict({});
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [language]);
+
+  useEffect(() => {
     const resolved = computeAutoTheme(themeMode);
     setActiveTheme(resolved);
     document.documentElement.setAttribute('data-theme', resolved);
     document.documentElement.setAttribute('data-theme-mode', themeMode);
     try {
-      localStorage.setItem('egw-theme-mode', themeMode);
+      localStorage.setItem(THEME_STORAGE_KEY, themeMode);
     } catch {
       // ignore
     }
@@ -90,8 +173,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [language]);
 
   useEffect(() => {
+    document.title = t('Ephesus Gatherings Worldwide — Equipping God’s Overcomers Across the Nations');
+  }, [t]);
+
+  useEffect(() => {
+    setNextGathering(computeNextGathering(Date.now(), { t, locale }));
     const timer = window.setInterval(() => {
-      setNextGathering(computeNextGathering());
+      setNextGathering(computeNextGathering(Date.now(), { t, locale }));
       if (themeMode === 'auto') {
         const nextAuto = computeAutoTheme('auto');
         setActiveTheme(prev => {
@@ -103,7 +191,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
     }, 1000);
     return () => window.clearInterval(timer);
-  }, [themeMode]);
+  }, [themeMode, t, locale]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -130,7 +218,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setThemeMode: setThemeModeState,
     language,
     currentLang,
-    setLanguage: setLanguageState,
+    setLanguage,
+    locale,
+    t,
     nextGathering,
     isSearchOpen,
     openSearch: () => setIsSearchOpen(true),

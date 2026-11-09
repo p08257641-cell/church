@@ -10,12 +10,20 @@ import {
   Circle,
   Flame
 } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 import { SCRIPTURE_GEMS, getReadingsForDate } from '../data/ministryData';
 import { getVisitorTimezone } from '../utils/time';
 
 type PlanId = '1-year' | '10-month' | '9-month';
 
+const WEEKDAYS_FULL = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const MONTHS_FULL = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
 export const DailyReadingsPage: React.FC = () => {
+  const { t } = useApp();
   const [selectedDate, setSelectedDate] = useState<Date>(() => new Date());
   const [plan, setPlan] = useState<PlanId>('1-year');
   const [completedIds, setCompletedIds] = useState<string[]>(() => {
@@ -57,12 +65,26 @@ export const DailyReadingsPage: React.FC = () => {
   };
 
   const completedTodayCount = todayPassages.filter(p => completedIds.includes(p.id)).length;
-  const formattedDate = selectedDate.toLocaleDateString('en-GB', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
+  const formattedDate = t('{weekday}, {day} {month} {year}', {
+    weekday: t(WEEKDAYS_FULL[selectedDate.getDay()]),
+    day: selectedDate.getDate(),
+    month: t(MONTHS_FULL[selectedDate.getMonth()]),
+    year: selectedDate.getFullYear()
   });
+
+  const trackBadgeLabel =
+    plan === '1-year'
+      ? t('1-YEAR TRACK')
+      : plan === '10-month'
+        ? t('10-MONTH TRACK')
+        : t('9-MONTH TRACK');
+
+  const planDisplayLabel =
+    plan === '1-year'
+      ? t('1-Year Bible Plan')
+      : plan === '10-month'
+        ? t('10-Month Bible Plan')
+        : t('9-Month Bible Plan');
 
   const dateInputVal = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
 
@@ -72,24 +94,24 @@ export const DailyReadingsPage: React.FC = () => {
       <section className="page-hero">
         <div className="container page-hero-inner">
           <div>
-            <span className="eyebrow eyebrow-light">Feed on the Living Word</span>
-            <h1>Daily Bible Readings & Proverbs Challenge</h1>
+            <span className="eyebrow eyebrow-light">{t('Feed on the Living Word')}</span>
+            <h1>{t('Daily Bible Readings & Proverbs Challenge')}</h1>
             <p className="lead">
-              Today’s passages from our 1-Year, 10-Month, and 9-Month Bible reading plans, alongside the daily Proverbs wisdom chapter and Book of the Month.
+              {t('Today’s passages from our 1-Year, 10-Month, and 9-Month Bible reading plans, alongside the daily Proverbs wisdom chapter and Book of the Month.')}
             </p>
           </div>
 
           <div className="stats-ribbon" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
             <div className="stat-item">
-              <div className="stat-value">Day {dayData.dayOfYear}</div>
-              <div className="stat-label">{dayData.percentOfYear}% through the year</div>
+              <div className="stat-value">{t('Day {day}', { day: dayData.dayOfYear })}</div>
+              <div className="stat-label">{t('{percent}% through the year', { percent: dayData.percentOfYear })}</div>
             </div>
             <div className="stat-item">
               <div className="stat-value">
                 <Flame size={22} style={{ display: 'inline', color: 'var(--brand-gold)', marginRight: 4 }} />
                 {completedIds.length}
               </div>
-              <div className="stat-label">Passages Marked Read</div>
+              <div className="stat-label">{t('Passages Marked Read')}</div>
             </div>
           </div>
         </div>
@@ -105,7 +127,7 @@ export const DailyReadingsPage: React.FC = () => {
                 type="button"
                 className="icon-btn"
                 onClick={() => setSelectedDate(d => new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1))}
-                aria-label="Previous day"
+                aria-label={t('Previous day')}
               >
                 <ChevronLeft size={18} />
               </button>
@@ -114,13 +136,13 @@ export const DailyReadingsPage: React.FC = () => {
                 className="btn btn-outline btn-sm"
                 onClick={() => setSelectedDate(new Date())}
               >
-                Today
+                {t('Today')}
               </button>
               <button
                 type="button"
                 className="icon-btn"
                 onClick={() => setSelectedDate(d => new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1))}
-                aria-label="Next day"
+                aria-label={t('Next day')}
               >
                 <ChevronRight size={18} />
               </button>
@@ -134,11 +156,11 @@ export const DailyReadingsPage: React.FC = () => {
                   const [y, m, d] = e.target.value.split('-').map(Number);
                   setSelectedDate(new Date(y, m - 1, d));
                 }}
-                aria-label="Pick reading date"
+                aria-label={t('Pick reading date')}
               />
             </div>
 
-            <div className="chip-group" role="tablist" aria-label="Reading pace">
+            <div className="chip-group" role="tablist" aria-label={t('Reading pace')}>
               {(
                 [
                   { id: '1-year', label: '1-Year Plan' },
@@ -152,7 +174,7 @@ export const DailyReadingsPage: React.FC = () => {
                   className={`chip-btn ${plan === p.id ? 'is-active' : ''}`}
                   onClick={() => setPlan(p.id)}
                 >
-                  {p.label}
+                  {t(p.label)}
                 </button>
               ))}
             </div>
@@ -164,12 +186,12 @@ export const DailyReadingsPage: React.FC = () => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
                 <div>
                   <span className="badge badge-gold" style={{ marginBottom: '0.45rem' }}>
-                    {plan.toUpperCase()} TRACK
+                    {trackBadgeLabel}
                   </span>
                   <h2 style={{ fontSize: '1.5rem' }}>{formattedDate}</h2>
                 </div>
                 <span className={`badge ${completedTodayCount === todayPassages.length ? 'badge-ok' : 'badge-navy'}`}>
-                  {completedTodayCount}/{todayPassages.length} Completed
+                  {t('{done}/{total} Completed', { done: completedTodayCount, total: todayPassages.length })}
                 </span>
               </div>
 
@@ -205,11 +227,13 @@ export const DailyReadingsPage: React.FC = () => {
                           <Circle size={22} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
                         )}
                         <div>
-                          <strong style={{ fontSize: '1.08rem', display: 'block' }}>{item.reference}</strong>
-                          <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>{item.focus}</span>
+                          <strong style={{ fontSize: '1.08rem', display: 'block' }}>
+                            {t(item.book)} {item.chapters}
+                          </strong>
+                          <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>{t(item.focus)}</span>
                         </div>
                       </div>
-                      <span className="badge badge-navy">{done ? 'Read' : 'Mark Done'}</span>
+                      <span className="badge badge-navy">{done ? t('Read') : t('Mark Done')}</span>
                     </div>
                   );
                 })}
@@ -227,14 +251,14 @@ export const DailyReadingsPage: React.FC = () => {
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
-                  <span className="badge badge-gold">Daily Wisdom Challenge</span>
+                  <span className="badge badge-gold">{t('Daily Wisdom Challenge')}</span>
                   <Award size={20} style={{ color: 'var(--gold-300)' }} />
                 </div>
                 <h3 style={{ fontSize: '1.45rem', color: '#FFFFFF', marginBottom: '0.4rem' }}>
-                  Proverbs Chapter {dayData.proverbsChapter}
+                  {t('Proverbs Chapter {chapter}', { chapter: dayData.proverbsChapter })}
                 </h3>
                 <p style={{ color: 'rgba(248,250,252,0.85)', fontSize: '0.94rem' }}>
-                  Read one chapter of Proverbs matching today’s calendar date to build supernatural discernment, practical stewardship, and godly counsel.
+                  {t('Read one chapter of Proverbs matching today’s calendar date to build supernatural discernment, practical stewardship, and godly counsel.')}
                 </p>
               </div>
 
@@ -242,15 +266,15 @@ export const DailyReadingsPage: React.FC = () => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', marginBottom: '0.5rem' }}>
                   <BookMarked size={20} style={{ color: 'var(--brand-royal)' }} />
                   <span style={{ fontSize: '0.76rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-gold)' }}>
-                    Book of the Month · {dayData.bookOfTheMonth.monthName}
+                    {t('Book of the Month')} · {t(dayData.bookOfTheMonth.monthName)}
                   </span>
                 </div>
-                <h3 style={{ fontSize: '1.3rem', marginBottom: '0.25rem' }}>{dayData.bookOfTheMonth.title}</h3>
+                <h3 style={{ fontSize: '1.3rem', marginBottom: '0.25rem' }}>{t(dayData.bookOfTheMonth.title)}</h3>
                 <p style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.55rem' }}>
-                  {dayData.bookOfTheMonth.author}
+                  {t(dayData.bookOfTheMonth.author)}
                 </p>
                 <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)' }}>
-                  {dayData.bookOfTheMonth.theme}
+                  {t(dayData.bookOfTheMonth.theme)}
                 </p>
               </div>
             </div>
@@ -262,9 +286,9 @@ export const DailyReadingsPage: React.FC = () => {
       <section className="section section-stage">
         <div className="container">
           <div style={{ marginBottom: '2rem' }}>
-            <span className="eyebrow">Confession & Meditation</span>
+            <span className="eyebrow">{t('Confession & Meditation')}</span>
             <h2 className="section-title">
-              Anchor Scriptures in <span className="accent-serif">Christ’s Finished Work</span>
+              {t('Anchor Scriptures in')} <span className="accent-serif">{t('Christ’s Finished Work')}</span>
             </h2>
           </div>
 
@@ -272,10 +296,10 @@ export const DailyReadingsPage: React.FC = () => {
             {SCRIPTURE_GEMS.map(gem => (
               <div key={gem.reference} className="card">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.6rem', color: 'var(--brand-royal)', fontWeight: 700 }}>
-                  <BookOpen size={17} /> {gem.reference}
+                  <BookOpen size={17} /> {t(gem.reference)}
                 </div>
                 <p className="scripture-quote" style={{ fontSize: '1.2rem' }}>
-                  “{gem.text}”
+                  “{t(gem.text)}”
                 </p>
               </div>
             ))}
@@ -288,21 +312,25 @@ export const DailyReadingsPage: React.FC = () => {
         <div className="container-narrow">
           <div className="card">
             <div style={{ marginBottom: '1.5rem' }}>
-              <span className="eyebrow">A Reminder at Your Hour</span>
+              <span className="eyebrow">{t('A Reminder at Your Hour')}</span>
               <h2 style={{ fontSize: '1.65rem', marginBottom: '0.35rem' }}>
-                Receive Today’s Passages in Your Inbox
+                {t('Receive Today’s Passages in Your Inbox')}
               </h2>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                Choose your preferred morning or evening hour in your time zone ({getVisitorTimezone()}).
+                {t('Choose your preferred morning or evening hour in your time zone ({tz}).', {
+                  tz: getVisitorTimezone()
+                })}
               </p>
             </div>
 
             {reminderSaved ? (
               <div style={{ padding: '1.35rem', borderRadius: 'var(--radius-md)', background: 'var(--ok-green-bg)', color: 'var(--ok-green)' }}>
                 <CheckCircle2 size={24} style={{ marginBottom: '0.4rem' }} />
-                <strong>Daily Reading Reminder Scheduled!</strong>
+                <strong>{t('Daily Reading Reminder Scheduled!')}</strong>
                 <p style={{ fontSize: '0.9rem', marginTop: '0.2rem' }}>
-                  Check your inbox for a quick confirmation link—your passages will follow the <strong>{plan}</strong> plan.
+                  {t('Check your inbox for a quick confirmation link—your passages will follow the {plan} plan.', {
+                    plan: planDisplayLabel
+                  })}
                 </p>
               </div>
             ) : (
@@ -314,28 +342,28 @@ export const DailyReadingsPage: React.FC = () => {
                 className="form-grid"
               >
                 <div>
-                  <label className="field-label">First Name <span className="req">*</span></label>
-                  <input required type="text" className="field-input" placeholder="Your first name" />
+                  <label className="field-label">{t('First Name')} <span className="req">*</span></label>
+                  <input required type="text" className="field-input" placeholder={t('Your first name')} />
                 </div>
                 <div>
-                  <label className="field-label">Email Address <span className="req">*</span></label>
+                  <label className="field-label">{t('Email Address')} <span className="req">*</span></label>
                   <input required type="email" className="field-input" placeholder="you@example.com" />
                 </div>
                 <div>
-                  <label className="field-label">Delivery Time (Local)</label>
+                  <label className="field-label">{t('Delivery Time (Local)')}</label>
                   <input type="time" defaultValue="06:30" className="field-input" />
                 </div>
                 <div>
-                  <label className="field-label">Reading Plan</label>
+                  <label className="field-label">{t('Reading Plan')}</label>
                   <select className="field-select" value={plan} onChange={e => setPlan(e.target.value as PlanId)}>
-                    <option value="1-year">1-Year Bible Plan</option>
-                    <option value="10-month">10-Month Bible Plan</option>
-                    <option value="9-month">9-Month Bible Plan</option>
+                    <option value="1-year">{t('1-Year Bible Plan')}</option>
+                    <option value="10-month">{t('10-Month Bible Plan')}</option>
+                    <option value="9-month">{t('9-Month Bible Plan')}</option>
                   </select>
                 </div>
                 <div className="form-full" style={{ display: 'flex', justifyContent: 'flex-end' }}>
                   <button type="submit" className="btn btn-primary">
-                    <Bell size={16} /> Start Daily Email Reminders
+                    <Bell size={16} /> {t('Start Daily Email Reminders')}
                   </button>
                 </div>
               </form>

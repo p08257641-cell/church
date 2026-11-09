@@ -7,21 +7,22 @@ import {
   Mail,
   MapPin,
   MessageCircle,
-  Phone,
-  Youtube
+  Phone
 } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
+import { useApp } from '../context/AppContext';
 
 const TOPICS = ['Sunday Service Links', 'Daily Readings', 'Events & Camps', 'Prophetic Updates'];
 
 export const Footer: React.FC = () => {
+  const { t } = useApp();
   const [selectedTopics, setSelectedTopics] = useState<string[]>(['Sunday Service Links', 'Events & Camps']);
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
   const toggleTopic = (topic: string) => {
     setSelectedTopics(prev =>
-      prev.includes(topic) ? prev.filter(t => t !== topic) : [...prev, topic]
+      prev.includes(topic) ? prev.filter(item => item !== topic) : [...prev, topic]
     );
   };
 
@@ -38,14 +39,14 @@ export const Footer: React.FC = () => {
         {/* Interactive Ministry Updates Banner */}
         <div className="footer-newsletter">
           <div>
-            <span className="eyebrow eyebrow-light">Stay Connected Worldwide</span>
+            <span className="eyebrow eyebrow-light">{t('Stay Connected Worldwide')}</span>
             <h3 style={{ fontSize: 'var(--text-2xl)', color: '#FFFFFF', marginBottom: '0.45rem' }}>
-              Receive Service Links, Readings & Prophetic Alerts
+              {t('Receive Service Links, Readings & Prophetic Alerts')}
             </h3>
             <p style={{ color: 'rgba(248,250,252,0.78)', fontSize: '0.94rem' }}>
-              Choose the updates you want in your inbox—tailored to your walk with Christ.
+              {t('Choose the updates you want in your inbox—tailored to your walk with Christ.')}
             </p>
-            <div className="topic-chips" role="group" aria-label="Email topics">
+            <div className="topic-chips" role="group" aria-label={t('Email topics')}>
               {TOPICS.map(topic => {
                 const active = selectedTopics.includes(topic);
                 return (
@@ -56,7 +57,7 @@ export const Footer: React.FC = () => {
                     onClick={() => toggleTopic(topic)}
                   >
                     {active ? '✓ ' : '+ '}
-                    {topic}
+                    {t(topic)}
                   </button>
                 );
               })}
@@ -79,9 +80,11 @@ export const Footer: React.FC = () => {
               >
                 <CheckCircle2 size={24} style={{ color: '#4ADE80', flexShrink: 0 }} />
                 <div>
-                  <strong>You are on the list!</strong>
+                  <strong>{t('You are on the list!')}</strong>
                   <div style={{ fontSize: '0.85rem', opacity: 0.88 }}>
-                    Subscribed to: {selectedTopics.join(', ') || 'General Ministry Updates'}.
+                    {t('Subscribed to: {topics}.', {
+                      topics: selectedTopics.map(item => t(item)).join(', ') || t('General Ministry Updates')
+                    })}
                   </div>
                 </div>
               </div>
@@ -93,16 +96,16 @@ export const Footer: React.FC = () => {
                     required
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    placeholder="Enter your email address..."
+                    placeholder={t('Enter your email address...')}
                     className="newsletter-input"
-                    aria-label="Email address"
+                    aria-label={t('Email address')}
                   />
                   <button type="submit" className="btn btn-gold">
-                    Subscribe
+                    {t('Subscribe')}
                   </button>
                 </div>
                 <span style={{ fontSize: '0.76rem', color: 'rgba(248,250,252,0.6)' }}>
-                  Sent only by Ephesus Gatherings Worldwide. Unsubscribe anytime with one click.
+                  {t('Sent only by Ephesus Gatherings Worldwide. Unsubscribe anytime with one click.')}
                 </span>
               </form>
             )}
@@ -114,7 +117,7 @@ export const Footer: React.FC = () => {
           <div>
             <BrandLogo onDark width={152} />
             <p style={{ marginTop: '1rem', fontSize: '0.92rem', color: 'rgba(248,250,252,0.75)', lineHeight: 1.65 }}>
-              A Christ-centred training centre equipping God’s overcomers across Ghana and the nations to fulfill their divine purpose, experience divine health, and make a transformative impact for the Lord Jesus Christ.
+              {t('A Christ-centred training centre equipping God’s overcomers across Ghana and the nations to fulfill their divine purpose, experience divine health, and make a transformative impact for the Lord Jesus Christ.')}
             </p>
             <div className="social-row">
               <a
@@ -123,7 +126,7 @@ export const Footer: React.FC = () => {
                 rel="noreferrer"
                 className="social-pill"
                 aria-label="Facebook"
-                title="Facebook (Ephesus Gatherings)"
+                title={t('Facebook (Ephesus Gatherings)')}
               >
                 <ExternalLink size={16} />
               </a>
@@ -142,8 +145,8 @@ export const Footer: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="social-pill"
-                aria-label="Ephesus Radio Mixlr"
-                title="Mixlr Live Broadcast"
+                aria-label={t('Ephesus Radio Mixlr')}
+                title={t('Mixlr Live Broadcast')}
               >
                 <ExternalLink size={16} />
               </a>
@@ -152,16 +155,16 @@ export const Footer: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="social-pill"
-                aria-label="WhatsApp Channel"
-                title="Official WhatsApp Channel"
+                aria-label={t('WhatsApp Channel')}
+                title={t('Official WhatsApp Channel')}
               >
                 <MessageCircle size={17} />
               </a>
               <a
                 href="mailto:admin@ephesusgatheringsworldwide.org"
                 className="social-pill"
-                aria-label="Email EGW"
-                title="Email Us"
+                aria-label={t('Email EGW')}
+                title={t('Email Us')}
               >
                 <Mail size={16} />
               </a>
@@ -169,60 +172,60 @@ export const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h4 className="footer-heading">Worship & Word</h4>
+            <h4 className="footer-heading">{t('Worship & Word')}</h4>
             <div className="footer-links">
-              <Link to="/online-service">Online Broadcast Stage</Link>
-              <Link to="/events">Events & Service Calendar</Link>
-              <Link to="/daily-readings">Daily Bible Readings</Link>
-              <Link to="/testimonies">Testimonies & Good Reports</Link>
-              <Link to="/salvation">Salvation — Receive Jesus</Link>
+              <Link to="/online-service">{t('Online Broadcast Stage')}</Link>
+              <Link to="/events">{t('Events & Service Calendar')}</Link>
+              <Link to="/daily-readings">{t('Daily Bible Readings')}</Link>
+              <Link to="/testimonies">{t('Testimonies & Good Reports')}</Link>
+              <Link to="/salvation">{t('Salvation — Receive Jesus')}</Link>
               <a
                 href="https://ephesus-radio.mixlr.com/events/4361028"
                 target="_blank"
                 rel="noreferrer"
               >
-                Ephesus Radio Mixlr <ExternalLink size={12} />
+                {t('Ephesus Radio Mixlr')} <ExternalLink size={12} />
               </a>
               <a
                 href="https://open.spotify.com/show/76wjFskbcoaJiCzwPTc7yG"
                 target="_blank"
                 rel="noreferrer"
               >
-                The Emergence Podcast <ExternalLink size={12} />
+                {t('The Emergence Podcast')} <ExternalLink size={12} />
               </a>
             </div>
           </div>
 
           <div>
-            <h4 className="footer-heading">Ministry & Schools</h4>
+            <h4 className="footer-heading">{t('Ministry & Schools')}</h4>
             <div className="footer-links">
-              <Link to="/about">Our Story & Vision</Link>
-              <Link to="/about#schools">Education & Training Unit</Link>
-              <Link to="/about#beliefs">12 Articles of Faith</Link>
+              <Link to="/about">{t('Our Story & Vision')}</Link>
+              <Link to="/about#schools">{t('Education & Training Unit')}</Link>
+              <Link to="/about#beliefs">{t('12 Articles of Faith')}</Link>
               <Link to="/about#founder">Prophet Edem Julius-Cudjoe</Link>
-              <Link to="/about#ministries">Mother Church Ministry Arms</Link>
-              <Link to="/join">Join as Member or Partner</Link>
-              <Link to="/give">Tithes, Offerings & Partnership</Link>
-              <Link to="/resources">All Resources & Outreach</Link>
+              <Link to="/about#ministries">{t('Mother Church Ministry Arms')}</Link>
+              <Link to="/join">{t('Join as Member or Partner')}</Link>
+              <Link to="/give">{t('Tithes, Offerings & Partnership')}</Link>
+              <Link to="/resources">{t('All Resources & Outreach')}</Link>
             </div>
           </div>
 
           <div>
-            <h4 className="footer-heading">Sanctuary & Contact</h4>
+            <h4 className="footer-heading">{t('Sanctuary & Contact')}</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.88rem', color: 'rgba(248,250,252,0.8)' }}>
               <div style={{ display: 'flex', gap: '0.6rem' }}>
                 <MapPin size={17} style={{ color: 'var(--gold-300)', flexShrink: 0, marginTop: 3 }} />
                 <div>
-                  <strong style={{ color: '#FFFFFF', display: 'block' }}>The Son Place (Grace Grounds)</strong>
-                  Mikaddo Plaza, Labone Junction, Accra, Ghana
+                  <strong style={{ color: '#FFFFFF', display: 'block' }}>{t('The Son Place (Grace Grounds)')}</strong>
+                  {t('Mikaddo Plaza, Labone Junction, Accra, Ghana')}
                   <div style={{ color: 'var(--gold-200)', fontSize: '0.82rem', marginTop: 2 }}>
-                    Sundays 3:00 PM GMT · Top Mission: 1st Week Monthly (Tue &amp; Wed, 6:30 PM Prompt)
+                    {t('Sundays 3:00 PM GMT · Top Mission: 1st Week Monthly (Tue & Wed, 6:30 PM Prompt)')}
                   </div>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
                 <Phone size={16} style={{ color: 'var(--gold-300)', flexShrink: 0 }} />
-                <a href="tel:+233201944006">+233 20 194 4006 (Office)</a>
+                <a href="tel:+233201944006">{t('+233 20 194 4006 (Office)')}</a>
                 <span style={{ opacity: 0.4 }}>·</span>
                 <a href="tel:+17809537153">+1 (780) 953-7153</a>
               </div>
@@ -233,7 +236,7 @@ export const Footer: React.FC = () => {
                 </a>
               </div>
               <div style={{ fontSize: '0.8rem', color: 'rgba(248,250,252,0.6)', marginTop: 2 }}>
-                Global Fellowship & Worldwide Family connecting believers across Ghana, Africa & the Nations.
+                {t('Global Fellowship & Worldwide Family connecting believers across Ghana, Africa & the Nations.')}
               </div>
             </div>
           </div>
@@ -241,11 +244,11 @@ export const Footer: React.FC = () => {
 
         <div className="footer-bottom">
           <div>
-            © {new Date().getFullYear()} EPHESUS GATHERINGS WORLDWIDE. All rights reserved.
+            {t('© {year} EPHESUS GATHERINGS WORLDWIDE. All rights reserved.', { year: new Date().getFullYear() })}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
             <Link to="/contact" style={{ color: 'rgba(248,250,252,0.75)' }}>
-              Confidential Prayer Desk
+              {t('Confidential Prayer Desk')}
             </Link>
             <button
               type="button"
@@ -258,7 +261,7 @@ export const Footer: React.FC = () => {
                 fontWeight: 600
               }}
             >
-              Back to top <ArrowUp size={14} />
+              {t('Back to top')} <ArrowUp size={14} />
             </button>
           </div>
         </div>

@@ -10,9 +10,11 @@ import {
   Sparkles,
   X
 } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 import { FLAG_URLS, TESTIMONIES_DATA, Testimony } from '../data/ministryData';
 
 export const TestimoniesPage: React.FC = () => {
+  const { t } = useApp();
   const [stories, setStories] = useState<Testimony[]>(TESTIMONIES_DATA);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -54,12 +56,15 @@ export const TestimoniesPage: React.FC = () => {
       const qOk =
         !q ||
         s.title.toLowerCase().includes(q) ||
+        t(s.title).toLowerCase().includes(q) ||
         s.summary.toLowerCase().includes(q) ||
+        t(s.summary).toLowerCase().includes(q) ||
         s.country.toLowerCase().includes(q) ||
+        t(s.country).toLowerCase().includes(q) ||
         s.author.toLowerCase().includes(q);
       return catOk && qOk;
     });
-  }, [stories, selectedCategory, searchQuery]);
+  }, [stories, selectedCategory, searchQuery, t]);
 
   const toggleViewMode = (mode: 'grid' | 'list') => {
     setViewMode(mode);
@@ -118,17 +123,17 @@ export const TestimoniesPage: React.FC = () => {
       <section className="page-hero">
         <div className="container page-hero-inner">
           <div>
-            <span className="eyebrow eyebrow-light">Psalm 66:5 · Come and See What God Has Done</span>
-            <h1>Testimonies of Healing, Fulfilled Prophecy & Grace</h1>
+            <span className="eyebrow eyebrow-light">{t('Psalm 66:5 · Come and See What God Has Done')}</span>
+            <h1>{t('Testimonies of Healing, Fulfilled Prophecy & Grace')}</h1>
             <p className="lead">
-              Verified stories from the Ephesus Gatherings Worldwide family across Ghana, Canada, the USA, the UK, and Kenya. Read what Jesus has done—and add your own testimony to build faith across the nations.
+              {t('Verified stories from the Ephesus Gatherings Worldwide family across Ghana, Canada, the USA, the UK, and Kenya. Read what Jesus has done—and add your own testimony to build faith across the nations.')}
             </p>
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.6rem', flexWrap: 'wrap' }}>
               <a href="#wall" className="btn btn-gold">
-                Browse Testimonies
+                {t('Browse Testimonies')}
               </a>
               <a href="#share-story" className="btn btn-ghost-light">
-                <PlusCircle size={16} /> Share Your Testimony
+                <PlusCircle size={16} /> {t('Share Your Testimony')}
               </a>
             </div>
           </div>
@@ -136,19 +141,19 @@ export const TestimoniesPage: React.FC = () => {
           <div className="stats-ribbon" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
             <div className="stat-item">
               <div className="stat-value">15+</div>
-              <div className="stat-label">Documented Stories</div>
+              <div className="stat-label">{t('Documented Stories')}</div>
             </div>
             <div className="stat-item">
               <div className="stat-value">5</div>
-              <div className="stat-label">Nations Represented</div>
+              <div className="stat-label">{t('Nations Represented')}</div>
             </div>
             <div className="stat-item">
               <div className="stat-value">{readIds.length}</div>
-              <div className="stat-label">Read on Your Device</div>
+              <div className="stat-label">{t('Read on Your Device')}</div>
             </div>
             <div className="stat-item">
               <div className="stat-value">100%</div>
-              <div className="stat-label">Glory to Jesus</div>
+              <div className="stat-label">{t('Glory to Jesus')}</div>
             </div>
           </div>
         </div>
@@ -166,7 +171,7 @@ export const TestimoniesPage: React.FC = () => {
                   className={`chip-btn ${selectedCategory === cat ? 'is-active' : ''}`}
                   onClick={() => setSelectedCategory(cat)}
                 >
-                  {cat}
+                  {t(cat)}
                 </button>
               ))}
             </div>
@@ -178,7 +183,7 @@ export const TestimoniesPage: React.FC = () => {
                   type="text"
                   className="field-input"
                   style={{ paddingLeft: '2.2rem', minHeight: 40, borderRadius: 'var(--radius-pill)', width: '100%' }}
-                  placeholder="Search stories..."
+                  placeholder={t('Search stories...')}
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                 />
@@ -188,7 +193,7 @@ export const TestimoniesPage: React.FC = () => {
                   type="button"
                   className="icon-btn"
                   onClick={() => toggleViewMode('grid')}
-                  aria-label="Grid view"
+                  aria-label={t('Grid view')}
                   style={viewMode === 'grid' ? { borderColor: 'var(--brand-gold)', color: 'var(--brand-primary)' } : undefined}
                 >
                   <LayoutGrid size={17} />
@@ -197,7 +202,7 @@ export const TestimoniesPage: React.FC = () => {
                   type="button"
                   className="icon-btn"
                   onClick={() => toggleViewMode('list')}
-                  aria-label="List view"
+                  aria-label={t('List view')}
                   style={viewMode === 'list' ? { borderColor: 'var(--brand-gold)', color: 'var(--brand-primary)' } : undefined}
                 >
                   <List size={17} />
@@ -219,23 +224,23 @@ export const TestimoniesPage: React.FC = () => {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.8rem' }}>
                       <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                         {story.featured && (
-                          <span className="badge badge-gold"><Sparkles size={12} /> Featured</span>
+                          <span className="badge badge-gold"><Sparkles size={12} /> {t('Featured')}</span>
                         )}
                         {story.categories.map(c => (
-                          <span key={c} className="badge badge-navy">{c}</span>
+                          <span key={c} className="badge badge-navy">{t(c)}</span>
                         ))}
                       </div>
                       <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: 600 }}>
                         {FLAG_URLS[story.flagCode] && (
                           <img src={FLAG_URLS[story.flagCode]} alt="" className="flag-mini" />
                         )}
-                        {story.country} · {story.year}
+                        {t(story.country)} · {story.year}
                       </span>
                     </div>
 
-                    <h3 style={{ fontSize: '1.35rem', marginBottom: '0.55rem' }}>{story.title}</h3>
+                    <h3 style={{ fontSize: '1.35rem', marginBottom: '0.55rem' }}>{t(story.title)}</h3>
                     <p style={{ color: 'var(--text-secondary)', fontSize: '0.94rem', marginBottom: '0.9rem' }}>
-                      {story.summary}
+                      {t(story.summary)}
                     </p>
                     <blockquote
                       style={{
@@ -247,20 +252,21 @@ export const TestimoniesPage: React.FC = () => {
                         color: 'var(--text-primary)'
                       }}
                     >
-                      “{story.closingQuote}”
+                      {t(story.closingQuote)}
                     </blockquote>
                   </div>
 
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.75rem', borderTop: '1px solid var(--border-subtle)' }}>
                     <span style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--text-muted)' }}>
-                      {story.author} {isRead && '· ✓ Read'}
+                      {story.author === 'EGW Family Member' ? t(story.author) : story.author}{' '}
+                      {isRead && `· ✓ ${t('Read')}`}
                     </span>
                     <button
                       type="button"
                       className="btn btn-primary btn-sm"
                       onClick={() => openStoryModal(story)}
                     >
-                      <BookOpenCheck size={15} /> Read Full Testimony
+                      <BookOpenCheck size={15} /> {t('Read Full Testimony')}
                     </button>
                   </div>
                 </article>
@@ -274,12 +280,12 @@ export const TestimoniesPage: React.FC = () => {
       <section id="share-story" className="section section-stage">
         <div className="container-narrow">
           <div style={{ textAlign: 'center', marginBottom: '2.25rem' }}>
-            <span className="eyebrow">Revelation 12:11</span>
+            <span className="eyebrow">{t('Revelation 12:11')}</span>
             <h2 className="section-title">
-              Share Your <span className="accent-serif">Testimony</span>
+              {t('Share Your')} <span className="accent-serif">{t('Testimony')}</span>
             </h2>
             <p style={{ color: 'var(--text-secondary)' }}>
-              Your story of God’s faithfulness encourages believers across our global community and glorifies the name of Jesus.
+              {t('Your story of God’s faithfulness encourages believers across our global community and glorifies the name of Jesus.')}
             </p>
           </div>
 
@@ -287,74 +293,74 @@ export const TestimoniesPage: React.FC = () => {
             {submitSuccess ? (
               <div style={{ textAlign: 'center', padding: '1.5rem' }}>
                 <CheckCircle2 size={42} style={{ color: 'var(--ok-green)', marginInline: 'auto', marginBottom: '0.75rem' }} />
-                <h3 style={{ fontSize: '1.45rem', marginBottom: '0.4rem' }}>Your Testimony Is With Our Team!</h3>
+                <h3 style={{ fontSize: '1.45rem', marginBottom: '0.4rem' }}>{t('Your Testimony Is With Our Team!')}</h3>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '1.25rem' }}>
-                  Thank you for glorifying the Lord—your story has also been added to the top of your Testimony Wall preview above.
+                  {t('Thank you for glorifying the Lord—your story has also been added to the top of your Testimony Wall preview above.')}
                 </p>
                 <button type="button" className="btn btn-outline btn-sm" onClick={() => setSubmitSuccess(false)}>
-                  Share Another Testimony
+                  {t('Share Another Testimony')}
                 </button>
               </div>
             ) : (
               <form onSubmit={handleShareSubmit} className="form-grid">
                 <div>
-                  <label className="field-label">Your Name <span className="req">*</span></label>
+                  <label className="field-label">{t('Your Name')} <span className="req">*</span></label>
                   <input
                     required
                     type="text"
                     className="field-input"
                     value={authorName}
                     onChange={e => setAuthorName(e.target.value)}
-                    placeholder="Full name or 'EGW Member'"
+                    placeholder={t('Full name or \'EGW Member\'')}
                   />
                 </div>
                 <div>
-                  <label className="field-label">Country of Residence <span className="req">*</span></label>
+                  <label className="field-label">{t('Country of Residence')} <span className="req">*</span></label>
                   <select className="field-select" value={country} onChange={e => setCountry(e.target.value)}>
-                    <option>Canada</option>
-                    <option>United Kingdom</option>
-                    <option>United States</option>
-                    <option>Germany</option>
-                    <option>Ghana</option>
-                    <option>Kenya</option>
+                    <option value="Canada">{t('Canada')}</option>
+                    <option value="United Kingdom">{t('United Kingdom')}</option>
+                    <option value="United States">{t('United States')}</option>
+                    <option value="Germany">{t('Germany')}</option>
+                    <option value="Ghana">{t('Ghana')}</option>
+                    <option value="Kenya">{t('Kenya')}</option>
                   </select>
                 </div>
                 <div>
-                  <label className="field-label">Testimony Headline <span className="req">*</span></label>
+                  <label className="field-label">{t('Testimony Headline')} <span className="req">*</span></label>
                   <input
                     required
                     type="text"
                     className="field-input"
                     value={storyTitle}
                     onChange={e => setStoryTitle(e.target.value)}
-                    placeholder="e.g., Complete Healing After Prayer"
+                    placeholder={t('e.g., Complete Healing After Prayer')}
                   />
                 </div>
                 <div>
-                  <label className="field-label">Category</label>
+                  <label className="field-label">{t('Category')}</label>
                   <select className="field-select" value={storyCategory} onChange={e => setStoryCategory(e.target.value)}>
-                    <option>Healing</option>
-                    <option>Divine Provision</option>
-                    <option>Breakthrough</option>
-                    <option>Family Restoration</option>
-                    <option>Favour & Excellence</option>
-                    <option>Speedy Breakthrough</option>
+                    <option value="Healing">{t('Healing')}</option>
+                    <option value="Divine Provision">{t('Divine Provision')}</option>
+                    <option value="Breakthrough">{t('Breakthrough')}</option>
+                    <option value="Family Restoration">{t('Family Restoration')}</option>
+                    <option value="Favour & Excellence">{t('Favour & Excellence')}</option>
+                    <option value="Speedy Breakthrough">{t('Speedy Breakthrough')}</option>
                   </select>
                 </div>
                 <div className="form-full">
-                  <label className="field-label">What Did the Lord Do? <span className="req">*</span></label>
+                  <label className="field-label">{t('What Did the Lord Do?')} <span className="req">*</span></label>
                   <textarea
                     required
                     className="field-textarea"
                     style={{ minHeight: 150 }}
                     value={storyBody}
                     onChange={e => setStoryBody(e.target.value)}
-                    placeholder="Tell your story in your own words..."
+                    placeholder={t('Tell your story in your own words...')}
                   />
                 </div>
                 <div className="form-full" style={{ display: 'flex', justifyContent: 'flex-end' }}>
                   <button type="submit" className="btn btn-gold">
-                    Submit Testimony
+                    {t('Submit Testimony')}
                   </button>
                 </div>
               </form>
@@ -371,15 +377,15 @@ export const TestimoniesPage: React.FC = () => {
               <div>
                 <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
                   {activeStory.categories.map(c => (
-                    <span key={c} className="badge badge-gold">{c}</span>
+                    <span key={c} className="badge badge-gold">{t(c)}</span>
                   ))}
                 </div>
-                <h2 style={{ fontSize: '1.6rem' }}>{activeStory.title}</h2>
+                <h2 style={{ fontSize: '1.6rem' }}>{t(activeStory.title)}</h2>
                 <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-                  Shared by <strong>{activeStory.author}</strong> · {activeStory.country} ({activeStory.year})
+                  {t('Shared by')} <strong>{activeStory.author === 'EGW Family Member' ? t(activeStory.author) : activeStory.author}</strong> · {t(activeStory.country)} ({activeStory.year})
                 </p>
               </div>
-              <button type="button" className="icon-btn" onClick={() => setActiveStory(null)} aria-label="Close">
+              <button type="button" className="icon-btn" onClick={() => setActiveStory(null)} aria-label={t('Close')}>
                 <X size={18} />
               </button>
             </div>
@@ -387,7 +393,7 @@ export const TestimoniesPage: React.FC = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
               {activeStory.paragraphs.map((p, i) => (
                 <p key={i} style={{ fontSize: '1.02rem', lineHeight: 1.75, color: 'var(--text-secondary)' }}>
-                  {p}
+                  {t(p)}
                 </p>
               ))}
             </div>
@@ -405,7 +411,7 @@ export const TestimoniesPage: React.FC = () => {
             >
               <Quote size={22} style={{ color: 'var(--brand-gold)', flexShrink: 0, marginTop: 2 }} />
               <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '1.18rem' }}>
-                {activeStory.closingQuote}
+                {t(activeStory.closingQuote)}
               </p>
             </div>
           </div>

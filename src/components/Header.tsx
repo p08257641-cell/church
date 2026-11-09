@@ -29,6 +29,7 @@ export const Header: React.FC = () => {
     language,
     currentLang,
     setLanguage,
+    t,
     nextGathering,
     openSearch
   } = useApp();
@@ -66,6 +67,13 @@ export const Header: React.FC = () => {
     return <SunMoon size={17} />;
   };
 
+  const themeDisplayName =
+    themeMode === 'light'
+      ? t('Sanctuary Light')
+      : themeMode === 'dark'
+        ? t('Midnight Navy')
+        : t('Auto (Day / Night)');
+
   return (
     <>
       {/* Top Utility Bar */}
@@ -77,33 +85,33 @@ export const Header: React.FC = () => {
               <span>
                 {nextGathering.isLive ? (
                   <>
-                    <strong>Live now:</strong> {nextGathering.service.title}
+                    <strong>{t('Live now:')}</strong> {t(nextGathering.service.title)}
                   </>
                 ) : (
                   <>
-                    <strong>{nextGathering.service.title}</strong>
+                    <strong>{t(nextGathering.service.title)}</strong>
                     <span style={{ opacity: 0.55 }}> · </span>
                     {nextGathering.humanWhen}
                   </>
                 )}
               </span>
               <span className="join-cta">
-                {nextGathering.isLive ? 'Watch stream →' : 'Join online →'}
+                {nextGathering.isLive ? t('Watch stream →') : t('Join online →')}
               </span>
             </Link>
           </div>
 
           <div className="top-strip-right">
             <Link to="/salvation" className="top-strip-link">
-              Receive Jesus
+              {t('Receive Jesus')}
             </Link>
             <span className="top-strip-sep" aria-hidden="true">/</span>
             <Link to="/daily-readings" className="top-strip-link">
-              Daily Readings
+              {t('Daily Readings')}
             </Link>
             <span className="top-strip-sep" aria-hidden="true">/</span>
             <Link to="/contact" className="top-strip-link">
-              Prayer &amp; Contact
+              {t('Prayer & Contact')}
             </Link>
           </div>
         </div>
@@ -115,7 +123,7 @@ export const Header: React.FC = () => {
           <BrandLogo width={132} />
 
           {/* Desktop Navigation with Rich Mega Menus */}
-          <nav className="desktop-nav" aria-label="Primary Navigation">
+          <nav className="desktop-nav" aria-label={t('Primary Navigation')}>
             <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
               {currentLang.nav.home}
             </NavLink>
@@ -129,29 +137,29 @@ export const Header: React.FC = () => {
                   <Link to="/about#welcome" className="mega-link-item">
                     <span className="mega-icon"><Sparkles size={18} /></span>
                     <div>
-                      <div className="mega-link-title">Pastor’s Welcome Letter</div>
-                      <div className="mega-link-desc">A personal word of grace in 9 languages</div>
+                      <div className="mega-link-title">{t('Pastor’s Welcome Letter')}</div>
+                      <div className="mega-link-desc">{t('A personal word of grace in 9 languages')}</div>
                     </div>
                   </Link>
                   <Link to="/about#vision" className="mega-link-item">
                     <span className="mega-icon"><Compass size={18} /></span>
                     <div>
-                      <div className="mega-link-title">Our Story & Vision</div>
-                      <div className="mega-link-desc">Mother Church in Accra & global Kingdom expression</div>
+                      <div className="mega-link-title">{t('Our Story & Vision')}</div>
+                      <div className="mega-link-desc">{t('Mother Church in Accra & global Kingdom expression')}</div>
                     </div>
                   </Link>
                   <Link to="/about#beliefs" className="mega-link-item">
                     <span className="mega-icon"><BookOpen size={18} /></span>
                     <div>
-                      <div className="mega-link-title">12 Articles of Faith</div>
-                      <div className="mega-link-desc">What we believe with full Scripture foundations</div>
+                      <div className="mega-link-title">{t('12 Articles of Faith')}</div>
+                      <div className="mega-link-desc">{t('What we believe with full Scripture foundations')}</div>
                     </div>
                   </Link>
                   <Link to="/about#ministries" className="mega-link-item">
                     <span className="mega-icon"><Users size={18} /></span>
                     <div>
-                      <div className="mega-link-title">Ministry Arms & Mandate</div>
-                      <div className="mega-link-desc">Explore the 6 core pillars of Ephesus Gatherings</div>
+                      <div className="mega-link-title">{t('Ministry Arms & Mandate')}</div>
+                      <div className="mega-link-desc">{t('Explore the 6 core pillars of Ephesus Gatherings')}</div>
                     </div>
                   </Link>
                 </div>
@@ -159,15 +167,15 @@ export const Header: React.FC = () => {
                 <div className="mega-feature-card">
                   <div>
                     <span className="badge badge-gold" style={{ marginBottom: '0.6rem' }}>
-                      Founder & Lead Convener
+                      {t('Founder & Lead Convener')}
                     </span>
                     <h4>{FOUNDER_INFO.name}</h4>
                     <p style={{ marginTop: '0.35rem' }}>
-                      Equipping God’s overcomers to rest in Christ’s finished work and reign in life.
+                      {t('Equipping God’s overcomers to rest in Christ’s finished work and reign in life.')}
                     </p>
                   </div>
                   <Link to="/about#founder" className="btn btn-gold btn-sm">
-                    Read Full Profile <ChevronRight size={15} />
+                    {t('Read Full Profile')} <ChevronRight size={15} />
                   </Link>
                 </div>
               </div>
@@ -187,7 +195,7 @@ export const Header: React.FC = () => {
 
             <div className="nav-item-wrap">
               <NavLink to="/resources" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                Grow & Connect <ChevronDown size={14} />
+                {t('Grow & Connect')} <ChevronDown size={14} />
               </NavLink>
               <div className="mega-menu">
                 <div className="mega-links">
@@ -195,28 +203,28 @@ export const Header: React.FC = () => {
                     <span className="mega-icon"><BookOpen size={18} /></span>
                     <div>
                       <div className="mega-link-title">{currentLang.nav.readings}</div>
-                      <div className="mega-link-desc">1-Year, 10-Month & 9-Month plans + Proverbs streak</div>
+                      <div className="mega-link-desc">{t('1-Year, 10-Month & 9-Month plans + Proverbs streak')}</div>
                     </div>
                   </Link>
                   <Link to="/salvation" className="mega-link-item">
                     <span className="mega-icon"><Heart size={18} /></span>
                     <div>
                       <div className="mega-link-title">{currentLang.nav.salvation}</div>
-                      <div className="mega-link-desc">Jesus the Only Way & guided salvation prayer</div>
+                      <div className="mega-link-desc">{t('Jesus the Only Way & guided salvation prayer')}</div>
                     </div>
                   </Link>
                   <Link to="/join" className="mega-link-item">
                     <span className="mega-icon"><Users size={18} /></span>
                     <div>
-                      <div className="mega-link-title">Join as Member or Affiliate</div>
-                      <div className="mega-link-desc">Pastoral welcome & discipleship across the nations</div>
+                      <div className="mega-link-title">{t('Join as Member or Affiliate')}</div>
+                      <div className="mega-link-desc">{t('Pastoral welcome & discipleship across the nations')}</div>
                     </div>
                   </Link>
                   <Link to="/resources" className="mega-link-item">
                     <span className="mega-icon"><Calendar size={18} /></span>
                     <div>
-                      <div className="mega-link-title">All Ministry Resources</div>
-                      <div className="mega-link-desc">Podcasts, WhatsApp channel, volunteer teams & tools</div>
+                      <div className="mega-link-title">{t('All Ministry Resources')}</div>
+                      <div className="mega-link-desc">{t('Podcasts, WhatsApp channel, volunteer teams & tools')}</div>
                     </div>
                   </Link>
                 </div>
@@ -224,15 +232,15 @@ export const Header: React.FC = () => {
                 <div className="mega-feature-card">
                   <div>
                     <div style={{ fontSize: '0.74rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--gold-300)', fontWeight: 700, marginBottom: '0.45rem' }}>
-                      {nextGathering.isLive ? 'Live Broadcast' : 'Upcoming Service'}
+                      {nextGathering.isLive ? t('Live Broadcast') : t('Upcoming Service')}
                     </div>
-                    <h4>{nextGathering.service.title}</h4>
+                    <h4>{t(nextGathering.service.title)}</h4>
                     <p style={{ marginTop: '0.35rem' }}>
                       {nextGathering.humanWhen}
                     </p>
                   </div>
                   <Link to="/online-service" className="btn btn-gold btn-sm">
-                    <Radio size={15} /> Open Broadcast Stage
+                    <Radio size={15} /> {t('Open Broadcast Stage')}
                   </Link>
                 </div>
               </div>
@@ -249,8 +257,8 @@ export const Header: React.FC = () => {
               type="button"
               className="icon-btn"
               onClick={openSearch}
-              title="Search (Ctrl+K)"
-              aria-label="Open global search"
+              title={t('Search (Ctrl+K)')}
+              aria-label={t('Open global search')}
             >
               <Search size={17} />
             </button>
@@ -261,15 +269,15 @@ export const Header: React.FC = () => {
                 type="button"
                 className="icon-btn"
                 onClick={() => setOpenPopover(prev => (prev === 'lang' ? null : 'lang'))}
-                title={`Language: ${currentLang.label}`}
-                aria-label="Choose language"
+                title={t('Language: {lang}', { lang: currentLang.label })}
+                aria-label={t('Choose language')}
               >
                 <Globe size={17} />
               </button>
               {openPopover === 'lang' && (
                 <div className="popover-panel" role="menu">
                   <div style={{ padding: '0.4rem 0.7rem', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted)' }}>
-                    Ministry Languages (9)
+                    {t('Ministry Languages (9)')}
                   </div>
                   {LANGUAGES.map(l => (
                     <button
@@ -298,8 +306,8 @@ export const Header: React.FC = () => {
                 type="button"
                 className="icon-btn"
                 onClick={() => setOpenPopover(prev => (prev === 'theme' ? null : 'theme'))}
-                title={`Theme: ${themeMode}`}
-                aria-label="Appearance mode"
+                title={t('Theme: {theme}', { theme: themeDisplayName })}
+                aria-label={t('Appearance mode')}
               >
                 {themeIcon()}
               </button>
@@ -307,9 +315,9 @@ export const Header: React.FC = () => {
                 <div className="popover-panel" role="menu" style={{ minWidth: 190 }}>
                   {(
                     [
-                      { id: 'light', label: 'Sanctuary Light', icon: <Sun size={15} /> },
-                      { id: 'dark', label: 'Midnight Navy', icon: <Moon size={15} /> },
-                      { id: 'auto', label: 'Auto (Day / Night)', icon: <SunMoon size={15} /> }
+                      { id: 'light', label: t('Sanctuary Light'), icon: <Sun size={15} /> },
+                      { id: 'dark', label: t('Midnight Navy'), icon: <Moon size={15} /> },
+                      { id: 'auto', label: t('Auto (Day / Night)'), icon: <SunMoon size={15} /> }
                     ] as { id: ThemeMode; label: string; icon: React.ReactNode }[]
                   ).map(opt => (
                     <button
@@ -342,7 +350,7 @@ export const Header: React.FC = () => {
               type="button"
               className="icon-btn mobile-toggle"
               onClick={() => setMobileOpen(true)}
-              aria-label="Open menu"
+              aria-label={t('Open menu')}
             >
               <Menu size={20} />
             </button>
@@ -356,7 +364,7 @@ export const Header: React.FC = () => {
           <div className="mobile-drawer-panel" onClick={e => e.stopPropagation()}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <BrandLogo width={120} />
-              <button type="button" className="icon-btn" onClick={() => setMobileOpen(false)} aria-label="Close menu">
+              <button type="button" className="icon-btn" onClick={() => setMobileOpen(false)} aria-label={t('Close menu')}>
                 <X size={18} />
               </button>
             </div>
@@ -364,7 +372,7 @@ export const Header: React.FC = () => {
             <div className="mobile-nav-list">
               {[
                 { to: '/', label: currentLang.nav.home },
-                { to: '/about', label: `${currentLang.nav.about} & Leaders` },
+                { to: '/about', label: t('About & Leaders') },
                 { to: '/online-service', label: currentLang.nav.online },
                 { to: '/events', label: currentLang.nav.events },
                 { to: '/testimonies', label: currentLang.nav.testimonies },
@@ -373,7 +381,7 @@ export const Header: React.FC = () => {
                 { to: '/give', label: currentLang.nav.give },
                 { to: '/join', label: currentLang.nav.join },
                 { to: '/resources', label: currentLang.nav.resources },
-                { to: '/contact', label: `${currentLang.nav.contact} & Prayer` }
+                { to: '/contact', label: t('Contact & Prayer') }
               ].map(link => (
                 <NavLink
                   key={link.to}
@@ -391,9 +399,9 @@ export const Header: React.FC = () => {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.4rem' }}>
                 {(
                   [
-                    { id: 'light', label: 'Light', icon: <Sun size={14} /> },
-                    { id: 'dark', label: 'Dark', icon: <Moon size={14} /> },
-                    { id: 'auto', label: 'Auto', icon: <SunMoon size={14} /> }
+                    { id: 'light', label: t('Light'), icon: <Sun size={14} /> },
+                    { id: 'dark', label: t('Dark'), icon: <Moon size={14} /> },
+                    { id: 'auto', label: t('Auto'), icon: <SunMoon size={14} /> }
                   ] as { id: ThemeMode; label: string; icon: React.ReactNode }[]
                 ).map(opt => (
                   <button
@@ -413,11 +421,11 @@ export const Header: React.FC = () => {
                 style={{ minHeight: 42 }}
                 value={language}
                 onChange={e => setLanguage(e.target.value as typeof language)}
-                aria-label="Choose ministry language"
+                aria-label={t('Choose ministry language')}
               >
                 {LANGUAGES.map(l => (
                   <option key={l.code} value={l.code}>
-                    Language: {l.label} ({l.englishName})
+                    {t('Language: {lang}', { lang: `${l.label} (${l.englishName})` })}
                   </option>
                 ))}
               </select>
@@ -428,7 +436,7 @@ export const Header: React.FC = () => {
                 {currentLang.nav.watchLive}
               </Link>
               <Link to="/join" className="btn btn-primary" style={{ width: '100%' }}>
-                Become a Member or Affiliate
+                {t('Become a Member or Affiliate')}
               </Link>
             </div>
           </div>

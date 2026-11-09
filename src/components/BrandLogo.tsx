@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useApp } from '../context/AppContext';
 
 interface BrandLogoProps {
   onDark?: boolean;
@@ -7,11 +8,13 @@ interface BrandLogoProps {
 }
 
 export const BrandLogo: React.FC<BrandLogoProps> = ({ onDark = false, width = 148 }) => {
+  const { t } = useApp();
+
   return (
     <Link
       to="/"
       className={`brand-link ${onDark ? 'force-dark' : ''}`}
-      aria-label="Ephesus Gatherings Worldwide — Home"
+      aria-label={t('Ephesus Gatherings Worldwide — Home')}
       style={{ '--logo-w': `${width}px` } as React.CSSProperties}
     >
       <img

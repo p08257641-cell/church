@@ -14,8 +14,7 @@ import {
   Play,
   Radio,
   Search,
-  Share2,
-  Youtube
+  Share2
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { FOUNDER_INFO, MEDIA_LIBRARY, SERMON_CATEGORIES } from '../data/ministryData';
@@ -32,7 +31,7 @@ const LATEST_SERVICE = MEDIA_LIBRARY.find(m => m.id === 'yt--5wUHKAsoHA') || MED
 type ConsoleTab = 'notes' | 'prayer' | 'salvation' | 'share';
 
 export const OnlineServicePage: React.FC = () => {
-  const { nextGathering, playMedia } = useApp();
+  const { nextGathering, playMedia, t, locale } = useApp();
   const [stageYoutubeId, setStageYoutubeId] = useState<string | null>(null);
   const [consoleTab, setConsoleTab] = useState<ConsoleTab>('notes');
   const [notes, setNotes] = useState<string>(() => {
@@ -56,11 +55,14 @@ export const OnlineServicePage: React.FC = () => {
       const qOk =
         !q ||
         item.title.toLowerCase().includes(q) ||
+        t(item.title).toLowerCase().includes(q) ||
         item.description.toLowerCase().includes(q) ||
-        item.speaker.toLowerCase().includes(q);
+        t(item.description).toLowerCase().includes(q) ||
+        item.speaker.toLowerCase().includes(q) ||
+        t(item.category).toLowerCase().includes(q);
       return catOk && qOk;
     });
-  }, [selectedLibCat, searchLib]);
+  }, [selectedLibCat, searchLib, t]);
 
   useEffect(() => {
     try {
@@ -71,7 +73,7 @@ export const OnlineServicePage: React.FC = () => {
   }, [notes]);
 
   const handleDownloadNotes = () => {
-    const content = `Ephesus Gatherings Worldwide — Service Notes (${new Date().toLocaleDateString()})\n\n${notes || 'No notes recorded yet.'}`;
+    const content = `${t('Ephesus Gatherings Worldwide — Service Notes')} (${new Date().toLocaleDateString(locale)})\n\n${notes || t('No notes recorded yet.')}`;
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -102,10 +104,10 @@ export const OnlineServicePage: React.FC = () => {
       {/* Hero */}
       <section className="page-hero" style={{ paddingBottom: '2.75rem' }}>
         <div className="container">
-          <span className="eyebrow eyebrow-light">Live Broadcast Sanctuary · Open to All</span>
-          <h1>Worship With Us Live, Every Week, From Wherever You Are</h1>
+          <span className="eyebrow eyebrow-light">{t('Live Broadcast Sanctuary · Open to All')}</span>
+          <h1>{t('Worship With Us Live, Every Week, From Wherever You Are')}</h1>
           <p className="lead">
-            No account required. Open this stage a few minutes early, take live sermon notes, send prayer requests in real time, and worship alongside believers across the nations.
+            {t('No account required. Open this stage a few minutes early, take live sermon notes, send prayer requests in real time, and worship alongside believers across the nations.')}
           </p>
         </div>
       </section>
@@ -120,7 +122,7 @@ export const OnlineServicePage: React.FC = () => {
                 {stageYoutubeId ? (
                   <iframe
                     src={`https://www.youtube.com/embed/${stageYoutubeId}?autoplay=1&rel=0`}
-                    title="EGW Broadcast Stage"
+                    title={t('EGW Broadcast Stage')}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
@@ -128,16 +130,18 @@ export const OnlineServicePage: React.FC = () => {
                   <>
                     <img
                       src="https://ephesusgatheringsworldwide.org/wp-content/uploads/2025/07/PWWC-4243-scaled-1.jpg"
-                      alt="Ephesus Gatherings Worldwide Sanctuary Broadcast"
+                      alt={t('Ephesus Gatherings Worldwide Sanctuary Broadcast')}
                       className="poster"
                     />
                     <div className="stage-center-overlay">
                       <div style={{ fontSize: '0.78rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: nextGathering.isLive ? '#F87171' : 'var(--gold-300)', fontWeight: 700, marginBottom: '0.55rem' }}>
-                        {nextGathering.isLive ? '● Live Broadcast In Progress' : `Next Service · Starts ${nextGathering.compactCountdown}`}
+                        {nextGathering.isLive
+                          ? t('● Live Broadcast In Progress')
+                          : t('Next Service · Starts {countdown}', { countdown: nextGathering.compactCountdown })}
                       </div>
 
                       <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', color: '#FFFFFF', marginBottom: '0.35rem' }}>
-                        {nextGathering.service.title}
+                        {t(nextGathering.service.title)}
                       </h2>
                       <p style={{ color: 'rgba(248,250,252,0.85)', marginBottom: '1.35rem', maxWidth: 460, fontSize: '0.98rem' }}>
                         {nextGathering.humanWhen}
@@ -145,10 +149,10 @@ export const OnlineServicePage: React.FC = () => {
 
                       {!nextGathering.isLive && (
                         <div className="countdown-boxes" style={{ width: 'min(360px, 100%)', marginBottom: '1.35rem' }}>
-                          <div className="countdown-cell"><span className="countdown-num">{nextGathering.days}</span><span className="countdown-lbl">Days</span></div>
-                          <div className="countdown-cell"><span className="countdown-num">{nextGathering.hours}</span><span className="countdown-lbl">Hrs</span></div>
-                          <div className="countdown-cell"><span className="countdown-num">{nextGathering.minutes}</span><span className="countdown-lbl">Min</span></div>
-                          <div className="countdown-cell"><span className="countdown-num">{nextGathering.seconds}</span><span className="countdown-lbl">Sec</span></div>
+                          <div className="countdown-cell"><span className="countdown-num">{nextGathering.days}</span><span className="countdown-lbl">{t('Days')}</span></div>
+                          <div className="countdown-cell"><span className="countdown-num">{nextGathering.hours}</span><span className="countdown-lbl">{t('Hrs')}</span></div>
+                          <div className="countdown-cell"><span className="countdown-num">{nextGathering.minutes}</span><span className="countdown-lbl">{t('Min')}</span></div>
+                          <div className="countdown-cell"><span className="countdown-num">{nextGathering.seconds}</span><span className="countdown-lbl">{t('Sec')}</span></div>
                         </div>
                       )}
 
@@ -158,7 +162,7 @@ export const OnlineServicePage: React.FC = () => {
                           className="btn btn-gold btn-sm"
                           onClick={() => setStageYoutubeId(LATEST_SERVICE.youtubeId || '-5wUHKAsoHA')}
                         >
-                          <Play size={15} fill="currentColor" /> Watch Latest Sunday Service (Overcomers 6)
+                          <Play size={15} fill="currentColor" /> {t('Watch Latest Sunday Service (Overcomers 6)')}
                         </button>
                         <a
                           href="https://ephesus-radio.mixlr.com/events/4361028"
@@ -166,7 +170,7 @@ export const OnlineServicePage: React.FC = () => {
                           rel="noreferrer"
                           className="btn btn-ghost-light btn-sm"
                         >
-                          <Radio size={16} /> Open Mixlr Audio
+                          <Radio size={16} /> {t('Open Mixlr Audio')}
                         </a>
                       </div>
                     </div>
@@ -191,8 +195,13 @@ export const OnlineServicePage: React.FC = () => {
                   <Radio size={17} style={{ color: 'var(--gold-400)' }} />
                   <span>
                     {stageYoutubeId
-                      ? `Now Playing on Stage: ${(MEDIA_LIBRARY.find(m => m.youtubeId === stageYoutubeId) || LATEST_SERVICE).title}`
-                      : `Up Next: ${nextGathering.service.title} (${nextGathering.gmtFormatted})`}
+                      ? t('Now Playing on Stage: {title}', {
+                          title: t((MEDIA_LIBRARY.find(m => m.youtubeId === stageYoutubeId) || LATEST_SERVICE).title)
+                        })
+                      : t('Up Next: {title} ({gmt})', {
+                          title: t(nextGathering.service.title),
+                          gmt: nextGathering.gmtFormatted
+                        })}
                   </span>
                 </div>
                 <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -202,7 +211,7 @@ export const OnlineServicePage: React.FC = () => {
                       className="btn btn-ghost-light btn-sm"
                       onClick={() => setStageYoutubeId(null)}
                     >
-                      Back to Live Countdown
+                      {t('Back to Live Countdown')}
                     </button>
                   )}
                   <button
@@ -210,21 +219,21 @@ export const OnlineServicePage: React.FC = () => {
                     className="btn btn-ghost-light btn-sm"
                     onClick={() =>
                       downloadICS({
-                        title: `EGW — ${nextGathering.service.title}`,
-                        description: nextGathering.service.description,
+                        title: `EGW — ${t(nextGathering.service.title)}`,
+                        description: t(nextGathering.service.description),
                         startIso: nextGathering.targetDate.toISOString(),
                         durationMinutes: nextGathering.service.durationMinutes
                       })
                     }
                   >
-                    <Bell size={14} /> Set Reminder
+                    <Bell size={14} /> {t('Set Reminder')}
                   </button>
                 </div>
               </div>
             </div>
 
             {/* Right: Interactive Companion Console */}
-            <aside className="stage-console-panel" aria-label="Interactive Service Companion">
+            <aside className="stage-console-panel" aria-label={t('Interactive Service Companion')}>
               <div className="console-tabs" role="tablist">
                 <button
                   type="button"
@@ -233,7 +242,7 @@ export const OnlineServicePage: React.FC = () => {
                   className={`console-tab ${consoleTab === 'notes' ? 'active' : ''}`}
                   onClick={() => setConsoleTab('notes')}
                 >
-                  <NotebookPen size={14} style={{ display: 'inline', marginRight: 4 }} /> Notes
+                  <NotebookPen size={14} style={{ display: 'inline', marginRight: 4 }} /> {t('Notes')}
                 </button>
                 <button
                   type="button"
@@ -242,7 +251,7 @@ export const OnlineServicePage: React.FC = () => {
                   className={`console-tab ${consoleTab === 'prayer' ? 'active' : ''}`}
                   onClick={() => setConsoleTab('prayer')}
                 >
-                  <MessageSquareHeart size={14} style={{ display: 'inline', marginRight: 4 }} /> Prayer
+                  <MessageSquareHeart size={14} style={{ display: 'inline', marginRight: 4 }} /> {t('Prayer')}
                 </button>
                 <button
                   type="button"
@@ -251,7 +260,7 @@ export const OnlineServicePage: React.FC = () => {
                   className={`console-tab ${consoleTab === 'salvation' ? 'active' : ''}`}
                   onClick={() => setConsoleTab('salvation')}
                 >
-                  <Heart size={14} style={{ display: 'inline', marginRight: 4 }} /> Altar
+                  <Heart size={14} style={{ display: 'inline', marginRight: 4 }} /> {t('Altar')}
                 </button>
                 <button
                   type="button"
@@ -260,7 +269,7 @@ export const OnlineServicePage: React.FC = () => {
                   className={`console-tab ${consoleTab === 'share' ? 'active' : ''}`}
                   onClick={() => setConsoleTab('share')}
                 >
-                  <Share2 size={14} style={{ display: 'inline', marginRight: 4 }} /> Invite
+                  <Share2 size={14} style={{ display: 'inline', marginRight: 4 }} /> {t('Invite')}
                 </button>
               </div>
 
@@ -268,9 +277,9 @@ export const OnlineServicePage: React.FC = () => {
                 {consoleTab === 'notes' && (
                   <>
                     <div>
-                      <h3 style={{ fontSize: '1.1rem', marginBottom: '0.2rem' }}>Personal Sermon Notes</h3>
+                      <h3 style={{ fontSize: '1.1rem', marginBottom: '0.2rem' }}>{t('Personal Sermon Notes')}</h3>
                       <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                        Saved automatically on your device as you type.
+                        {t('Saved automatically on your device as you type.')}
                       </p>
                     </div>
                     <textarea
@@ -278,10 +287,10 @@ export const OnlineServicePage: React.FC = () => {
                       style={{ flex: 1, minHeight: 190 }}
                       value={notes}
                       onChange={e => setNotes(e.target.value)}
-                      placeholder="Write Scripture references, prophetic declarations, and personal takeaways..."
+                      placeholder={t('Write Scripture references, prophetic declarations, and personal takeaways...')}
                     />
                     <button type="button" className="btn btn-outline btn-sm" onClick={handleDownloadNotes}>
-                      <Download size={15} /> Export Notes (.txt)
+                      <Download size={15} /> {t('Export Notes (.txt)')}
                     </button>
                   </>
                 )}
@@ -289,17 +298,17 @@ export const OnlineServicePage: React.FC = () => {
                 {consoleTab === 'prayer' && (
                   <>
                     <div>
-                      <h3 style={{ fontSize: '1.1rem', marginBottom: '0.2rem' }}>Live Prayer Desk</h3>
+                      <h3 style={{ fontSize: '1.1rem', marginBottom: '0.2rem' }}>{t('Live Prayer Desk')}</h3>
                       <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                        Held in confidence and lifted up by our intercessory team.
+                        {t('Held in confidence and lifted up by our intercessory team.')}
                       </p>
                     </div>
                     {prayerSent ? (
                       <div style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: 'var(--ok-green-bg)', color: 'var(--ok-green)' }}>
                         <CheckCircle2 size={22} style={{ marginBottom: '0.4rem' }} />
-                        <strong style={{ display: 'block' }}>Your prayer request has been received.</strong>
+                        <strong style={{ display: 'block' }}>{t('Your prayer request has been received.')}</strong>
                         <p style={{ fontSize: '0.85rem', marginTop: '0.25rem' }}>
-                          Our pastors and prayer coordinators are standing in faith with you.
+                          {t('Our pastors and prayer coordinators are standing in faith with you.')}
                         </p>
                         <button
                           type="button"
@@ -307,33 +316,33 @@ export const OnlineServicePage: React.FC = () => {
                           style={{ marginTop: '0.85rem' }}
                           onClick={() => setPrayerSent(false)}
                         >
-                          Send Another Request
+                          {t('Send Another Request')}
                         </button>
                       </div>
                     ) : (
                       <form onSubmit={handlePrayerSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
                         <div>
-                          <label className="field-label">Your Name</label>
+                          <label className="field-label">{t('Your Name')}</label>
                           <input
                             type="text"
                             className="field-input"
                             value={prayerName}
                             onChange={e => setPrayerName(e.target.value)}
-                            placeholder="Optional or first name"
+                            placeholder={t('Optional or first name')}
                           />
                         </div>
                         <div>
-                          <label className="field-label">How can we pray with you? <span className="req">*</span></label>
+                          <label className="field-label">{t('How can we pray with you?')} <span className="req">*</span></label>
                           <textarea
                             required
                             className="field-textarea"
                             value={prayerText}
                             onChange={e => setPrayerText(e.target.value)}
-                            placeholder="Share your prayer point..."
+                            placeholder={t('Share your prayer point...')}
                           />
                         </div>
                         <button type="submit" className="btn btn-primary btn-sm">
-                          Send to Prayer Team
+                          {t('Send to Prayer Team')}
                         </button>
                       </form>
                     )}
@@ -343,21 +352,21 @@ export const OnlineServicePage: React.FC = () => {
                 {consoleTab === 'salvation' && (
                   <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1, gap: '1rem' }}>
                     <div>
-                      <span className="badge badge-gold" style={{ marginBottom: '0.6rem' }}>Altar Call</span>
-                      <h3 style={{ fontSize: '1.2rem', marginBottom: '0.45rem' }}>Ready to Receive Jesus?</h3>
+                      <span className="badge badge-gold" style={{ marginBottom: '0.6rem' }}>{t('Altar Call')}</span>
+                      <h3 style={{ fontSize: '1.2rem', marginBottom: '0.45rem' }}>{t('Ready to Receive Jesus?')}</h3>
                       <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '0.85rem' }}>
-                        “For with the heart one believes unto righteousness, and with the mouth confession is made unto salvation.” — Romans 10:10
+                        {t('“For with the heart one believes unto righteousness, and with the mouth confession is made unto salvation.” — Romans 10:10')}
                       </p>
                       <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-                        If the Holy Spirit is tugging at your heart right now during the broadcast, we have prepared a guided salvation prayer and a pastoral welcome gift for you.
+                        {t('If the Holy Spirit is tugging at your heart right now during the broadcast, we have prepared a guided salvation prayer and a pastoral welcome gift for you.')}
                       </p>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                       <Link to="/salvation" className="btn btn-gold btn-sm">
-                        <Heart size={15} /> Pray the Salvation Prayer Now
+                        <Heart size={15} /> {t('Pray the Salvation Prayer Now')}
                       </Link>
                       <Link to="/give" className="btn btn-outline btn-sm">
-                        Honour the Lord with Tithes / Offering
+                        {t('Honour the Lord with Tithes / Offering')}
                       </Link>
                     </div>
                   </div>
@@ -366,22 +375,22 @@ export const OnlineServicePage: React.FC = () => {
                 {consoleTab === 'share' && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
                     <div>
-                      <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>Invite Someone to Worship</h3>
+                      <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>{t('Invite Someone to Worship')}</h3>
                       <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                        A single link can bring healing, peace, and direction to a friend or family member today.
+                        {t('A single link can bring healing, peace, and direction to a friend or family member today.')}
                       </p>
                     </div>
                     <button type="button" className="btn btn-primary btn-sm" onClick={handleCopyInvite}>
                       {copied ? <Check size={15} /> : <Copy size={15} />}
-                      {copied ? 'Broadcast Link Copied!' : 'Copy Broadcast Stage Link'}
+                      {copied ? t('Broadcast Link Copied!') : t('Copy Broadcast Stage Link')}
                     </button>
                     <a
-                      href={`https://wa.me/?text=${encodeURIComponent('Worship live with us at Ephesus Gatherings Worldwide: https://ephesusgatheringsworldwide.org/online-service/')}`}
+                      href={`https://wa.me/?text=${encodeURIComponent(`${t('Worship live with us at Ephesus Gatherings Worldwide:')} https://ephesusgatheringsworldwide.org/online-service/`)}`}
                       target="_blank"
                       rel="noreferrer"
                       className="btn btn-outline btn-sm"
                     >
-                      Share via WhatsApp <ExternalLink size={14} />
+                      {t('Share via WhatsApp')} <ExternalLink size={14} />
                     </a>
                   </div>
                 )}
@@ -395,9 +404,9 @@ export const OnlineServicePage: React.FC = () => {
       <section className="section section-stage">
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: 680, marginInline: 'auto', marginBottom: '2.5rem' }}>
-            <span className="eyebrow">Simple & Accessible</span>
+            <span className="eyebrow">{t('Simple & Accessible')}</span>
             <h2 className="section-title">
-              Three Steps, <span className="accent-serif">Zero Sign-Up Barriers</span>
+              {t('Three Steps,')} <span className="accent-serif">{t('Zero Sign-Up Barriers')}</span>
             </h2>
           </div>
 
@@ -421,8 +430,8 @@ export const OnlineServicePage: React.FC = () => {
             ].map(s => (
               <div key={s.step} className="card">
                 <div className="faith-num" style={{ marginBottom: '0.65rem' }}>{s.step}</div>
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '0.4rem' }}>{s.title}</h3>
-                <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)' }}>{s.desc}</p>
+                <h3 style={{ fontSize: '1.2rem', marginBottom: '0.4rem' }}>{t(s.title)}</h3>
+                <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)' }}>{t(s.desc)}</p>
               </div>
             ))}
           </div>
@@ -431,19 +440,21 @@ export const OnlineServicePage: React.FC = () => {
           <div className="grid-2" style={{ marginTop: '1.5rem' }}>
             {WEEKLY_SERVICES.map(svc => {
               const nextDate = getNextServiceOccurrence(svc);
-              const t = formatGMTServiceInLocal(nextDate.getUTCDay(), svc.hourGMT, svc.minuteGMT, nextDate);
+              const local = formatGMTServiceInLocal(nextDate.getUTCDay(), svc.hourGMT, svc.minuteGMT, nextDate, { t, locale });
               return (
                 <div key={svc.id} className="card" style={{ padding: '1.25rem 1.4rem' }}>
-                  <div style={{ fontWeight: 700, fontSize: '1.08rem', marginBottom: '0.25rem' }}>{svc.title}</div>
+                  <div style={{ fontWeight: 700, fontSize: '1.08rem', marginBottom: '0.25rem' }}>{t(svc.title)}</div>
                   <div style={{ fontSize: '0.9rem', color: 'var(--text-gold)', fontWeight: 600 }}>
                     {svc.id === 'top-mission-service' && isTopMissionOverrideMonth(nextDate)
-                      ? 'This Month: Tue, Nov 10 & Wed, Nov 11'
-                      : svc.scheduleLabel || `Every ${t.localDayFull}`}{' '}
-                    · {t.isSameAsGMT ? t.gmt : `${t.localTime} ${t.shortTz} (${t.gmt})`}
+                      ? t('This Month: Tue, Nov 10 & Wed, Nov 11')
+                      : svc.scheduleLabel
+                        ? t(svc.scheduleLabel)
+                        : t('Every {day}', { day: local.localDayFull })}{' '}
+                    · {local.isSameAsGMT ? local.gmt : `${local.localTime} ${local.shortTz} (${local.gmt})`}
                   </div>
                   {svc.location && (
                     <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>
-                      {svc.location}
+                      {t(svc.location)}
                     </div>
                   )}
                 </div>
@@ -458,12 +469,12 @@ export const OnlineServicePage: React.FC = () => {
         <div className="container">
           <div className="section-head-split">
             <div>
-              <span className="eyebrow">Ephesus Broadcast & Archive</span>
+              <span className="eyebrow">{t('Ephesus Broadcast & Archive')}</span>
               <h2 className="section-title">
-                Watch Again, Worship Songs & <span className="accent-serif">The Emergence Podcast</span>
+                {t('Watch Again, Worship Songs &')} <span className="accent-serif">{t('The Emergence Podcast')}</span>
               </h2>
               <p className="section-lead">
-                Stream messages and live worship right in our floating player while you browse the site.
+                {t('Stream messages and live worship right in our floating player while you browse the site.')}
               </p>
             </div>
             <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
@@ -473,7 +484,7 @@ export const OnlineServicePage: React.FC = () => {
                 rel="noreferrer"
                 className="btn btn-outline btn-sm"
               >
-                <Headphones size={15} /> Spotify Podcast
+                <Headphones size={15} /> {t('Spotify Podcast')}
               </a>
               <a
                 href={FOUNDER_INFO.podcasts.apple}
@@ -481,7 +492,7 @@ export const OnlineServicePage: React.FC = () => {
                 rel="noreferrer"
                 className="btn btn-outline btn-sm"
               >
-                Apple Podcasts <ExternalLink size={14} />
+                {t('Apple Podcasts')} <ExternalLink size={14} />
               </a>
             </div>
           </div>
@@ -504,7 +515,7 @@ export const OnlineServicePage: React.FC = () => {
                     className={`chip-btn ${selectedLibCat === cat ? 'is-active' : ''}`}
                     onClick={() => setSelectedLibCat(cat)}
                   >
-                    {cat}
+                    {t(cat)}
                   </button>
                 ))}
               </div>
@@ -520,13 +531,16 @@ export const OnlineServicePage: React.FC = () => {
                   type="text"
                   className="field-input"
                   style={{ paddingLeft: '2.4rem', borderRadius: 'var(--radius-pill)', width: '100%' }}
-                  placeholder="Filter messages by topic or series..."
+                  placeholder={t('Filter messages by topic or series...')}
                   value={searchLib}
                   onChange={e => setSearchLib(e.target.value)}
                 />
               </div>
               <span style={{ fontSize: '0.86rem', color: 'var(--text-muted)' }}>
-                Showing {filteredMedia.length} of {MEDIA_LIBRARY.length} messages & songs
+                {t('Showing {shown} of {total} messages & songs', {
+                  shown: filteredMedia.length,
+                  total: MEDIA_LIBRARY.length
+                })}
               </span>
             </div>
           </div>
@@ -538,15 +552,15 @@ export const OnlineServicePage: React.FC = () => {
                 className="card card-interactive media-row-card"
               >
                 <div style={{ borderRadius: 'var(--radius-sm)', overflow: 'hidden', aspectRatio: '16 / 10', background: 'var(--navy-900)' }}>
-                  <img src={item.thumbnail} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={item.thumbnail} alt={t(item.title)} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div>
                   <span className="badge badge-navy" style={{ marginBottom: '0.45rem' }}>
-                    {item.category} · {item.duration}
+                    {t(item.category)} · {item.duration}
                   </span>
-                  <h3 style={{ fontSize: '1.15rem', marginBottom: '0.25rem' }}>{item.title}</h3>
+                  <h3 style={{ fontSize: '1.15rem', marginBottom: '0.25rem' }}>{t(item.title)}</h3>
                   <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', marginBottom: '0.75rem' }}>
-                    {item.description}
+                    {t(item.description)}
                   </p>
                   <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                     <button
@@ -554,7 +568,7 @@ export const OnlineServicePage: React.FC = () => {
                       className="btn btn-primary btn-sm"
                       onClick={() => playMedia(item)}
                     >
-                      <Play size={14} fill="currentColor" /> Play in Drawer
+                      <Play size={14} fill="currentColor" /> {t('Play in Drawer')}
                     </button>
                     {item.youtubeId && (
                       <button
@@ -565,7 +579,7 @@ export const OnlineServicePage: React.FC = () => {
                           window.scrollTo({ top: 180, behavior: 'smooth' });
                         }}
                       >
-                        Play on Main Stage
+                        {t('Play on Main Stage')}
                       </button>
                     )}
                   </div>

@@ -3,19 +3,19 @@ import { ExternalLink, MapPin, X } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export const GlobalOverlays: React.FC = () => {
-  const { activeMedia, closeMedia, lightboxPhoto, closeLightbox } = useApp();
+  const { activeMedia, closeMedia, lightboxPhoto, closeLightbox, t } = useApp();
 
   return (
     <>
       {activeMedia && (
-        <aside className="media-drawer" aria-label="Media Player">
+        <aside className="media-drawer" aria-label={t('Media Player')}>
           <div className="media-drawer-header">
             <div style={{ minWidth: 0 }}>
               <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--gold-300)', fontWeight: 700 }}>
-                {activeMedia.category}
+                {t(activeMedia.category)}
               </div>
               <div style={{ fontWeight: 700, fontSize: '0.92rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                {activeMedia.title}
+                {t(activeMedia.title)}
               </div>
             </div>
             <button
@@ -32,7 +32,7 @@ export const GlobalOverlays: React.FC = () => {
                 justifyContent: 'center',
                 flexShrink: 0
               }}
-              aria-label="Close media player"
+              aria-label={t('Close media player')}
             >
               <X size={16} />
             </button>
@@ -42,7 +42,7 @@ export const GlobalOverlays: React.FC = () => {
             {activeMedia.youtubeId ? (
               <iframe
                 src={`https://www.youtube.com/embed/${activeMedia.youtubeId}?autoplay=1&rel=0`}
-                title={activeMedia.title}
+                title={t(activeMedia.title)}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
@@ -64,7 +64,7 @@ export const GlobalOverlays: React.FC = () => {
                   backgroundSize: 'cover'
                 }}
               >
-                <p style={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.86)' }}>{activeMedia.description}</p>
+                <p style={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.86)' }}>{t(activeMedia.description)}</p>
                 {activeMedia.externalUrl && (
                   <a
                     href={activeMedia.externalUrl}
@@ -72,7 +72,7 @@ export const GlobalOverlays: React.FC = () => {
                     rel="noreferrer"
                     className="btn btn-gold btn-sm"
                   >
-                    Open on Official Channel <ExternalLink size={14} />
+                    {t('Open on Official Channel')} <ExternalLink size={14} />
                   </a>
                 )}
               </div>
@@ -88,20 +88,20 @@ export const GlobalOverlays: React.FC = () => {
       {lightboxPhoto && (
         <div className="modal-backdrop" onClick={closeLightbox} role="dialog" aria-modal="true">
           <div className="lightbox-figure" onClick={e => e.stopPropagation()}>
-            <img src={lightboxPhoto.src} alt={lightboxPhoto.caption} />
+            <img src={lightboxPhoto.src} alt={t(lightboxPhoto.caption)} />
             <div className="lightbox-caption">
               <div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--gold-300)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.2rem' }}>
-                  {lightboxPhoto.category} · <MapPin size={12} style={{ display: 'inline', verticalAlign: 'middle' }} /> {lightboxPhoto.location}
+                  {t(lightboxPhoto.category)} · <MapPin size={12} style={{ display: 'inline', verticalAlign: 'middle' }} /> {t(lightboxPhoto.location)}
                 </div>
-                <p style={{ fontSize: '0.95rem' }}>{lightboxPhoto.caption}</p>
+                <p style={{ fontSize: '0.95rem' }}>{t(lightboxPhoto.caption)}</p>
               </div>
               <button
                 type="button"
                 className="btn btn-ghost-light btn-sm"
                 onClick={closeLightbox}
               >
-                <X size={16} /> Close
+                <X size={16} /> {t('Close')}
               </button>
             </div>
           </div>
