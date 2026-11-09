@@ -11,6 +11,11 @@ import {
 } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
 import { useApp } from '../context/AppContext';
+import {
+  WEEKLY_SERVICES,
+  getNextServiceOccurrence,
+  isTopMissionOverrideMonth
+} from '../utils/time';
 
 const TOPICS = ['Sunday Service Links', 'Daily Readings', 'Events & Camps', 'Prophetic Updates'];
 
@@ -219,7 +224,9 @@ export const Footer: React.FC = () => {
                   <strong style={{ color: '#FFFFFF', display: 'block' }}>{t('The Son Place (Grace Grounds)')}</strong>
                   {t('Mikaddo Plaza, Labone Junction, Accra, Ghana')}
                   <div style={{ color: 'var(--gold-200)', fontSize: '0.82rem', marginTop: 2 }}>
-                    {t('Sundays 3:00 PM GMT · Top Mission: 1st Week Monthly (Tue & Wed, 6:30 PM Prompt)')}
+                    {isTopMissionOverrideMonth(getNextServiceOccurrence(WEEKLY_SERVICES[1]))
+                      ? t('Sundays 3:00 PM GMT · Top Mission: This Month Wed, Nov 11 Only (6:30 PM Prompt)')
+                      : t('Sundays 3:00 PM GMT · Top Mission: 1st Week Monthly (Tue & Wed, 6:30 PM Prompt)')}
                   </div>
                 </div>
               </div>

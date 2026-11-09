@@ -8,6 +8,11 @@ import {
   MINISTRY_EVENTS,
   TESTIMONIES_DATA
 } from '../data/ministryData';
+import {
+  WEEKLY_SERVICES,
+  getNextServiceOccurrence,
+  isTopMissionOverrideMonth
+} from '../utils/time';
 
 interface SearchEntry {
   id: string;
@@ -73,9 +78,13 @@ export const SearchModal: React.FC = () => {
       };
     });
 
+    const topMissionOverride = isTopMissionOverrideMonth(getNextServiceOccurrence(WEEKLY_SERVICES[1]));
     const events: SearchEntry[] = MINISTRY_EVENTS.map(ev => {
       const title = t(ev.title);
-      const subtitle = `${t(ev.dateLabel)} · ${t(ev.timeGMT)}`;
+      const dateStr = ev.id === 'top-mission-service' && topMissionOverride
+        ? t('This Month: Wed, Nov 11 Only')
+        : t(ev.dateLabel);
+      const subtitle = `${dateStr} · ${t(ev.timeGMT)}`;
       return {
         id: `e-${ev.id}`,
         title,

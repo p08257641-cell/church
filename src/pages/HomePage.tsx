@@ -53,6 +53,7 @@ export const HomePage: React.FC = () => {
   const worshipTrack = MEDIA_LIBRARY[0]; // By My Side (Live Worship)
   const campClip = ITFC_MOMENT_VIDEO; // Authentic YouTube ITFC Ministry Moment
   const sundayTime = formatGMTServiceInLocal(0, 15, 0, undefined, { t, locale });
+  const nextTopMissionDate = getNextServiceOccurrence(WEEKLY_SERVICES[1]);
 
   const [selectedSermonCat, setSelectedSermonCat] = useState<string>('All');
 
@@ -205,9 +206,13 @@ export const HomePage: React.FC = () => {
               <div className="ledger-meta">{t('Main Sanctuary & Monthly Mission')}</div>
               <div className="ledger-title">{t('Sunday Worship & Top Mission Service')}</div>
               <div className="ledger-sub">
-                {t('Every Sunday · 15:00 GMT ({time}) · Top Mission: 1st Week Monthly (Tue & Wed, 18:30 GMT)', {
-                  time: sundayTime.isSameAsGMT ? sundayTime.gmt : `${sundayTime.localTime} ${sundayTime.shortTz}`
-                })}
+                {isTopMissionOverrideMonth(nextTopMissionDate)
+                  ? t('Every Sunday · 15:00 GMT ({time}) · Top Mission: This Month Wed, Nov 11 Only (18:30 GMT)', {
+                      time: sundayTime.isSameAsGMT ? sundayTime.gmt : `${sundayTime.localTime} ${sundayTime.shortTz}`
+                    })
+                  : t('Every Sunday · 15:00 GMT ({time}) · Top Mission: 1st Week Monthly (Tue & Wed, 18:30 GMT)', {
+                      time: sundayTime.isSameAsGMT ? sundayTime.gmt : `${sundayTime.localTime} ${sundayTime.shortTz}`
+                    })}
               </div>
             </div>
             <Link to="/events" className="ledger-link">
@@ -335,7 +340,7 @@ export const HomePage: React.FC = () => {
                       <div>
                         <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)', fontWeight: 700 }}>
                           {svc.id === 'top-mission-service' && isTopMissionOverrideMonth(nextDate)
-                            ? t('This Month: Tue, Nov 10 & Wed, Nov 11')
+                            ? t('This Month: Wed, Nov 11 Only')
                             : svc.scheduleLabel
                               ? t(svc.scheduleLabel)
                               : t('Every {day}', { day: local.localDayFull })}

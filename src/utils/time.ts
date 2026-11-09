@@ -69,11 +69,11 @@ export function getFirstTuesdayOfMonth(year: number, monthIndex: number): number
 }
 
 // Explicit month overrides where Top Mission shifts from the regular first week (0-indexed month)
-const TOP_MISSION_MONTH_OVERRIDES: Record<string, [number, number]> = {
-  '2026-10': [10, 11] // November 2026: shifted from 1st week to Tue Nov 10 & Wed Nov 11
+const TOP_MISSION_MONTH_OVERRIDES: Record<string, number[]> = {
+  '2026-10': [11] // November 2026: Wednesday, Nov 11 only (no Tuesday Nov 10 session)
 };
 
-export function getTopMissionDaysForMonth(year: number, monthIndex: number): [number, number] {
+export function getTopMissionDaysForMonth(year: number, monthIndex: number): number[] {
   const override = TOP_MISSION_MONTH_OVERRIDES[`${year}-${monthIndex}`];
   if (override) return override;
   const firstTue = getFirstTuesdayOfMonth(year, monthIndex);
@@ -81,12 +81,15 @@ export function getTopMissionDaysForMonth(year: number, monthIndex: number): [nu
 }
 
 export function isTopMissionDateUTC(year: number, monthIndex: number, dayOfMonth: number): boolean {
-  const [tue, wed] = getTopMissionDaysForMonth(year, monthIndex);
-  return dayOfMonth === tue || dayOfMonth === wed;
+  return getTopMissionDaysForMonth(year, monthIndex).includes(dayOfMonth);
+}
+
+export function isTopMissionOverrideYearMonth(year: number, monthIndex: number): boolean {
+  return Boolean(TOP_MISSION_MONTH_OVERRIDES[`${year}-${monthIndex}`]);
 }
 
 export function isTopMissionOverrideMonth(dateUTC: Date): boolean {
-  return Boolean(TOP_MISSION_MONTH_OVERRIDES[`${dateUTC.getUTCFullYear()}-${dateUTC.getUTCMonth()}`]);
+  return isTopMissionOverrideYearMonth(dateUTC.getUTCFullYear(), dateUTC.getUTCMonth());
 }
 
 export function doesServiceRunOnUTCDate(svc: WeeklyService, dateUTC: Date): boolean {

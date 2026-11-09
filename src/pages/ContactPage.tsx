@@ -12,7 +12,12 @@ import {
   Shield
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { WEEKLY_SERVICES, formatGMTServiceInLocal } from '../utils/time';
+import {
+  WEEKLY_SERVICES,
+  formatGMTServiceInLocal,
+  getNextServiceOccurrence,
+  isTopMissionOverrideMonth
+} from '../utils/time';
 
 const REASONS = [
   { id: 'prayer', label: 'Prayer Request', email: 'welfare@ephesusgatheringsworldwide.org' },
@@ -246,13 +251,18 @@ export const ContactPage: React.FC = () => {
               <h4 style={{ fontSize: '1.05rem', marginBottom: '0.65rem' }}>{t('When We Gather Online & In Person')}</h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                 {WEEKLY_SERVICES.map(s => {
-                  const local = formatGMTServiceInLocal(s.dayOfWeek, s.hourGMT, s.minuteGMT, undefined, { t, locale });
+                  const nextDate = getNextServiceOccurrence(s);
+                  const local = formatGMTServiceInLocal(nextDate.getUTCDay(), s.hourGMT, s.minuteGMT, nextDate, { t, locale });
                   return (
                     <div key={s.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.75rem', fontSize: '0.86rem' }}>
                       <div>
                         <strong style={{ display: 'block' }}>{t(s.title)}</strong>
                         <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                          {s.scheduleLabel ? t(s.scheduleLabel) : t('Every {day}', { day: local.localDayFull })}
+                          {s.id === 'top-mission-service' && isTopMissionOverrideMonth(nextDate)
+                            ? t('This Month: Wed, Nov 11 Only')
+                            : s.scheduleLabel
+                              ? t(s.scheduleLabel)
+                              : t('Every {day}', { day: local.localDayFull })}
                         </span>
                       </div>
                       <span style={{ color: 'var(--brand-royal)', fontWeight: 600, textAlign: 'right', whiteSpace: 'nowrap' }}>

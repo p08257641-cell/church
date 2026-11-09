@@ -22,7 +22,8 @@ import {
   getNextServiceOccurrence,
   getVisitorTimezone,
   isTopMissionDateUTC,
-  isTopMissionOverrideMonth
+  isTopMissionOverrideMonth,
+  isTopMissionOverrideYearMonth
 } from '../utils/time';
 
 const CATEGORIES: ('All' | MinistryEvent['category'])[] = [
@@ -132,7 +133,7 @@ export const EventsPage: React.FC = () => {
             <h3 style={{ color: '#FFFFFF', fontSize: '1.35rem', marginBottom: '0.35rem' }}>{t(spotlight.title)}</h3>
             <p style={{ fontSize: '0.9rem', color: 'rgba(248,250,252,0.82)', marginBottom: '1rem' }}>
               {isTopMissionOverrideMonth(topMissionTimer.targetDate)
-                ? t('This Month: Tue, Nov 10 & Wed, Nov 11')
+                ? t('This Month: Wed, Nov 11 Only')
                 : t(spotlight.dateLabel)}{' '}
               · {t(spotlight.timeGMT)} · {t('With {speaker}', { speaker: spotlight.speaker })}
             </p>
@@ -195,7 +196,7 @@ export const EventsPage: React.FC = () => {
                       borderColor: 'rgba(212,175,55,0.45)'
                     }}
                   >
-                    {t('This Month: Tue, Nov 10 & Wed, Nov 11')}
+                    {t('This Month: Wed, Nov 11 Only')}
                   </span>
                 )}
                 <span className="badge badge-navy">{t(spotlight.timeGMT)}</span>
@@ -350,7 +351,7 @@ export const EventsPage: React.FC = () => {
                     <h3 style={{ fontSize: '1.25rem', marginBottom: '0.3rem' }}>{t(ev.title)}</h3>
                     <div style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--brand-royal)', marginBottom: '0.5rem' }}>
                       {ev.id === 'top-mission-service' && isTopMissionOverrideMonth(topMissionTimer.targetDate)
-                        ? `${t(ev.dateLabel)} · ${t('This Month: Tue, Nov 10 & Wed, Nov 11')}`
+                        ? t('This Month: Wed, Nov 11 Only')
                         : t(ev.dateLabel)}
                     </div>
                     <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '0.75rem' }}>
@@ -406,6 +407,14 @@ export const EventsPage: React.FC = () => {
               </h2>
               <p className="section-lead">
                 {t('Blue markers indicate Sunday Service (every Sunday, 15:00 GMT) and Top Mission Service (1st week monthly · Tue & Wed, 18:30 GMT); gold markers highlight special convocations.')}
+                {isTopMissionOverrideYearMonth(calMonth.getFullYear(), calMonth.getMonth()) && (
+                  <>
+                    {' '}
+                    <strong style={{ color: 'var(--brand-royal)' }}>
+                      ({t('This Month: Wed, Nov 11 Only')})
+                    </strong>
+                  </>
+                )}
               </p>
             </div>
             <div className="calendar-month-nav">
@@ -522,7 +531,10 @@ export const EventsPage: React.FC = () => {
                 <span className="badge badge-gold" style={{ marginBottom: '0.45rem' }}>{t(rsvpEvent.category)}</span>
                 <h3 style={{ fontSize: '1.45rem' }}>{t(rsvpEvent.title)}</h3>
                 <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-                  {t(rsvpEvent.dateLabel)} · {t(rsvpEvent.timeGMT)}
+                  {rsvpEvent.id === 'top-mission-service' && isTopMissionOverrideMonth(topMissionTimer.targetDate)
+                    ? t('This Month: Wed, Nov 11 Only')
+                    : t(rsvpEvent.dateLabel)}{' '}
+                  · {t(rsvpEvent.timeGMT)}
                 </p>
               </div>
               <button type="button" className="icon-btn" onClick={() => setRsvpEvent(null)} aria-label={t('Close modal')}>

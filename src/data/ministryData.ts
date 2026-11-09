@@ -795,7 +795,7 @@ export const MINISTRY_EVENTS: MinistryEvent[] = [
     subtitle: 'Every First Week Monthly · Tuesdays & Wednesdays',
     category: 'Monthly Convocation',
     dateLabel: 'First Week of Every Month · Tue & Wed',
-    startIso: '2026-11-10T18:30:00Z',
+    startIso: '2026-11-11T18:30:00Z',
     timeGMT: '18:30 GMT (6:30 PM Prompt)',
     durationMinutes: 150,
     location: 'Grace Grounds (The Son Place), Mikaddo Conference Centre, Labone Junction & Online',

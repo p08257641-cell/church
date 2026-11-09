@@ -446,7 +446,7 @@ export const OnlineServicePage: React.FC = () => {
                   <div style={{ fontWeight: 700, fontSize: '1.08rem', marginBottom: '0.25rem' }}>{t(svc.title)}</div>
                   <div style={{ fontSize: '0.9rem', color: 'var(--text-gold)', fontWeight: 600 }}>
                     {svc.id === 'top-mission-service' && isTopMissionOverrideMonth(nextDate)
-                      ? t('This Month: Tue, Nov 10 & Wed, Nov 11')
+                      ? t('This Month: Wed, Nov 11 Only')
                       : svc.scheduleLabel
                         ? t(svc.scheduleLabel)
                         : t('Every {day}', { day: local.localDayFull })}{' '}
