@@ -17,7 +17,6 @@ import { useApp } from '../context/AppContext';
 import { MINISTRY_EVENTS, MinistryEvent } from '../data/ministryData';
 import {
   WEEKLY_SERVICES,
-  computeServiceCountdown,
   downloadICS,
   getNextServiceOccurrence,
   getVisitorTimezone,
@@ -35,15 +34,21 @@ const CATEGORIES: ('All' | MinistryEvent['category'])[] = [
 ];
 
 export const EventsPage: React.FC = () => {
-  const { t, locale } = useApp(); // Subscribes to 1s tick & locale updates
+  const { nextGathering, t, locale } = useApp(); // Subscribes to 1s tick & locale updates
   const [selectedCategory, setSelectedCategory] = useState<'All' | MinistryEvent['category']>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [calMonth, setCalMonth] = useState(() => new Date(2026, 10, 1)); // Nov 2026 default
   const [rsvpEvent, setRsvpEvent] = useState<MinistryEvent | null>(null);
   const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
 
-  const spotlight = MINISTRY_EVENTS.find(e => e.id === 'top-mission-service') || MINISTRY_EVENTS[0];
-  const topMissionTimer = computeServiceCountdown(WEEKLY_SERVICES[1], Date.now(), { t, locale });
+  const spotlightEventId =
+    nextGathering.service.id === 'top-mission-service'
+      ? 'top-mission-service'
+      : 'sunday-main-sanctuary';
+  const spotlight = MINISTRY_EVENTS.find(e => e.id === spotlightEventId) || MINISTRY_EVENTS[0];
+  const nextTopMissionDate = getNextServiceOccurrence(WEEKLY_SERVICES[1]);
+  const isSpotlightTopMissionOverride =
+    spotlight.id === 'top-mission-service' && isTopMissionOverrideMonth(nextGathering.targetDate);
 
   const filteredEvents = useMemo(() => {
     return MINISTRY_EVENTS.filter(ev => {
@@ -142,7 +147,7 @@ export const EventsPage: React.FC = () => {
             <span className="badge badge-gold" style={{ marginBottom: '0.6rem' }}>{t(spotlight.category)}</span>
             <h3 style={{ color: '#FFFFFF', fontSize: '1.35rem', marginBottom: '0.35rem' }}>{t(spotlight.title)}</h3>
             <p style={{ fontSize: '0.9rem', color: 'rgba(248,250,252,0.82)', marginBottom: '1rem' }}>
-              {isTopMissionOverrideMonth(topMissionTimer.targetDate)
+              {isSpotlightTopMissionOverride
                 ? t('This Month: Wed, Nov 11 Only')
                 : t(spotlight.dateLabel)}{' '}
               · {t(spotlight.timeGMT)} · {t('With {speaker}', { speaker: spotlight.speaker })}
@@ -165,7 +170,7 @@ export const EventsPage: React.FC = () => {
                   downloadICS({
                     title: t(spotlight.title),
                     description: t(spotlight.description),
-                    startIso: getEventStartIso(spotlight),
+                    startIso: nextGathering.targetDate.toISOString(),
                     durationMinutes: spotlight.durationMinutes,
                     location: spotlight.location
                   })
@@ -191,13 +196,18 @@ export const EventsPage: React.FC = () => {
               <img
                 src={spotlight.image}
                 alt={t(spotlight.title)}
+                style={
+                  spotlight.id === 'top-mission-service'
+                    ? undefined
+                    : { objectPosition: spotlight.imagePosition || 'center 20%' }
+                }
               />
             </div>
             <div>
               <div className="events-spotlight-badges">
                 <span className="badge badge-gold"><Sparkles size={13} /> {t('Spotlight Gathering')}</span>
                 <span className="badge badge-navy">{t(spotlight.dateLabel)}</span>
-                {isTopMissionOverrideMonth(topMissionTimer.targetDate) && (
+                {isSpotlightTopMissionOverride && (
                   <span
                     className="badge"
                     style={{
@@ -213,9 +223,11 @@ export const EventsPage: React.FC = () => {
               </div>
               <h2 className="events-spotlight-title">{t(spotlight.title)}</h2>
               <p style={{ fontWeight: 700, color: 'var(--brand-royal)', marginBottom: '0.85rem' }}>
-                {t('Ministering: {speaker} · Grace Grounds (Mikaddo Conference Centre, Labone Junction)', {
-                  speaker: spotlight.speaker
-                })}
+                {spotlight.id === 'top-mission-service'
+                  ? t('Ministering: {speaker} · Grace Grounds (Mikaddo Conference Centre, Labone Junction)', {
+                      speaker: spotlight.speaker
+                    })
+                  : `${t('With {speaker}', { speaker: spotlight.speaker })} · ${t(spotlight.location)}`}
               </p>
 
               <div className="flyer-timer-panel">
@@ -226,40 +238,42 @@ export const EventsPage: React.FC = () => {
                       fontWeight: 700,
                       letterSpacing: '0.09em',
                       textTransform: 'uppercase',
-                      color: topMissionTimer.isLive ? '#F87171' : 'var(--gold-300)'
+                      color: nextGathering.isLive ? '#F87171' : 'var(--gold-300)'
                     }}
                   >
-                    {topMissionTimer.isLive
-                      ? t('● Top Mission Live Right Now')
-                      : t('Next Top Mission Service Timer')}
+                    {nextGathering.isLive
+                      ? t('● Live Broadcast In Progress')
+                      : t('Next Service Countdown')}
                   </span>
                   <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'rgba(248,250,252,0.88)' }}>
-                    {topMissionTimer.targetDateFormatted} ·{' '}
-                    {topMissionTimer.isSameAsGMT
-                      ? topMissionTimer.gmtFormatted
-                      : `${topMissionTimer.localTimeFormatted} (${topMissionTimer.gmtFormatted})`}
+                    {nextGathering.targetDateFormatted} ·{' '}
+                    {nextGathering.isSameAsGMT
+                      ? nextGathering.gmtFormatted
+                      : `${nextGathering.localTimeFormatted} (${nextGathering.gmtFormatted})`}
                   </span>
                 </div>
-                {topMissionTimer.isLive ? (
+                {nextGathering.isLive ? (
                   <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: '1.05rem' }}>
-                    {t('Live now at Grace Grounds & on the Online Broadcast Stage.')}
+                    {spotlight.id === 'top-mission-service'
+                      ? t('Live now at Grace Grounds & on the Online Broadcast Stage.')
+                      : t('Join the sanctuary broadcast')}
                   </div>
                 ) : (
                   <div className="countdown-boxes" role="timer" aria-live="off">
                     <div className="countdown-cell">
-                      <span className="countdown-num">{topMissionTimer.days}</span>
+                      <span className="countdown-num">{nextGathering.days}</span>
                       <span className="countdown-lbl">{t('Days')}</span>
                     </div>
                     <div className="countdown-cell">
-                      <span className="countdown-num">{topMissionTimer.hours}</span>
+                      <span className="countdown-num">{nextGathering.hours}</span>
                       <span className="countdown-lbl">{t('Hrs')}</span>
                     </div>
                     <div className="countdown-cell">
-                      <span className="countdown-num">{topMissionTimer.minutes}</span>
+                      <span className="countdown-num">{nextGathering.minutes}</span>
                       <span className="countdown-lbl">{t('Min')}</span>
                     </div>
                     <div className="countdown-cell">
-                      <span className="countdown-num">{topMissionTimer.seconds}</span>
+                      <span className="countdown-num">{nextGathering.seconds}</span>
                       <span className="countdown-lbl">{t('Sec')}</span>
                     </div>
                   </div>
@@ -371,7 +385,7 @@ export const EventsPage: React.FC = () => {
                     </div>
                     <h3 style={{ fontSize: '1.25rem', marginBottom: '0.3rem' }}>{t(ev.title)}</h3>
                     <div style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--brand-royal)', marginBottom: '0.5rem' }}>
-                      {ev.id === 'top-mission-service' && isTopMissionOverrideMonth(topMissionTimer.targetDate)
+                      {ev.id === 'top-mission-service' && isTopMissionOverrideMonth(nextTopMissionDate)
                         ? t('This Month: Wed, Nov 11 Only')
                         : t(ev.dateLabel)}
                     </div>
@@ -552,7 +566,7 @@ export const EventsPage: React.FC = () => {
                 <span className="badge badge-gold" style={{ marginBottom: '0.45rem' }}>{t(rsvpEvent.category)}</span>
                 <h3 style={{ fontSize: '1.45rem' }}>{t(rsvpEvent.title)}</h3>
                 <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-                  {rsvpEvent.id === 'top-mission-service' && isTopMissionOverrideMonth(topMissionTimer.targetDate)
+                  {rsvpEvent.id === 'top-mission-service' && isTopMissionOverrideMonth(nextTopMissionDate)
                     ? t('This Month: Wed, Nov 11 Only')
                     : t(rsvpEvent.dateLabel)}{' '}
                   · {t(rsvpEvent.timeGMT)}
