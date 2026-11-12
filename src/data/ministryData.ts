@@ -768,6 +768,9 @@ export interface MinistryEvent {
   featured?: boolean;
   speaker: string;
   image: string;
+  imagePosition?: string;
+  imageFit?: 'cover' | 'contain';
+  imageBg?: string;
   description: string;
 }
 
@@ -807,39 +810,111 @@ export const MINISTRY_EVENTS: MinistryEvent[] = [
       'Held every first week of every month on Tuesdays and Wednesdays at 6:30 PM Prompt with Prophet Edem Julius-Cudjoe at Grace Grounds (The Son Place), Mikaddo Conference Centre, Labone Junction & Online.'
   },
   {
+    id: 'couples-meeting',
+    title: 'Couples Meeting',
+    subtitle: 'With Prophet Edem Julius-Cudjoe · Covenant Marriage Fellowship',
+    category: 'Special Gathering',
+    dateLabel: '14th & 28th November 2026',
+    startIso: '2026-11-14T16:00:00Z',
+    timeGMT: 'Schedule TBA',
+    durationMinutes: 150,
+    location: 'The Son Place, Mikaddo Plaza, Labone & Online',
+    isOnline: true,
+    featured: true,
+    speaker: 'Prophet Edem Julius-Cudjoe',
+    image: '/images/prophet-mrs-julius-cudjoe.png',
+    imageFit: 'contain',
+    imageBg: '#5c3c2b',
+    imagePosition: 'center top',
+    description:
+      'Special couples fellowship and prophetic counsel with Prophet Edem Julius-Cudjoe on 14th & 28th November 2026—strengthening homes in grace, wisdom, and covenant love.'
+  },
+  {
+    id: 'fasting-and-prayers-28-days',
+    title: '28 Days Fasting and Prayers',
+    subtitle: 'Season of Consecration, Intercession & Spiritual Alignment',
+    category: 'Special Gathering',
+    dateLabel: '16th November – 13th December 2026',
+    startIso: '2026-11-16T06:00:00Z',
+    timeGMT: 'Daily Prayer Watch',
+    durationMinutes: 120,
+    location: 'Grace Grounds (The Son Place), Labone & Worldwide Online',
+    isOnline: true,
+    featured: true,
+    speaker: 'Prophet Edem Julius-Cudjoe & Intercessory Team',
+    image: '/images/sanctuary-prayer-worship.jpg',
+    description:
+      'Twenty-eight days of corporate fasting, prevailing prayer, and Word-centred consecration from 16th November to 13th December 2026 across the global Ephesus family.'
+  },
+  {
+    id: 'fathers-blessing',
+    title: 'The Father’s Blessing & Impartation',
+    subtitle: 'With Rev. George Wilfred Arthur · 6th December 2026',
+    category: 'Special Gathering',
+    dateLabel: '6th December 2026',
+    startIso: '2026-12-06T15:00:00Z',
+    timeGMT: '15:00 GMT',
+    durationMinutes: 180,
+    location: 'Grace Grounds (The Son Place), Mikaddo Plaza, Labone & Online',
+    isOnline: true,
+    featured: true,
+    speaker: 'Rev. George Wilfred Arthur',
+    image: '/images/fathers-blessing.jpg',
+    imagePosition: 'center 15%',
+    description:
+      'A special prophetic service on 6th December 2026 with Rev. George Wilfred Arthur, releasing the fatherly mantle, favour, and covenant blessings.'
+  },
+  {
+    id: 'special-singles-meeting',
+    title: 'Special Singles Meeting',
+    subtitle: 'Purpose, Purity & Kingdom Relationships',
+    category: 'Special Gathering',
+    dateLabel: '12th December 2026',
+    startIso: '2026-12-12T15:00:00Z',
+    timeGMT: 'Schedule TBA',
+    durationMinutes: 150,
+    location: 'The Son Place, Mikaddo Plaza, Labone & Online',
+    isOnline: true,
+    featured: true,
+    speaker: 'Prophet Edem Julius-Cudjoe & Ministry Team',
+    image: '/images/youth-fellowship-gathering.jpg',
+    description:
+      'A dedicated December fellowship on 12th December 2026 equipping single believers in spiritual maturity, destiny clarity, and godly relationships.'
+  },
+  {
+    id: 'pwwc-conference',
+    title: 'P.W.W.C — Prophetic Warfare Worship Conference',
+    subtitle: 'Three Sundays of Prophetic Worship & Intercession',
+    category: 'Conference & Camp',
+    dateLabel: '13th, 20th & 27th December 2026',
+    startIso: '2026-12-13T15:00:00Z',
+    timeGMT: 'Schedule TBA',
+    durationMinutes: 180,
+    location: 'Grace Grounds (The Son Place), Mikaddo Plaza, Labone & Online',
+    isOnline: true,
+    featured: true,
+    speaker: 'Prophet Edem Julius-Cudjoe & Guest Ministers',
+    image: '/images/worship-surrender.jpg',
+    imagePosition: 'center 32%',
+    description:
+      'Prophetic Warfare Worship Conference (P.W.W.C) holding on 13th, 20th & 27th December 2026—three Sundays of intense worship, spiritual warfare, and prophetic release.'
+  },
+  {
     id: 'cross-over-service',
     title: 'Cross Over Service — Time With the King of Kings',
-    subtitle: 'Annual 31st December Convocation at Grace Grounds',
+    subtitle: 'With Rev. George Wilfred Arthur · 31st December 2026',
     category: 'Special Gathering',
-    dateLabel: '31st December · 20:00 GMT',
+    dateLabel: '31st December 2026 · 20:00 GMT',
     startIso: '2026-12-31T20:00:00Z',
     timeGMT: '20:00 GMT',
     durationMinutes: 300,
     location: 'Grace Grounds (The Son Place), Mikaddo Plaza, Labone & Online',
     isOnline: true,
     featured: true,
-    speaker: 'Prophet Edem Julius-Cudjoe & Guest Ministers',
-    image:
-      '/images/sanctuary-corporate-worship.jpg',
+    speaker: 'Prophet Edem Julius-Cudjoe & Rev. George Wilfred Arthur',
+    image: '/images/sanctuary-corporate-worship.jpg',
     description:
-      '31st December crossover service happening at the Grace Grounds (The Son Place), Mikaddo Plaza, Labone Junction, Accra and streamed to the ends of the earth.'
-  },
-  {
-    id: 'fathers-blessing',
-    title: 'The Father’s Blessing & Impartation',
-    subtitle: 'The 11th Hour Generation Impartation Service',
-    category: 'Special Gathering',
-    dateLabel: 'Annual Prophetic Service',
-    startIso: '2026-11-22T15:00:00Z',
-    timeGMT: '15:00 GMT',
-    durationMinutes: 180,
-    location: 'The Son Place, Mikaddo Plaza, Labone, Accra',
-    isOnline: true,
-    speaker: 'Prophet Edem Julius-Cudjoe',
-    image:
-      '/images/fathers-blessing.jpg',
-    description:
-      'A powerful prophetic convocation releasing the fatherly mantle, favor, and covenant blessings upon the 11th hour generation of believers.'
+      'Annual 31st December 2026 crossover service with Prophet Edem Julius-Cudjoe and Rev. George Wilfred Arthur at Grace Grounds (The Son Place), Mikaddo Plaza, Labone Junction & Online.'
   },
   {
     id: 'itf-camp-convocation',
@@ -853,8 +928,7 @@ export const MINISTRY_EVENTS: MinistryEvent[] = [
     location: 'Accra, Ghana & Live Worldwide Stream',
     isOnline: true,
     speaker: 'Prophet Edem Julius-Cudjoe & Guest Ministers',
-    image:
-      '/images/itf-camp-family.jpg',
+    image: '/images/itf-camp-family.jpg',
     description:
       'Unforgettable days of prayer, Flag Night celebration of nations, prophetic impartation, and deep spiritual renewal with the entire Ephesus family.'
   }

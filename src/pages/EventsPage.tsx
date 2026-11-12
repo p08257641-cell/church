@@ -79,7 +79,17 @@ export const EventsPage: React.FC = () => {
       if (isTopMissionDateUTC(year, month, d)) svcs.push('Top Mission 18:30 GMT');
 
       let special: string | undefined;
-      if (month === 11 && d === 31) special = 'Cross Over Service';
+      if (year === 2026 && month === 10) {
+        if (d === 14 || d === 28) special = 'Couples Meeting';
+        if (d === 16) special = '28 Days Fasting Starts';
+      }
+      if (year === 2026 && month === 11) {
+        if (d === 6) special = 'The Father’s Blessing';
+        if (d === 12) special = 'Special Singles Meeting';
+        if (d === 13) special = 'P.W.W.C · Fasting Ends';
+        if (d === 20 || d === 27) special = 'P.W.W.C';
+        if (d === 31) special = 'Cross Over Service';
+      }
       if (month === 1 && d === 18) special = 'ITFC Camp';
 
       cells.push({ day: d, services: svcs, special });
@@ -329,7 +339,13 @@ export const EventsPage: React.FC = () => {
               <article key={ev.id} className="card card-interactive event-card">
                 <div
                   className="event-media"
-                  style={ev.id === 'top-mission-service' ? { background: '#050b14' } : undefined}
+                  style={
+                    ev.imageBg
+                      ? { background: ev.imageBg }
+                      : ev.id === 'top-mission-service'
+                        ? { background: '#050b14' }
+                        : undefined
+                  }
                 >
                   <img
                     src={ev.image}
@@ -338,7 +354,12 @@ export const EventsPage: React.FC = () => {
                     style={
                       ev.id === 'top-mission-service'
                         ? { objectFit: 'contain', objectPosition: 'center' }
-                        : undefined
+                        : ev.imageFit || ev.imagePosition
+                          ? {
+                              ...(ev.imageFit ? { objectFit: ev.imageFit } : {}),
+                              ...(ev.imagePosition ? { objectPosition: ev.imagePosition } : {})
+                            }
+                          : undefined
                     }
                   />
                 </div>
